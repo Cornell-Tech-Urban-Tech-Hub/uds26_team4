@@ -1,376 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pollution Team - Gowanus Research</title>
-    <!-- Modern Typography: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --water-blue: #0a192f;
-            --toxic-green: #00ff88;
-            --dark-bg: #050b14;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #e6f1ff;
-            --text-muted: #8892b0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            /* Deep, subtly atmospheric background */
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(10, 25, 47, 0.9) 0%, transparent 50%),
-                linear-gradient(to bottom, var(--dark-bg) 0%, #081221 100%);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        /* Ambient animated blobs */
-        .ambient-blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            z-index: 0;
-            animation: float 10s infinite alternate ease-in-out;
-        }
-
-        .blob-1 {
-            top: 10%;
-            right: 15%;
-            width: 400px;
-            height: 400px;
-            background: var(--toxic-green);
-        }
-
-        .blob-2 {
-            bottom: -10%;
-            left: 5%;
-            width: 500px;
-            height: 500px;
-            background: #0088ff;
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-30px, 50px) scale(1.1); }
-        }
-
-        .navbar {
-            position: relative;
-            z-index: 10;
-            padding: 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--toxic-green);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--toxic-green);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 5%;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero {
-            text-align: left;
-            margin-bottom: 5rem;
-            animation: slideInUp 1s ease-out backwards;
-            animation-delay: 0.3s;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 255, 136, 0.1);
-            color: var(--toxic-green);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            backdrop-filter: blur(5px);
-        }
-
-        h1 {
-            font-size: clamp(3rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #ffffff 30%, #8892b0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .highlight {
-            background: linear-gradient(45deg, var(--toxic-green), #00c3ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-        }
-
-        p.subtitle {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            animation: slideInUp 1s ease-out backwards;
-            animation-delay: 0.6s;
-        }
-
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        /* Glossy glare effect */
-        .card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            transition: 0.5s;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(0, 255, 136, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 136, 0.1);
-        }
-
-        .card:hover::after {
-            left: 200%;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .card-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.03);
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
-            position: absolute;
-            right: 1.5rem;
-            top: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover .card-number {
-            color: rgba(0, 255, 136, 0.05);
-            -webkit-text-stroke: 1px rgba(0, 255, 136, 0.2);
-        }
-
-        .card h3 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            margin-top: 1rem;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        .cta-container {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--toxic-green);
-            color: var(--dark-bg);
-            border: 2px solid var(--toxic-green);
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
-            transform: scale(1.05);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-main);
-            border: 2px solid var(--glass-border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--glass-bg);
-            border-color: rgba(255,255,255,0.2);
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .hero { text-align: center; }
-            .badge { justify-content: center; }
-            p.subtitle { margin: 0 auto 2.5rem; }
-            .cta-container { justify-content: center; flex-wrap: wrap; }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flooding-driven Pollution in Gowanus</title>
+<meta name="description" content="A research showcase on flooding-driven pollution in the Gowanus Canal: causes, simulations, and solutions." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #1f2937; background: #fafaf7; }
+  h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+  .section { padding: 6rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+  .eyebrow { letter-spacing: .25em; font-size: .75rem; text-transform: uppercase; color: #6b7280; font-weight: 600; }
+  /* Hover overlay for charts */
+  .chart-card { position: relative; overflow: hidden; border-radius: 0.75rem; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #e5e7eb; }
+  .chart-card img { display:block; width:100%; height:auto; transition: opacity .35s ease, transform .6s ease; }
+  .chart-card .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(15,23,42,0.85), rgba(15,23,42,0.95));
+    color: #f8fafc; padding: 1.25rem 1.5rem;
+    opacity: 0; transition: opacity .35s ease;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-size: .95rem; line-height: 1.6;
+  }
+  .chart-card:hover img { opacity: .15; transform: scale(1.02); }
+  .chart-card:hover .overlay { opacity: 1; }
+  /* Hero */
+  .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; }
+  .hero img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .hero::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.55) 100%); }
+  .hero-content { position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:#fff; padding: 0 1.5rem; }
+  /* Nav */
+  .nav { position: fixed; top: 0; left:0; right:0; z-index: 50; backdrop-filter: blur(10px); background: rgba(250,250,247,0.75); border-bottom: 1px solid rgba(0,0,0,.05); }
+  .nav a { font-size: .85rem; color:#374151; font-weight:500; }
+  .nav a:hover { color:#0f172a; }
+  /* Card */
+  .card { background:#fff; border:1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.75rem; transition: transform .3s ease, box-shadow .3s ease; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -10px rgba(0,0,0,.15); }
+  .divider { height:1px; background: linear-gradient(90deg, transparent, #d1d5db, transparent); margin: 0 auto; max-width: 200px; }
+  video { width: 100%; border-radius: 0.75rem; background:#000; display:block; }
+  .case-video-wrap { box-shadow: 0 20px 50px -20px rgba(0,0,0,.25); border-radius: 0.75rem; overflow:hidden; }
+</style>
 </head>
-<body>
-    <div class="ambient-blob blob-1"></div>
-    <div class="ambient-blob blob-2"></div>
-    
-    <nav class="navbar">
-        <div class="logo">
-            <span class="logo-dot"></span>
-            Pollution Team
-        </div>
-    </nav>
+<body class="antialiased">
 
-    <main class="container">
-        <div class="hero">
-            <div class="badge">
-                <span style="font-size: 10px;">🟢</span> Live Research
-            </div>
-            <h1>Analyzing <br><span class="highlight">Gowanus</span> Ecosystem</h1>
-            <p class="subtitle">Investigating the critical intersection of historical industrial pollution, modern urban flooding, and proactive environmental resilience.</p>
-            <div class="cta-container">
-                <a href="#" class="btn btn-primary">View Data Modules</a>
-                <a href="#" class="btn btn-secondary">About the Project</a>
-            </div>
-        </div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="font-semibold tracking-tight">Gowanus · Research</div>
+    <div class="hidden md:flex gap-8">
+      <a href="#intro">Intro</a>
+      <a href="#process">Process</a>
+      <a href="#cases">Case Studies</a>
+      <a href="#sites">Simulations</a>
+      <a href="#stakeholders">Stakeholders</a>
+    </div>
+  </div>
+</nav>
 
-        <div class="cards">
-            <div class="card">
-                <span class="card-number">01</span>
-                <div class="card-header">
-                    <div class="card-icon">🌊</div>
-                </div>
-                <h3>Flood Vulnerability</h3>
-                <p>Tracking tidal fluctuations, combined sewer overflows (CSO), and sea-level rise modeling specific to the Canal's neighboring topography.</p>
-            </div>
-            <div class="card">
-                <span class="card-number">02</span>
-                <div class="card-header">
-                    <div class="card-icon">🧪</div>
-                </div>
-                <h3>Toxicity Mapping</h3>
-                <p>Spatio-temporal analysis of heavy metals (Lead, Mercury), PAHs, and emerging contaminants trapped in the sediment layers.</p>
-            </div>
-            <div class="card">
-                <span class="card-number">03</span>
-                <div class="card-header">
-                    <div class="card-icon">🏙️</div>
-                </div>
-                <h3>Urban Resilience</h3>
-                <p>Evaluating localized mitigation strategies, green infrastructure performance, and community-led adaptation initiatives.</p>
-            </div>
-        </div>
-    </main>
+<!-- 1. HERO -->
+<header id="intro" class="hero">
+  <img src="img/1.png" alt="Gowanus Canal aerial view" />
+  <div class="hero-content">
+    <p class="eyebrow text-white/80 mb-6">Urban Resilience · Water · Pollution</p>
+    <h1 class="text-5xl md:text-7xl font-bold leading-tight max-w-4xl">Flooding-driven Pollution in Gowanus</h1>
+    <p class="mt-6 max-w-2xl text-lg text-white/85 leading-relaxed">
+      As sea levels rise and storms intensify, the Gowanus Canal becomes a conduit for contaminated water entering the surrounding neighborhood — threatening public health, fragile ecology, and urban infrastructure.
+    </p>
+    <a href="#process" class="mt-10 inline-block px-6 py-3 border border-white/40 rounded-full text-sm hover:bg-white hover:text-slate-900 transition">Explore the research ↓</a>
+  </div>
+</header>
 
-    <script>
-        // Smooth parallax effect for depth
-        document.addEventListener('mousemove', (e) => {
-            const blobs = document.querySelectorAll('.ambient-blob');
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
-            
-            blobs[0].style.transform = `translate(${x * -50}px, ${y * -50}px)`;
-            blobs[1].style.transform = `translate(${x * 40}px, ${y * 40}px)`;
-        });
-    </script>
+<!-- Background context -->
+<section class="section">
+  <div class="grid md:grid-cols-3 gap-12 items-start">
+    <div>
+      <p class="eyebrow mb-3">Health Risk</p>
+      <h3 class="text-2xl mb-3">Toxic Exposure</h3>
+      <p class="text-gray-600 leading-relaxed">Sewage overflow and industrial residues expose residents to bacteria, heavy metals, and PAHs during flood events.</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-3">Ecological Risk</p>
+      <h3 class="text-2xl mb-3">Aquatic Collapse</h3>
+      <p class="text-gray-600 leading-relaxed">Repeated contamination disrupts marine life recovery and degrades sediment quality across the canal basin.</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-3">Urban Risk</p>
+      <h3 class="text-2xl mb-3">Infrastructure Strain</h3>
+      <p class="text-gray-600 leading-relaxed">Aging combined sewer systems and low-lying streets amplify damage to homes, roads, and public space.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 2. POLLUTION FORMATION PROCESS -->
+<section id="process" class="section">
+  <div class="text-center mb-16">
+    <p class="eyebrow mb-3">Section 02</p>
+    <h2 class="text-4xl md:text-5xl font-bold">How Pollution Forms</h2>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Two hydrological mechanisms drive contamination during heavy rain and tidal surges.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-10">
+    <!-- Overflow -->
+    <div>
+      <div class="rounded-xl overflow-hidden border border-gray-200 bg-white">
+        <img src="img/2.png" alt="Combined sewer overflow diagram" class="w-full h-auto" />
+      </div>
+      <h3 class="text-2xl mt-6 mb-3">Overflow</h3>
+      <p class="text-gray-600 leading-relaxed">
+        During intense rainfall, the combined sewer system exceeds capacity. Untreated stormwater mixed with sewage discharges directly into the Gowanus Canal through CSO outfalls.
+      </p>
+    </div>
+    <!-- Backflow -->
+    <div>
+      <div class="rounded-xl overflow-hidden border border-gray-200 bg-white">
+        <img src="img/3.png" alt="Tidal backflow diagram" class="w-full h-auto" />
+      </div>
+      <h3 class="text-2xl mt-6 mb-3">Backflow</h3>
+      <p class="text-gray-600 leading-relaxed">
+        High tides and storm surges push contaminated canal water back inland through drains and low-lying streets, carrying pollutants into the urban fabric.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 3. CASE STUDIES -->
+<section id="cases" class="section">
+  <div class="text-center mb-20">
+    <p class="eyebrow mb-3">Section 03</p>
+    <h2 class="text-4xl md:text-5xl font-bold">Case Studies</h2>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Three intervention strategies — compared through simulation, data, and trade-offs.</p>
+  </div>
+
+  <!-- CASE 1: Physical Block -->
+  <article class="mb-32">
+    <div class="max-w-3xl mx-auto text-center mb-10">
+      <p class="eyebrow mb-3">Strategy 01</p>
+      <h3 class="text-3xl md:text-4xl font-bold mb-4">Physical Block</h3>
+      <p class="text-gray-600 leading-relaxed">
+        A hard-engineered barrier system — floodwalls, gates, and bulkheads — designed to prevent canal water from entering streets.
+        <br/><br/>
+        <span class="text-emerald-700 font-medium">Strengths:</span> Immediate, predictable protection during surge events.
+        <span class="text-rose-700 font-medium ml-3">Weaknesses:</span> High cost, ecological disruption, and limited adaptability to long-term sea-level rise.
+      </p>
+    </div>
+
+    <div class="case-video-wrap mb-10">
+      <video src="video/2.mp4" controls></video>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="chart-card group">
+        <img src="img/temp1.png" alt="Physical block water level chart" />
+        <div class="overlay"><p>Water levels drop ~62% behind the barrier during a 100-year flood scenario, but minor inland accumulation persists due to rainfall trapped behind the wall.</p></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- CASE 2: Green Infrastructure -->
+  <article class="mb-32">
+    <div class="max-w-3xl mx-auto text-center mb-10">
+      <p class="eyebrow mb-3">Strategy 02</p>
+      <h3 class="text-3xl md:text-4xl font-bold mb-4">Green Infrastructure</h3>
+      <p class="text-gray-600 leading-relaxed">
+        Rain gardens, bioswales, permeable pavements, and restored wetlands that absorb, slow, and filter stormwater before it reaches the canal.
+        <br/><br/>
+        <span class="text-emerald-700 font-medium">Strengths:</span> Ecological co-benefits, lower cost, public space value.
+        <span class="text-rose-700 font-medium ml-3">Weaknesses:</span> Limited capacity in extreme events; requires distributed maintenance.
+      </p>
+    </div>
+
+    <div class="case-video-wrap mb-10">
+      <video src="video/3.mp4" controls></video>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="chart-card group">
+        <img src="img/temp2.png" alt="Green infrastructure absorption chart" />
+        <div class="overlay"><p>Distributed green systems absorb up to 40% of small-storm runoff, significantly reducing CSO triggering frequency.</p></div>
+      </div>
+      <div class="chart-card group">
+        <img src="img/temp3.png" alt="Green infrastructure runoff data" />
+        <div class="overlay"><p>Peak runoff delayed by ~25 minutes — buying critical time for sewer system processing.</p></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- CASE 3: Comprehensive Solution -->
+  <article class="mb-12">
+    <div class="max-w-3xl mx-auto text-center mb-10">
+      <p class="eyebrow mb-3">Strategy 03</p>
+      <h3 class="text-3xl md:text-4xl font-bold mb-4">Comprehensive Solution</h3>
+      <p class="text-gray-600 leading-relaxed">
+        A hybrid approach combining physical defenses, distributed green infrastructure, and policy-driven land use changes for layered resilience.
+        <br/><br/>
+        <span class="text-emerald-700 font-medium">Strengths:</span> Adaptive, multi-scale, balances ecology and protection.
+        <span class="text-rose-700 font-medium ml-3">Weaknesses:</span> Requires coordination across agencies and long-term funding.
+      </p>
+    </div>
+
+    <div class="case-video-wrap mb-10">
+      <video src="video/4.mp4" controls></video>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="chart-card group">
+        <img src="img/temp4.png" alt="Comprehensive water level data" />
+        <div class="overlay"><p>Combined approach reduces flood depth by 78% across modeled scenarios — outperforming single-strategy interventions.</p></div>
+      </div>
+      <div class="chart-card group">
+        <img src="img/temp5.png" alt="Comprehensive pollution chart" />
+        <div class="overlay"><p>Pollutant load entering the canal drops by over half, with measurable ecological recovery within 5 years.</p></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<div class="divider"></div>
+
+<!-- 4. SITE-SPECIFIC SIMULATIONS -->
+<section id="sites" class="section">
+  <div class="text-center mb-16">
+    <p class="eyebrow mb-3">Section 04</p>
+    <h2 class="text-4xl md:text-5xl font-bold">Site-specific Simulations</h2>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Comparative water modeling across critical canal locations and storm intensities.</p>
+  </div>
+
+  <!-- Scenario A · 7+8 并排通栏铺满 -->
+  <div class="mb-20">
+    <h3 class="text-2xl mb-2">Scenario A · Three River Locations</h3>
+    <p class="text-gray-600 mb-8">Water volume simulations at the upper, middle, and lower canal segments under identical rainfall.</p>
+    <div class="grid grid-cols-2 gap-4 w-full">
+      <div class="chart-card group">
+        <img src="img/7.png" alt="Upper canal simulation" />
+        <div class="overlay"><p>Upper canal — slowest dissipation; pollutants accumulate due to limited tidal exchange.</p></div>
+      </div>
+      <div class="chart-card group">
+        <img src="img/8.png" alt="Mid canal simulation" />
+        <div class="overlay"><p>Middle canal — moderate flow; high CSO contribution during storms.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario B · 9 占1/2宽度 + 水平居中 -->
+  <div class="mb-20">
+    <h3 class="text-2xl mb-2">Scenario B · Small Flood vs. Large Flood</h3>
+    <p class="text-gray-600 mb-8">Two selected locations modeled under different storm magnitudes.</p>
+    <div class="flex justify-center">
+      <div class="w-1/2">
+        <div class="chart-card group">
+          <img src="img/9.png" alt="Site 1 small flood" />
+          <div class="overlay"><p>Site 1 · Small flood — contained within engineered drainage; minimal street impact.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario C · 10 单独通栏铺满 -->
+  <div>
+    <h3 class="text-2xl mb-2">Scenario C · Different Future</h3>
+    <p class="text-gray-600 mb-8">AI-predicted flood patterns under future climate scenarios.</p>
+    <div class="w-full">
+      <div class="chart-card group">
+        <img src="img/10.png" alt="Future flood simulation" />
+        <div class="overlay"><p>AI model predicts 37% higher flood frequency by 2050 without adaptive interventions.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 5. STAKEHOLDERS -->
+<section id="stakeholders" class="section">
+  <div class="text-center mb-16">
+    <p class="eyebrow mb-3">Section 05</p>
+    <h2 class="text-4xl md:text-5xl font-bold">Stakeholders</h2>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Multiple actors must align to translate research into resilient outcomes.</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="card">
+      <p class="eyebrow mb-3">Community</p>
+      <h3 class="text-xl mb-3">Residents</h3>
+      <p class="text-gray-600 leading-relaxed">Bear the daily health and property risk. Their lived experience and advocacy shape priority interventions and equitable outcomes.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow mb-3">Design</p>
+      <h3 class="text-xl mb-3">Planners & Designers</h3>
+      <p class="text-gray-600 leading-relaxed">Translate hydrological data into spatial strategies — balancing ecology, public space, and resilience across scales.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow mb-3">Policy</p>
+      <h3 class="text-xl mb-3">Government Agencies</h3>
+      <p class="text-gray-600 leading-relaxed">Allocate funding, enforce regulation, and coordinate cross-jurisdictional infrastructure investment for long-term resilience.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-200 mt-20 py-10 text-center text-sm text-gray-500">
+  <p>Gowanus Flooding-driven Pollution Research · 2025</p>
+</footer>
+
 </body>
 </html>

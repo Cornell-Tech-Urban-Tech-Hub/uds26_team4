@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -50,91 +50,293 @@
   <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
     <div class="font-semibold tracking-tight">Gowanus · Research</div>
     <div class="hidden md:flex gap-8">
-      <a href="#intro">Intro</a>
-      <a href="#process">Process</a>
-      <a href="#cases">Case Studies</a>
-      <a href="#sites">Simulations</a>
-      <a href="#stakeholders">Stakeholders</a>
+      <a href="#hook">1. Crisis</a>
+      <a href="#problem">2. The Problem</a>
+      <a href="#science">3. Simulations</a>
+      <a href="#solutions">4. Solutions</a>
+      <a href="#action">5. Take Action</a>
     </div>
   </div>
 </nav>
 
-<!-- 1. HERO -->
-<header id="intro" class="hero">
+<!-- PART 1: THE HOOK -->
+<header id="hook" class="hero">
   <img src="img/1.png" alt="Gowanus Canal aerial view" />
   <div class="hero-content">
-    <p class="eyebrow text-white/80 mb-6">Urban Resilience · Water · Pollution</p>
+    <p class="eyebrow text-white/80 mb-6">Part 1: The Hook</p>
     <h1 class="text-5xl md:text-7xl font-bold leading-tight max-w-4xl">Flooding-driven Pollution in Gowanus</h1>
     <p class="mt-6 max-w-2xl text-lg text-white/85 leading-relaxed">
       As sea levels rise and storms intensify, the Gowanus Canal becomes a conduit for contaminated water entering the surrounding neighborhood — threatening public health, fragile ecology, and urban infrastructure.
     </p>
-    <a href="#process" class="mt-10 inline-block px-6 py-3 border border-white/40 rounded-full text-sm hover:bg-white hover:text-slate-900 transition">Explore the research ↓</a>
+    <a href="#problem" class="mt-10 inline-block px-6 py-3 border border-white/40 rounded-full text-sm hover:bg-white hover:text-slate-900 transition">Explore the research ↓</a>
   </div>
 </header>
 
-<!-- Background context -->
-<section class="section">
-  <div class="grid md:grid-cols-3 gap-12 items-start">
-    <div>
-      <p class="eyebrow mb-3">Health Risk</p>
-      <h3 class="text-2xl mb-3">Toxic Exposure</h3>
-      <p class="text-gray-600 leading-relaxed">Sewage overflow and industrial residues expose residents to bacteria, heavy metals, and PAHs during flood events.</p>
-    </div>
-    <div>
-      <p class="eyebrow mb-3">Ecological Risk</p>
-      <h3 class="text-2xl mb-3">Aquatic Collapse</h3>
-      <p class="text-gray-600 leading-relaxed">Repeated contamination disrupts marine life recovery and degrades sediment quality across the canal basin.</p>
-    </div>
-    <div>
-      <p class="eyebrow mb-3">Urban Risk</p>
-      <h3 class="text-2xl mb-3">Infrastructure Strain</h3>
-      <p class="text-gray-600 leading-relaxed">Aging combined sewer systems and low-lying streets amplify damage to homes, roads, and public space.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- 2. POLLUTION FORMATION PROCESS -->
-<section id="process" class="section">
+<!-- PART 2: THE PROBLEM -->
+<section id="problem" class="section">
   <div class="text-center mb-16">
-    <p class="eyebrow mb-3">Section 02</p>
-    <h2 class="text-4xl md:text-5xl font-bold">How Pollution Forms</h2>
-    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Two hydrological mechanisms drive contamination during heavy rain and tidal surges.</p>
+    <p class="eyebrow mb-3">Part 2</p>
+    <h2 class="text-4xl md:text-5xl font-bold">The Problem: Pollution Mechanisms & Impact</h2>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">How contamination spreads during flood events, and where it remains after the water recedes.</p>
   </div>
 
-  <div class="grid md:grid-cols-2 gap-10">
-    <!-- Overflow -->
-    <div>
-      <div class="rounded-xl overflow-hidden border border-gray-200 bg-white">
-        <img src="img/2.png" alt="Combined sewer overflow diagram" class="w-full h-auto" />
+  <!-- OFFICIAL REPORTS -->
+  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">Official Damage Assessments</h3>
+  <div class="grid md:grid-cols-3 gap-8 mb-24 max-w-6xl mx-auto fade-in">
+    <!-- Health Risk Card -->
+    <a href="https://www.epa.gov/enforcement/multiple-enforcement-actions-address-cleaning-contaminated-sediments-gowanus-canal-site" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
+      <div class="absolute top-0 left-0 w-full h-1 bg-rose-600"></div>
+      <div class="flex justify-between items-start mb-4">
+        <p class="eyebrow text-rose-600">Health Risk</p>
+        <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">EPA</span>
       </div>
-      <h3 class="text-2xl mt-6 mb-3">Overflow</h3>
-      <p class="text-gray-600 leading-relaxed">
-        During intense rainfall, the combined sewer system exceeds capacity. Untreated stormwater mixed with sewage discharges directly into the Gowanus Canal through CSO outfalls.
+      <h4 class="text-lg font-bold mb-3 group-hover:text-rose-700 transition leading-snug">Multiple Enforcement Actions Address Cleaning Up Contaminated Sediments</h4>
+      <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+        "Addressing the severe contamination in the Gowanus Canal... mitigating exposure to hazardous substances like coal tar, heavy metals, and PCBs affecting local communities."
       </p>
+      <div class="text-sm font-bold text-rose-600 flex items-center gap-1 mt-auto">
+        Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+      </div>
+    </a>
+
+    <!-- Ecological Risk Card -->
+    <a href="https://darrp.noaa.gov/gowanus-canal" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
+      <div class="absolute top-0 left-0 w-full h-1 bg-emerald-600"></div>
+      <div class="flex justify-between items-start mb-4">
+        <p class="eyebrow text-emerald-600">Ecological Risk</p>
+        <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">NOAA</span>
+      </div>
+      <h4 class="text-lg font-bold mb-3 group-hover:text-emerald-700 transition leading-snug">Gowanus Canal Damage Assessment, Remediation, and Restoration</h4>
+      <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+        "Decades of industrial pollution have severely degraded the canal's ecosystem, threatening marine habitats and degrading sediment quality across the basin."
+      </p>
+      <div class="text-sm font-bold text-emerald-600 flex items-center gap-1 mt-auto">
+        Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+      </div>
+    </a>
+
+    <!-- Urban Risk Card -->
+    <a href="https://www.epa.gov/newsreleases/epa-reaches-new-milestone-cleanup-gowanus-canal-superfund-site-cleanup" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
+      <div class="absolute top-0 left-0 w-full h-1 bg-blue-600"></div>
+      <div class="flex justify-between items-start mb-4">
+        <p class="eyebrow text-blue-600">Urban Risk</p>
+        <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">EPA</span>
+      </div>
+      <h4 class="text-lg font-bold mb-3 group-hover:text-blue-700 transition leading-snug">EPA Reaches New Milestone in Gowanus Canal Superfund Site Cleanup</h4>
+      <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+        "A major component of the cleanup is the construction of two large underground retention tanks designed to intercept and store millions of gallons of sewage during rainstorms."
+      </p>
+      <div class="text-sm font-bold text-blue-600 flex items-center gap-1 mt-auto">
+        Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+      </div>
+    </a>
+  </div>
+
+  <!-- MECHANISMS -->
+  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">During the Flood: Spreading Mechanisms</h3>
+  <div class="max-w-6xl mx-auto mb-24 fade-in">
+    <!-- Animated Web Diagrams replacing img/3.png -->
+    <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm mb-10">
+      <div class="grid lg:grid-cols-[1fr_1fr_200px] gap-8 items-center">
+        
+        <!-- Overflow SVG -->
+        <div class="flex flex-col items-center">
+          <h4 class="text-xl font-bold mb-4 text-slate-800">Overflow Process</h4>
+          <svg viewBox="0 0 400 200" class="w-full h-auto drop-shadow-md">
+            <defs>
+              <clipPath id="above-land-1">
+                <path d="M 0 0 L 400 0 L 400 110 L 260 110 C 220 110, 190 160, 140 160 L 0 160 Z" />
+              </clipPath>
+              <linearGradient id="poll-over" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#fcd34d" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#ea580c" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+            <!-- Land Profile -->
+            <path d="M 0 160 L 140 160 C 190 160, 220 110, 260 110 L 400 110 L 400 200 L 0 200 Z" fill="#e7e5e4" stroke="#a8a29e" stroke-width="2"/>
+            
+            <!-- Water & Pollution clipped perfectly above land -->
+            <g clip-path="url(#above-land-1)">
+              <!-- Water -->
+              <path fill="#93c5fd" opacity="0.8">
+                <animate attributeName="d" 
+                         values="M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z; 
+                                 M 0 50 Q 200 50 400 120 L 400 200 L 0 200 Z; 
+                                 M 0 80 Q 250 80 400 85 L 400 200 L 0 200 Z; 
+                                 M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z" 
+                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
+              </path>
+              <!-- Pollution -->
+              <path fill="url(#poll-over)">
+                <animate attributeName="d" 
+                         values="M 0 155 Q 150 155 400 155 L 400 200 L 0 200 Z; 
+                                 M 0 80 Q 180 80 400 130 L 400 200 L 0 200 Z; 
+                                 M 0 100 Q 250 100 400 100 L 400 200 L 0 200 Z; 
+                                 M 0 155 Q 150 155 400 155 L 400 200 L 0 200 Z" 
+                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
+              </path>
+            </g>
+            
+            <!-- Arrow Right -->
+            <g transform="translate(180, 40)">
+              <path d="M 0 0 L 40 0 M 30 -5 L 40 0 L 30 5" stroke="#1e293b" stroke-width="2" fill="none">
+                <animateTransform attributeName="transform" type="translate" values="-20,0; 20,0; 20,0; -20,0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
+              </path>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Backflow SVG -->
+        <div class="flex flex-col items-center lg:border-l border-gray-100 lg:pl-8 mt-8 lg:mt-0">
+          <h4 class="text-xl font-bold mb-4 text-slate-800">Backflow Process</h4>
+          <svg viewBox="0 0 400 200" class="w-full h-auto drop-shadow-md">
+            <defs>
+              <clipPath id="above-land-2">
+                <path d="M 0 0 L 400 0 L 400 110 L 260 110 C 220 110, 190 160, 140 160 L 0 160 Z" />
+              </clipPath>
+              <linearGradient id="poll-back" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.9" />
+              </linearGradient>
+            </defs>
+            <!-- Land Profile -->
+            <path d="M 0 160 L 140 160 C 190 160, 220 110, 260 110 L 400 110 L 400 200 L 0 200 Z" fill="#e7e5e4" stroke="#a8a29e" stroke-width="2"/>
+            
+            <!-- Water & Pollution clipped perfectly above land -->
+            <g clip-path="url(#above-land-2)">
+              <!-- Water -->
+              <path fill="#60a5fa" opacity="0.8">
+                <animate attributeName="d" values="M 0 110 L 160 110 C 210 110, 240 105, 280 105 L 400 105 L 400 200 L 0 200 Z; M 0 115 L 150 115 C 200 115, 230 100, 270 100 L 400 100 L 400 200 L 0 200 Z; M 0 110 L 160 110 C 210 110, 240 105, 280 105 L 400 105 L 400 200 L 0 200 Z" dur="3s" repeatCount="indefinite"/>
+              </path>
+              <!-- Pollution (Stuck on land) -->
+              <path fill="url(#poll-back)">
+                <animate attributeName="d" values="M 120 160 C 170 160, 220 105, 260 105 L 400 105 L 400 200 L 120 200 Z; M 120 160 C 170 160, 220 100, 260 100 L 400 100 L 400 200 L 120 200 Z; M 120 160 C 170 160, 220 105, 260 105 L 400 105 L 400 200 L 120 200 Z" dur="3s" repeatCount="indefinite"/>
+              </path>
+            </g>
+            
+            <!-- Arrow Left -->
+            <g transform="translate(180, 40)">
+              <path d="M 40 0 L 0 0 M 10 -5 L 0 0 L 10 5" stroke="#1e293b" stroke-width="2" fill="none">
+                <animateTransform attributeName="transform" type="translate" values="0,0; -15,0; 0,0" dur="2s" repeatCount="indefinite"/>
+              </path>
+            </g>
+          </svg>
+        </div>
+        
+        <!-- Legend -->
+        <div class="flex flex-col lg:border-l border-gray-100 lg:pl-8 mt-8 lg:mt-0 space-y-6">
+          <div>
+            <h5 class="text-sm font-bold uppercase tracking-wider mb-3 text-slate-800">Water Depth</h5>
+            <div class="space-y-2 text-sm text-gray-600">
+              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#bae6fd] rounded"></div> Shallow</div>
+              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#7dd3fc] rounded"></div> Moderate</div>
+              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#38bdf8] rounded"></div> Deep</div>
+            </div>
+          </div>
+          <div>
+            <h5 class="text-sm font-bold uppercase tracking-wider mb-3 text-slate-800">Pollution Level</h5>
+            <div class="space-y-2 text-sm text-gray-600">
+              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#fcd34d] rounded"></div> Low</div>
+              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#fb923c] rounded"></div> Medium</div>
+              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#ea580c] rounded"></div> High</div>
+              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#b91c1c] rounded"></div> Very High</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <!-- Backflow -->
-    <div>
-      <div class="rounded-xl overflow-hidden border border-gray-200 bg-white">
-        <img src="img/3.png" alt="Tidal backflow diagram" class="w-full h-auto" />
+    
+    <!-- Explanations Below Diagram -->
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
+        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-indigo-500 pl-3">Overflow Process (Flooding)</h4>
+        <p class="text-gray-600 leading-relaxed text-sm">
+          During a flood event, the highly toxic sediment pollution deposited at the bottom of the Gowanus Canal is easily stirred up. As the water level rises, this mixed contaminated water overflows directly from the canal into the surrounding urban space.
+        </p>
       </div>
-      <h3 class="text-2xl mt-6 mb-3">Backflow</h3>
-      <p class="text-gray-600 leading-relaxed">
-        High tides and storm surges push contaminated canal water back inland through drains and low-lying streets, carrying pollutants into the urban fabric.
-      </p>
+      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
+        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-cyan-500 pl-3">Backflow Process (Receding)</h4>
+        <p class="text-gray-600 leading-relaxed text-sm">
+          When the floodwaters begin to recede back into the canal, a significant amount of the pollution does not recede with the water. It is left behind, trapped in the urban fabric where it takes a very long time to safely dissipate.
+        </p>
+      </div>
     </div>
   </div>
+
+  <!-- AFTERMATH -->
+  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">The Aftermath: Residual Impact</h3>
+  <div class="bg-gray-100 rounded-xl p-10 text-center border border-gray-200 max-w-6xl mx-auto">
+    <h4 class="text-xl font-bold mb-4 text-gray-800">[Placeholder: Pollution Residue Heatmap]</h4>
+    <p class="text-gray-600 max-w-2xl mx-auto">Insert visual here showing where the pollution settles after the flood recedes (low-lying streets, basements, soil). Explain how long it stays and what specific toxins are present.</p>
+  </div>
+
+
 </section>
 
 <div class="divider"></div>
 
-<!-- 3. CASE STUDIES -->
-<section id="cases" class="section">
+<!-- PART 3: THE SCIENCE -->
+<section id="science" class="section">
+  <div class="text-center mb-16">
+    <p class="eyebrow mb-3">Part 3</p>
+    <h2 class="text-4xl md:text-5xl font-bold">The Science: Simulation & Modeling</h2>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Utilizing data and agent-based modeling to predict the severity of the crisis.</p>
+  </div>
+
+  <!-- Scenario A & B & C -->
+  <div class="mb-20">
+    <h3 class="text-2xl mb-2 font-bold">Hydrological Flow Simulations</h3>
+    <p class="text-gray-600 mb-8">Water volume simulations at the upper, middle, and lower canal segments under identical rainfall.</p>
+    <div class="grid grid-cols-2 gap-4 w-full mb-12">
+      <div class="chart-card group">
+        <img src="img/7.png" alt="Upper canal simulation" />
+        <div class="overlay"><p>Upper canal — slowest dissipation; pollutants accumulate due to limited tidal exchange.</p></div>
+      </div>
+      <div class="chart-card group">
+        <img src="img/8.png" alt="Mid canal simulation" />
+        <div class="overlay"><p>Middle canal — moderate flow; high CSO contribution during storms.</p></div>
+      </div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-10">
+      <div>
+        <h4 class="text-xl font-bold mb-4">Storm Magnitudes</h4>
+        <div class="chart-card group">
+          <img src="img/9.png" alt="Site 1 small flood" />
+          <div class="overlay"><p>Site 1 · Small flood — contained within engineered drainage; minimal street impact.</p></div>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-xl font-bold mb-4">AI-Predicted Future</h4>
+        <div class="chart-card group h-full">
+          <img src="img/10.png" alt="Future flood simulation" class="h-full object-cover" />
+          <div class="overlay"><p>AI model predicts 37% higher flood frequency by 2050 without adaptive interventions.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAMA Placeholder -->
+  <div class="bg-gray-900 rounded-xl p-10 text-center border border-gray-800 shadow-xl">
+    <h4 class="text-2xl font-bold mb-4 text-white">Agent-Based Simulation (GAMA)</h4>
+    <p class="text-gray-400 max-w-2xl mx-auto mb-8">Insert video or interactive iframe of the GAMA models here. Show how human agents interact with the flooded environment and pollution hotspots.</p>
+    <div class="w-full aspect-video bg-gray-800 rounded flex items-center justify-center border border-gray-700">
+       <span class="text-gray-500">[Video Placeholder]</span>
+    </div>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- PART 4: THE SOLUTIONS -->
+<section id="solutions" class="section">
   <div class="text-center mb-20">
-    <p class="eyebrow mb-3">Section 03</p>
-    <h2 class="text-4xl md:text-5xl font-bold">Case Studies</h2>
-    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Three intervention strategies — compared through simulation, data, and trade-offs.</p>
+    <p class="eyebrow mb-3">Part 4</p>
+    <h2 class="text-4xl md:text-5xl font-bold">The Solutions: Interventions & Testing</h2>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Testing physical and green interventions in our models to measure their impact on pollution reduction.</p>
   </div>
 
   <article class="mb-32 max-w-6xl mx-auto px-4">
@@ -342,28 +544,29 @@
     <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Multiple actors must align to translate research into resilient outcomes.</p>
   </div>
 
+  <h3 class="text-2xl font-bold mb-8 text-center">Stakeholder Roles</h3>
   <div class="grid md:grid-cols-3 gap-6">
     <div class="card">
       <p class="eyebrow mb-3">Community</p>
-      <h3 class="text-xl mb-3">Residents</h3>
-      <p class="text-gray-600 leading-relaxed">Bear the daily health and property risk. Their lived experience and advocacy shape priority interventions and equitable outcomes.</p>
+      <h4 class="text-xl mb-3 font-semibold">Residents</h4>
+      <p class="text-gray-600 leading-relaxed text-sm">Bear the daily health and property risk. Their lived experience and advocacy shape priority interventions and equitable outcomes.</p>
     </div>
     <div class="card">
       <p class="eyebrow mb-3">Design</p>
-      <h3 class="text-xl mb-3">Planners & Designers</h3>
-      <p class="text-gray-600 leading-relaxed">Translate hydrological data into spatial strategies — balancing ecology, public space, and resilience across scales.</p>
+      <h4 class="text-xl mb-3 font-semibold">Planners & Designers</h4>
+      <p class="text-gray-600 leading-relaxed text-sm">Translate hydrological data into spatial strategies — balancing ecology, public space, and resilience across scales.</p>
     </div>
     <div class="card">
       <p class="eyebrow mb-3">Policy</p>
-      <h3 class="text-xl mb-3">Government Agencies</h3>
-      <p class="text-gray-600 leading-relaxed">Allocate funding, enforce regulation, and coordinate cross-jurisdictional infrastructure investment for long-term resilience.</p>
+      <h4 class="text-xl mb-3 font-semibold">Government Agencies</h4>
+      <p class="text-gray-600 leading-relaxed text-sm">Allocate funding, enforce regulation, and coordinate cross-jurisdictional infrastructure investment for long-term resilience.</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="border-t border-gray-200 mt-20 py-10 text-center text-sm text-gray-500">
-  <p>Gowanus Flooding-driven Pollution Research · 2025</p>
+  <p>INFO5420 Urban Design · Team 4 Research Portfolio · 2026</p>
 </footer>
 
 </body>

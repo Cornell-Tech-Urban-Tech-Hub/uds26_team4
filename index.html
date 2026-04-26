@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth snap-y snap-mandatory bg-[#fafaf7]">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -41,6 +41,14 @@
   .divider { height:1px; background: linear-gradient(90deg, transparent, #d1d5db, transparent); margin: 0 auto; max-width: 200px; }
   video { width: 100%; border-radius: 0.75rem; background:#000; display:block; }
   .case-video-wrap { box-shadow: 0 20px 50px -20px rgba(0,0,0,.25); border-radius: 0.75rem; overflow:hidden; }
+  
+  /* Scroll Reveal Animations */
+  .reveal { opacity: 0; transform: translateY(60px); }
+  .reveal.active { 
+    opacity: 1; 
+    transform: translateY(0); 
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
 </style>
 </head>
 <body class="antialiased">
@@ -60,7 +68,7 @@
 </nav>
 
 <!-- PART 1: THE HOOK -->
-<header id="hook" class="hero">
+<header id="hook" class="hero snap-start snap-always">
   <img src="img/1.png" alt="Gowanus Canal aerial view" />
   <div class="hero-content">
     <p class="eyebrow text-white/80 mb-6">Part 1: The Hook</p>
@@ -73,16 +81,45 @@
 </header>
 
 <!-- PART 2: THE PROBLEM -->
-<section id="problem" class="section">
-  <div class="text-center mb-16">
-    <p class="eyebrow mb-3">Part 2</p>
-    <h2 class="text-4xl md:text-5xl font-bold">The Problem: Pollution Mechanisms & Impact</h2>
-    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">How contamination spreads during flood events, and where it remains after the water recedes.</p>
+<section id="problem" class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-[4.5rem] pb-16">
+  <div class="text-center mb-6">
+    <p class="eyebrow mb-2">Part 2</p>
+    <h2 class="text-4xl font-bold">The Problem: Pollution Mechanisms and Impact</h2>
+    <p class="text-gray-600 mt-3 max-w-4xl mx-auto">How contamination spreads during flood events, and where it remains after the water recedes.</p>
+  </div>
+
+  <!-- DATA CALLOUT -->
+  <div class="max-w-6xl mx-auto mb-10 md:mb-12 reveal">
+    <div class="bg-white rounded-2xl border border-rose-100 shadow-sm px-6 py-3 md:px-8 relative overflow-hidden group hover:shadow-md transition duration-500">
+      <!-- Decorative background accent -->
+      <div class="absolute top-0 right-0 w-64 h-64 bg-rose-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-100 transition duration-700 pointer-events-none"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+        <div class="shrink-0 text-center md:text-left min-w-[140px]">
+          <div class="text-4xl md:text-5xl font-extrabold text-rose-600 tracking-tight">115M</div>
+          <div class="text-rose-400 font-bold tracking-widest uppercase text-xs mt-1">Gallons / Year</div>
+        </div>
+        
+        <div class="border-l-2 border-rose-100 pl-6 md:pl-8 py-1">
+          <h4 class="text-slate-800 font-bold text-lg mb-1 flex items-center">
+             <svg class="w-4 h-4 text-rose-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+             The Unsolved Reality
+          </h4>
+          <p class="text-slate-600 leading-relaxed text-sm mb-2 max-w-4xl">
+            Historically, over <strong class="text-slate-800">377 million gallons</strong> of raw sewage dumped into Gowanus annually. Even after the ongoing billion-dollar EPA retention tanks are completed, models project that at least <strong class="text-rose-600">115 million gallons</strong> of toxic Combined Sewer Overflow (CSO) will <em>still</em> flush into the canal every single year.
+          </p>
+          <a href="https://www.epa.gov/ny/gowanus-canal-superfund-site-brooklyn-ny" target="_blank" class="inline-flex items-center text-xs font-semibold text-rose-500 hover:text-rose-700 transition group-hover:underline">
+            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            Source: EPA Superfund Official Data Hub
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- OFFICIAL REPORTS -->
-  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">Official Damage Assessments</h3>
-  <div class="grid md:grid-cols-3 gap-8 mb-24 max-w-6xl mx-auto fade-in">
+  <h3 class="text-xl md:text-2xl font-bold mb-5 text-center border-b pb-3 max-w-5xl mx-auto">Official Damage Assessments</h3>
+  <div class="grid md:grid-cols-3 gap-5 mb-16 max-w-6xl mx-auto fade-in">
     <!-- Health Risk Card -->
     <a href="https://www.epa.gov/enforcement/multiple-enforcement-actions-address-cleaning-contaminated-sediments-gowanus-canal-site" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
       <div class="absolute top-0 left-0 w-full h-1 bg-rose-600"></div>
@@ -131,7 +168,11 @@
       </div>
     </a>
   </div>
+  </div>
+</section>
 
+<!-- Slide B: MECHANISMS -->
+<section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
   <!-- MECHANISMS -->
   <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">During the Flood: Spreading Mechanisms</h3>
   <div class="max-w-6xl mx-auto mb-24 fade-in">
@@ -151,13 +192,17 @@
                 <stop offset="0%" stop-color="#fcd34d" stop-opacity="0.9"/>
                 <stop offset="100%" stop-color="#ea580c" stop-opacity="0.9"/>
               </linearGradient>
+              <linearGradient id="poll-deep" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.9" />
+              </linearGradient>
             </defs>
             <!-- Land Profile -->
             <path d="M 0 160 L 140 160 C 190 160, 220 110, 260 110 L 400 110 L 400 200 L 0 200 Z" fill="#e7e5e4" stroke="#a8a29e" stroke-width="2"/>
             
             <!-- Water & Pollution clipped perfectly above land -->
             <g clip-path="url(#above-land-1)">
-              <!-- Water -->
+              <!-- 1. Water -->
               <path fill="#93c5fd" opacity="0.8">
                 <animate attributeName="d" 
                          values="M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z; 
@@ -166,13 +211,24 @@
                                  M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z" 
                          keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
               </path>
-              <!-- Pollution -->
+
+              <!-- 2. Suspended Lighter Pollution -->
               <path fill="url(#poll-over)">
                 <animate attributeName="d" 
-                         values="M 0 155 Q 150 155 400 155 L 400 200 L 0 200 Z; 
-                                 M 0 80 Q 180 80 400 130 L 400 200 L 0 200 Z; 
-                                 M 0 100 Q 250 100 400 100 L 400 200 L 0 200 Z; 
-                                 M 0 155 Q 150 155 400 155 L 400 200 L 0 200 Z" 
+                         values="M 0 148 Q 150 148 400 148 L 400 200 L 0 200 Z; 
+                                 M 0 75 Q 180 75 400 125 L 400 200 L 0 200 Z; 
+                                 M 0 95 Q 230 95 400 100 L 400 200 L 0 200 Z; 
+                                 M 0 148 Q 150 148 400 148 L 400 200 L 0 200 Z" 
+                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
+              </path>
+
+              <!-- 3. Deep Red Static Sediment (Bottom of canal) -->
+              <path fill="url(#poll-deep)">
+                <animate attributeName="d" 
+                         values="M 0 152 L 400 152 L 400 200 L 0 200 Z;
+                                 M 0 152 L 400 152 L 400 200 L 0 200 Z;
+                                 M 0 152 L 400 152 L 400 200 L 0 200 Z;
+                                 M 0 152 L 400 152 L 400 200 L 0 200 Z" 
                          keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
               </path>
             </g>
@@ -205,20 +261,31 @@
             
             <!-- Water & Pollution clipped perfectly above land -->
             <g clip-path="url(#above-land-2)">
-              <!-- Water -->
-              <path fill="#60a5fa" opacity="0.8">
-                <animate attributeName="d" values="M 0 110 L 160 110 C 210 110, 240 105, 280 105 L 400 105 L 400 200 L 0 200 Z; M 0 115 L 150 115 C 200 115, 230 100, 270 100 L 400 100 L 400 200 L 0 200 Z; M 0 110 L 160 110 C 210 110, 240 105, 280 105 L 400 105 L 400 200 L 0 200 Z" dur="3s" repeatCount="indefinite"/>
+              <!-- 1. Water Receding -->
+              <path fill="#60a5fa" opacity="0.85">
+                <animate attributeName="d" 
+                         values="M 0 100 C 150 105, 250 95, 400 100 L 400 200 L 0 200 Z; 
+                                 M 0 120 C 150 125, 250 115, 400 120 L 400 200 L 0 200 Z; 
+                                 M 0 145 C 150 140, 250 150, 400 145 L 400 200 L 0 200 Z; 
+                                 M 0 100 C 150 105, 250 95, 400 100 L 400 200 L 0 200 Z" 
+                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
               </path>
-              <!-- Pollution (Stuck on land) -->
+
+              <!-- 2. Pollution (Static sediment hugging the land & canal bed) -->
               <path fill="url(#poll-back)">
-                <animate attributeName="d" values="M 120 160 C 170 160, 220 105, 260 105 L 400 105 L 400 200 L 120 200 Z; M 120 160 C 170 160, 220 100, 260 100 L 400 100 L 400 200 L 120 200 Z; M 120 160 C 170 160, 220 105, 260 105 L 400 105 L 400 200 L 120 200 Z" dur="3s" repeatCount="indefinite"/>
+                <animate attributeName="d" 
+                         values="M 0 152 L 140 152 C 190 152, 220 106, 260 106 L 400 106 L 400 200 L 0 200 Z; 
+                                 M 0 154 L 140 154 C 190 154, 220 105, 260 105 L 400 105 L 400 200 L 0 200 Z; 
+                                 M 0 152 L 140 152 C 190 152, 220 106, 260 106 L 400 106 L 400 200 L 0 200 Z" 
+                         dur="4s" repeatCount="indefinite"/>
               </path>
             </g>
             
             <!-- Arrow Left -->
             <g transform="translate(180, 40)">
               <path d="M 40 0 L 0 0 M 10 -5 L 0 0 L 10 5" stroke="#1e293b" stroke-width="2" fill="none">
-                <animateTransform attributeName="transform" type="translate" values="0,0; -15,0; 0,0" dur="2s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="translate" values="20,0; -20,0; -20,0; 20,0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
               </path>
             </g>
           </svg>
@@ -251,13 +318,13 @@
     <!-- Explanations Below Diagram -->
     <div class="grid md:grid-cols-2 gap-10">
       <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
-        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-indigo-500 pl-3">Overflow Process (Flooding)</h4>
+        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-amber-500 pl-3">Overflow Process (Flooding)</h4>
         <p class="text-gray-600 leading-relaxed text-sm">
           During a flood event, the highly toxic sediment pollution deposited at the bottom of the Gowanus Canal is easily stirred up. As the water level rises, this mixed contaminated water overflows directly from the canal into the surrounding urban space.
         </p>
       </div>
       <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
-        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-cyan-500 pl-3">Backflow Process (Receding)</h4>
+        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-rose-600 pl-3">Backflow Process (Receding)</h4>
         <p class="text-gray-600 leading-relaxed text-sm">
           When the floodwaters begin to recede back into the canal, a significant amount of the pollution does not recede with the water. It is left behind, trapped in the urban fabric where it takes a very long time to safely dissipate.
         </p>
@@ -265,23 +332,120 @@
     </div>
   </div>
 
+</section>
+
+<!-- Slide C: AFTERMATH -->
+<section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
   <!-- AFTERMATH -->
-  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">The Aftermath: Residual Impact</h3>
-  <div class="bg-gray-100 rounded-xl p-10 text-center border border-gray-200 max-w-6xl mx-auto">
-    <h4 class="text-xl font-bold mb-4 text-gray-800">[Placeholder: Pollution Residue Heatmap]</h4>
-    <p class="text-gray-600 max-w-2xl mx-auto">Insert visual here showing where the pollution settles after the flood recedes (low-lying streets, basements, soil). Explain how long it stays and what specific toxins are present.</p>
+  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">The Aftermath: What Gets Left Behind?</h3>
+  <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
+    
+    <!-- Card 1 -->
+    <div class="bg-rose-50 rounded-xl p-6 border border-rose-100 flex flex-col hover:shadow-md transition-shadow relative">
+      <div class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-rose-200 flex-shrink-0 shadow-sm relative">
+        <img src="img/black_mayo.jpg" alt="Black Mayonnaise" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+      </div>
+      <h4 class="text-lg font-bold text-rose-900 mb-2">"Black Mayonnaise"</h4>
+      <p class="text-rose-800 text-sm leading-relaxed mb-6 flex-grow">
+        The noxious sludge famously lining the canal bottom. When deposited on streets and drying out, its contaminated dust easily becomes airborne and infiltrates local basements.
+      </p>
+      <a href="https://www.brownstoner.com/development/gowanus-canal-black-mayonnaise-superfund-epa-cleanup-brooklyn/" target="_blank" class="text-rose-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
+        Read Cover Story <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+      </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="bg-orange-50 rounded-xl p-6 border border-orange-100 flex flex-col hover:shadow-md transition-shadow relative">
+      <div class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-orange-200 flex-shrink-0 shadow-sm relative">
+        <img src="img/heavy_metals.jpg" alt="Heavy Metals and PAHs" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+      </div>
+      <h4 class="text-lg font-bold text-orange-900 mb-2">Heavy Metals and PAHs</h4>
+      <p class="text-orange-800 text-sm leading-relaxed mb-6 flex-grow">
+        Residual concentrations of Lead, Arsenic, and Polycyclic Aromatic Hydrocarbons (PAHs) persist in the urban soil long after the floodwaters have completely drained.
+      </p>
+      <a href="https://www.epa.gov/archive/epapages/newsroom_archive/newsreleases/e99317da92c631ce8525782b0057e138.html" target="_blank" class="text-orange-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
+        EPA Press Release <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+      </a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="bg-amber-50 rounded-xl p-6 border border-amber-100 flex flex-col hover:shadow-md transition-shadow relative">
+      <div class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-amber-200 flex-shrink-0 shadow-sm relative">
+        <img src="img/persistence.jpg" alt="Contaminated Soil" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+      </div>
+      <h4 class="text-lg font-bold text-amber-900 mb-2">Extreme Persistence</h4>
+      <p class="text-amber-800 text-sm leading-relaxed mb-6 flex-grow">
+        While floodwater retracts within hours, sediment pathogens and chemicals take years to dissipate naturally, turning temporary floods into long-term chronic public health hazards.
+      </p>
+      <a href="https://www.esd.ny.gov/sites/default/files/media/document/Item-VA-Exhibit-4-Gowanus-Existing-Conditions-Report.pdf" target="_blank" class="text-amber-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
+        NY Conditions Report <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+      </a>
+    </div>
+    
   </div>
 
+
+  </div>
+</section>
+
+<!-- Slide D: SLIDER -->
+<section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-20 pb-8">
+  <!-- BEFORE & AFTER SLIDER (Moved to bottom of Part 2) -->
+  <h3 class="text-2xl font-bold mb-3 text-center border-b pb-4 max-w-4xl mx-auto">Context and Vulnerability: Proposed vs Flooded</h3>
+  
+  <!-- Sleek slider tags moved outside to protect baked-in image annotations -->
+  <div class="flex justify-between items-end w-full max-w-5xl mx-auto mb-3 px-2 text-xs md:text-sm">
+    <div class="text-slate-600 font-bold uppercase tracking-wide bg-slate-100/80 backdrop-blur px-4 py-1.5 rounded-full border border-slate-200/50 shadow-sm">← Proposed Future Vision</div>
+    <div class="text-rose-700 font-bold uppercase tracking-wide bg-rose-50/80 backdrop-blur px-4 py-1.5 rounded-full border border-rose-200/50 shadow-sm">Simulated Post-Flood Impact →</div>
+  </div>
+
+  <div class="w-full max-w-5xl mx-auto relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group aspect-[16/10]" id="flood-slider-container">
+    
+    <!-- Before Image (Baseline) -->
+    <img src="img/part2/Gowanus CSO Red Hook—Rendered View of Proposed Aerial View in Context.png" alt="Normal View" class="absolute top-0 left-0 w-full h-full object-cover object-center block select-none pointer-events-none">
+    
+    <!-- After Image (Pollution) -->
+    <img id="flood-after-img" src="img/part2/Gowanus CSO Red Hook—Rendered View of Proposed Aerial View in Context Pollution.png" alt="Flooded View" class="absolute top-0 left-0 w-full h-full object-cover object-center block select-none pointer-events-none z-10" style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);">
+    
+    <!-- Custom Slider Handle -->
+    <div id="flood-slider-handle" class="absolute top-0 left-1/2 h-full z-20 flex items-center justify-center -ml-5 w-10 pointer-events-none" style="left: 50%;">
+      <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-white -ml-[2px] shadow-md z-0"></div>
+      <div class="w-10 h-10 bg-white rounded-full shadow-lg border border-slate-200 flex items-center justify-center z-10 text-slate-500">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8l-4 4 4 4m8-8l4 4-4 4"></path></svg>
+      </div>
+    </div>
+    
+    <!-- Range Input -->
+    <input type="range" min="0" max="100" value="50" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" id="flood-slider-input" aria-label="Compare flooding">
+    
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sliderInput = document.getElementById('flood-slider-input');
+      const sliderAfterImg = document.getElementById('flood-after-img');
+      const sliderHandle = document.getElementById('flood-slider-handle');
+
+      if (sliderInput && sliderAfterImg && sliderHandle) {
+        sliderInput.addEventListener('input', (e) => {
+          const val = e.target.value;
+          // Pollution image is mapped to the RIGHT half of the slider
+          sliderAfterImg.style.clipPath = `polygon(${val}% 0, 100% 0, 100% 100%, ${val}% 100%)`;
+          sliderHandle.style.left = `${val}%`;
+        });
+      }
+    });
+  </script>
 
 </section>
 
 <div class="divider"></div>
 
 <!-- PART 3: THE SCIENCE -->
-<section id="science" class="section">
+<section id="science" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
   <div class="text-center mb-16">
     <p class="eyebrow mb-3">Part 3</p>
-    <h2 class="text-4xl md:text-5xl font-bold">The Science: Simulation & Modeling</h2>
+    <h2 class="text-4xl md:text-5xl font-bold">The Science: Simulation and Modeling</h2>
     <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Utilizing data and agent-based modeling to predict the severity of the crisis.</p>
   </div>
 
@@ -322,8 +486,16 @@
   <div class="bg-gray-900 rounded-xl p-10 text-center border border-gray-800 shadow-xl">
     <h4 class="text-2xl font-bold mb-4 text-white">Agent-Based Simulation (GAMA)</h4>
     <p class="text-gray-400 max-w-2xl mx-auto mb-8">Insert video or interactive iframe of the GAMA models here. Show how human agents interact with the flooded environment and pollution hotspots.</p>
-    <div class="w-full aspect-video bg-gray-800 rounded flex items-center justify-center border border-gray-700">
-       <span class="text-gray-500">[Video Placeholder]</span>
+    <div class="w-full aspect-video bg-black rounded-lg overflow-hidden border border-gray-700 relative flex items-center justify-center shadow-inner">
+       <video 
+         class="w-full h-full object-contain" 
+         autoplay 
+         loop 
+         muted 
+         playsinline>
+         <source src="video/baseline.mp4" type="video/mp4">
+         Your browser does not support the video tag.
+       </video>
     </div>
   </div>
 
@@ -332,10 +504,10 @@
 <div class="divider"></div>
 
 <!-- PART 4: THE SOLUTIONS -->
-<section id="solutions" class="section">
+<section id="solutions" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
   <div class="text-center mb-20">
     <p class="eyebrow mb-3">Part 4</p>
-    <h2 class="text-4xl md:text-5xl font-bold">The Solutions: Interventions & Testing</h2>
+    <h2 class="text-4xl md:text-5xl font-bold">The Solutions: Interventions and Testing</h2>
     <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Testing physical and green interventions in our models to measure their impact on pollution reduction.</p>
   </div>
 
@@ -471,7 +643,7 @@
 
 
 <!-- 4. SITE-SPECIFIC SIMULATIONS -->
-<section id="sites" class="section">
+<section id="sites" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
   <div class="text-center mb-16 px-4">
     <p class="eyebrow mb-3">Section 04</p>
     <h2 class="text-4xl md:text-5xl font-bold">Site-specific Simulations</h2>
@@ -537,7 +709,7 @@
 </section>
 
 <!-- 5. STAKEHOLDERS -->
-<section id="stakeholders" class="section">
+<section id="stakeholders" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
   <div class="text-center mb-16">
     <p class="eyebrow mb-3">Section 05</p>
     <h2 class="text-4xl md:text-5xl font-bold">Stakeholders</h2>
@@ -553,7 +725,7 @@
     </div>
     <div class="card">
       <p class="eyebrow mb-3">Design</p>
-      <h4 class="text-xl mb-3 font-semibold">Planners & Designers</h4>
+      <h4 class="text-xl mb-3 font-semibold">Planners and Designers</h4>
       <p class="text-gray-600 leading-relaxed text-sm">Translate hydrological data into spatial strategies — balancing ecology, public space, and resilience across scales.</p>
     </div>
     <div class="card">
@@ -568,6 +740,45 @@
 <footer class="border-t border-gray-200 mt-20 py-10 text-center text-sm text-gray-500">
   <p>INFO5420 Urban Design · Team 4 Research Portfolio · 2026</p>
 </footer>
+
+<script>
+  // Advanced Scroll Reveal Logic
+  document.addEventListener("DOMContentLoaded", () => {
+    // Automatically apply the 'reveal' class to major blocks to avoid manual HTML bloat
+    const autoAnimateSelectors = [
+      '.eyebrow', '.section h2', '.section h3', '.section p.max-w-2xl',
+      '.card', '.chart-card', 
+      '.grid > div', '.grid > a', '#flood-slider-container', 
+      '.bg-slate-900', '.bg-gray-900', 'video', '.case-video-wrap'
+    ];
+    
+    document.querySelectorAll(autoAnimateSelectors.join(', ')).forEach(el => {
+      // Don't apply to icons/small svgs inside cards
+      el.classList.add('reveal');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      let delay = 0;
+      entries.forEach((entry) => {
+        if(entry.isIntersecting) {
+          // Staggered wave effect for elements entering at the exact same time (like grid cards)
+          setTimeout(() => {
+            entry.target.classList.add('active');
+          }, delay);
+          delay += 150; // 150ms delay between each simultaneous element
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { 
+      threshold: 0.15, 
+      rootMargin: "0px 0px -40px 0px" 
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
 
 </body>
 </html>

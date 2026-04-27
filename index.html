@@ -449,55 +449,338 @@
     <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Utilizing data and agent-based modeling to predict the severity of the crisis.</p>
   </div>
 
-  <!-- Scenario A & B & C -->
-  <div class="mb-20">
-    <h3 class="text-2xl mb-2 font-bold">Hydrological Flow Simulations</h3>
-    <p class="text-gray-600 mb-8">Water volume simulations at the upper, middle, and lower canal segments under identical rainfall.</p>
-    <div class="grid grid-cols-2 gap-4 w-full mb-12">
-      <div class="chart-card group">
-        <img src="img/7.png" alt="Upper canal simulation" />
-        <div class="overlay"><p>Upper canal — slowest dissipation; pollutants accumulate due to limited tidal exchange.</p></div>
-      </div>
-      <div class="chart-card group">
-        <img src="img/8.png" alt="Mid canal simulation" />
-        <div class="overlay"><p>Middle canal — moderate flow; high CSO contribution during storms.</p></div>
-      </div>
-    </div>
-    
-    <div class="grid md:grid-cols-2 gap-10">
-      <div>
-        <h4 class="text-xl font-bold mb-4">Storm Magnitudes</h4>
-        <div class="chart-card group">
-          <img src="img/9.png" alt="Site 1 small flood" />
-          <div class="overlay"><p>Site 1 · Small flood — contained within engineered drainage; minimal street impact.</p></div>
+  <!-- SIMULATION METHODOLOGY & PARAMETERS -->
+  <div class="mb-12 lg:mb-16 fade-in w-full max-w-6xl mx-auto px-4 lg:px-0">
+    <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/60 flex flex-col lg:flex-row gap-10 items-stretch">
+        
+        <!-- Left: Intro & Code Link -->
+        <div class="lg:w-5/12 w-full text-left flex flex-col justify-between">
+            <div>
+                <span class="inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] uppercase font-extrabold tracking-widest mb-4 border border-slate-200">Methodology</span>
+                <h4 class="text-2xl font-bold mb-4 text-slate-900">GAMA Agent-Based Model</h4>
+                <p class="text-slate-500 text-sm leading-relaxed mb-5">
+                    Our simulation dynamically maps extreme rainfall, continuous canal overflow, and complex urban topologies (DEM). Water flows anatomically across the terrain grid, constrained by real-world building massing and specific surface runoff coefficients.
+                </p>
+                
+                <!-- SIMULATION TIMELINE GRAPHIC -->
+                <div class="mb-6 bg-slate-50/80 border border-slate-100 rounded-xl p-4">
+                  <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-400 mb-2.5 tracking-wider">
+                     <span>Temporal Frame</span>
+                     <span class="font-mono text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200 shadow-sm">150 Ticks Total</span>
+                  </div>
+                  <div class="flex h-2 rounded-full overflow-hidden mb-2.5 bg-slate-100">
+                     <div class="bg-blue-500" style="width: 13.3%"></div>
+                     <div class="bg-amber-400" style="width: 86.7%"></div>
+                  </div>
+                  <div class="flex justify-between text-[11px] font-semibold">
+                     <span class="text-blue-600 flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg> 
+                        20 Ticks Storm
+                     </span>
+                     <span class="text-amber-600 flex items-center gap-1">
+                        130 Ticks Recession 
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                     </span>
+                  </div>
+                </div>
+            </div>
+
+            <div>
+                <a href="gama_code/models/gowanus_flood_resilience.gaml" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/95 text-white text-sm font-semibold rounded-xl hover:bg-slate-800 transition shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    View GAML Source
+                </a>
+            </div>
         </div>
-      </div>
-      <div>
-        <h4 class="text-xl font-bold mb-4">AI-Predicted Future</h4>
-        <div class="chart-card group h-full">
-          <img src="img/10.png" alt="Future flood simulation" class="h-full object-cover" />
-          <div class="overlay"><p>AI model predicts 37% higher flood frequency by 2050 without adaptive interventions.</p></div>
+        
+        <!-- Right: Parameter Grid -->
+        <div class="lg:w-7/12 w-full grid grid-cols-2 gap-4 md:gap-5 text-left">
+            <div class="p-5 bg-slate-50/80 rounded-xl border border-slate-100 flex flex-col justify-between">
+                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div> Topography
+                </div>
+                <div>
+                  <div class="font-mono text-sm md:text-base font-semibold text-slate-700">DEM 2263</div>
+                  <p class="text-[11px] text-slate-400 mt-1.5 leading-tight">≈ 1-Foot High-Resolution Elevation Data</p>
+                </div>
+            </div>
+            <div class="p-5 bg-slate-50/80 rounded-xl border border-slate-100 flex flex-col justify-between">
+                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div> Cellular Size
+                </div>
+                <div>
+                  <div class="font-mono text-sm md:text-base font-semibold text-slate-700">Dynamic Grid</div>
+                  <p class="text-[11px] text-slate-400 mt-1.5 leading-tight">≈ 2m × 2m Urban Micro-Catchment Scale</p>
+                </div>
+            </div>
+            <div class="p-5 bg-rose-50/80 rounded-xl border border-rose-100 flex flex-col justify-between">
+                <div class="text-[10px] text-rose-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div> Rain Intensity
+                </div>
+                <div>
+                  <div class="font-mono text-sm md:text-base font-semibold text-rose-700">0.2 units/t</div>
+                  <p class="text-[11px] text-rose-500/70 mt-1.5 leading-tight">≈ 100-Year Extreme Storm (3+ in/hr)</p>
+                </div>
+            </div>
+            <div class="p-5 bg-amber-50/80 rounded-xl border border-amber-100 flex flex-col justify-between">
+                <div class="text-[10px] text-amber-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div> Canal Pollution
+                </div>
+                <div>
+                  <div class="font-mono text-sm md:text-base font-semibold text-amber-700">Level 7.0</div>
+                  <p class="text-[11px] text-amber-600/70 mt-1.5 leading-tight">≈ Extremely Toxic Raw CSO Sewage Discharge</p>
+                </div>
+            </div>
+            <div class="p-5 bg-amber-50/80 rounded-xl border border-amber-100 flex flex-col justify-between">
+                <div class="text-[10px] text-amber-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div> Contagion Rate
+                </div>
+                <div>
+                  <div class="font-mono text-sm md:text-base font-semibold text-amber-700">Mobility 1.4</div>
+                  <p class="text-[11px] text-amber-600/70 mt-1.5 leading-tight">≈ Rapid Tidal Backflow Spreading Rate</p>
+                </div>
+            </div>
+            <div class="p-5 bg-emerald-50/80 rounded-xl border border-emerald-100 flex flex-col justify-between">
+                <div class="text-[10px] text-emerald-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> Green Absorb
+                </div>
+                <div>
+                  <div class="font-mono text-sm md:text-base font-semibold text-emerald-700">0.08 / cell</div>
+                  <p class="text-[11px] text-emerald-600/70 mt-1.5 leading-tight">≈ Natural Porous Soil Retention Capacity</p>
+                </div>
+            </div>
         </div>
-      </div>
+        
     </div>
   </div>
 
-  <!-- GAMA Placeholder -->
-  <div class="bg-gray-900 rounded-xl p-10 text-center border border-gray-800 shadow-xl">
-    <h4 class="text-2xl font-bold mb-4 text-white">Agent-Based Simulation (GAMA)</h4>
-    <p class="text-gray-400 max-w-2xl mx-auto mb-8">Insert video or interactive iframe of the GAMA models here. Show how human agents interact with the flooded environment and pollution hotspots.</p>
-    <div class="w-full aspect-video bg-black rounded-lg overflow-hidden border border-gray-700 relative flex items-center justify-center shadow-inner">
-       <video 
-         class="w-full h-full object-contain" 
-         autoplay 
-         loop 
-         muted 
-         playsinline>
-         <source src="video/baseline.mp4" type="video/mp4">
-         Your browser does not support the video tag.
-       </video>
+  <!-- INTERACTIVE SIMULATION SWITCHER -->
+  <div class="mb-10 lg:mb-20 fade-in w-full">
+    <h3 class="text-2xl mb-2 font-bold text-center">Intervention Modeling Console</h3>
+    <p class="text-gray-600 mb-8 max-w-2xl mx-auto text-center">Interactive hydrological simulation mapping four distinct physical intervention strategies under identical storm constraints.</p>
+    
+    <div class="max-w-6xl mx-auto bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200/60 ring-1 ring-slate-900/5">
+      
+      <!-- Interactive Screen -->
+      <div id="sim-viewport" class="relative w-full aspect-[16/10] md:aspect-video bg-slate-900 border-b border-slate-100 overflow-hidden cursor-grab active:cursor-grabbing group">
+        
+        <!-- Zoom instructions hint -->
+        <div class="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-black/60 backdrop-blur text-white/90 px-4 py-1.5 text-[10px] md:text-xs uppercase tracking-widest rounded-full opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none shadow-lg">
+           <span class="hidden md:inline">Scroll to Zoom · </span>Drag to Pan<span class="hidden md:inline"> · Double Click to Reset</span>
+        </div>
+
+        <!-- THE ZOOM LAYER -->
+        <div id="sim-zoom-layer" class="absolute inset-0 w-full h-full origin-top-left will-change-transform">
+            <video id="sim-vid-baseline" src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-100 z-10 pointer-events-none"></video>
+            <video id="sim-vid-block" src="img/part3/block_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
+            <video id="sim-vid-green" src="img/part3/green_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
+            <video id="sim-vid-comp" src="img/part3/comprehensive_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
+        </div>
+        
+        <!-- Play / Pause Overlay Button -->
+        <button onclick="toggleSimPlayback()" class="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-50 bg-black/60 backdrop-blur text-white/90 p-3 rounded-full hover:bg-black/80 transition shadow-lg focus:outline-none flex items-center justify-center cursor-pointer">
+            <!-- Pause Icon -->
+            <svg id="sim-icon-pause" class="w-3.5 h-3.5 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>
+            <!-- Play Icon -->
+            <svg id="sim-icon-play" class="w-3.5 h-3.5 md:w-4 md:h-4 hidden ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+
+        <!-- THE STATIC UI OVERLAY LAYER -->
+        <div id="sim-text-baseline" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-100 z-20 border border-white/10">
+             <span class="font-bold text-amber-400 block mb-1 text-xs tracking-wider uppercase">Baseline Scenario</span>
+             <p class="text-slate-200">No interventions active. Severe flooding occurs, driving pollutant deposition deep into vulnerable low-lying urban zones.</p>
+        </div>
+        <div id="sim-text-block" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
+             <span class="font-bold text-blue-400 block mb-1 text-xs tracking-wider uppercase">Strategy 1: Physical Block</span>
+             <p class="text-slate-200">Hard engineered barriers completely halt initial storm surges but disrupt critical tidal ecosystems inside the canal.</p>
+        </div>
+        <div id="sim-text-green" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
+             <span class="font-bold text-emerald-400 block mb-1 text-xs tracking-wider uppercase">Strategy 2: Permeable Greenland</span>
+             <p class="text-slate-200">Vast porous networks absorb minor runoff effectively, though they inevitably become saturated during extreme events.</p>
+        </div>
+        <div id="sim-text-comp" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
+             <span class="font-bold text-purple-400 block mb-1 text-xs tracking-wider uppercase">Strategy 3: Comprehensive</span>
+             <p class="text-slate-200">A hybrid layered approach balances resilient physical defense with ecological integration and absorption.</p>
+        </div>
+        
+      </div>
+
+      <!-- Control Console -->
+      <div class="grid grid-cols-4 bg-slate-50/50 backdrop-blur divide-x divide-slate-200/50 text-sm">
+        <button onclick="switchSimulation('baseline')" id="btn-sim-baseline" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 bg-white shadow-[inset_0_3px_0_0_#0f172a] text-slate-900">
+           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-slate-500 mb-1 tracking-widest">Control</span>
+           <span class="font-bold text-sm md:text-base">Baseline</span>
+        </button>
+        <button onclick="switchSimulation('block')" id="btn-sim-block" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
+           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-blue-500 mb-1 tracking-widest">Strategy 1</span>
+           <span class="font-bold text-sm md:text-base">Physical Block</span>
+        </button>
+        <button onclick="switchSimulation('green')" id="btn-sim-green" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
+           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-emerald-500 mb-1 tracking-widest">Strategy 2</span>
+           <span class="font-bold text-sm md:text-base">Greenland</span>
+        </button>
+        <button onclick="switchSimulation('comp')" id="btn-sim-comp" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
+           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-purple-500 mb-1 tracking-widest">Strategy 3</span>
+           <span class="font-bold text-sm md:text-base">Comprehensive</span>
+        </button>
+      </div>
+
     </div>
   </div>
+
+  <script>
+    // 1. Simulation Crossfade Logic
+    function switchSimulation(targetId) {
+      const views = ['baseline', 'block', 'green', 'comp'];
+      views.forEach(id => {
+        // Toggle dynamic video layer
+        const vidEl = document.getElementById('sim-vid-' + id);
+        if (id === targetId) {
+          vidEl.classList.remove('opacity-0', 'z-0');
+          vidEl.classList.add('opacity-100', 'z-10');
+        } else {
+          vidEl.classList.remove('opacity-100', 'z-10');
+          vidEl.classList.add('opacity-0', 'z-0');
+        }
+
+        // Toggle text overlay layer
+        const txtEl = document.getElementById('sim-text-' + id);
+        if (id === targetId) {
+          txtEl.classList.remove('opacity-0', 'z-0');
+          txtEl.classList.add('opacity-100', 'z-20');
+        } else {
+          txtEl.classList.remove('opacity-100', 'z-20');
+          txtEl.classList.add('opacity-0', 'z-0');
+        }
+
+        // Toggle button styling
+        const btn = document.getElementById('btn-sim-' + id);
+        if (id === targetId) {
+          btn.classList.add('bg-white', 'shadow-[inset_0_3px_0_0_#0f172a]', 'text-slate-900', 'opacity-100');
+          btn.classList.remove('hover:bg-slate-100/50', 'text-slate-500', 'opacity-80', 'hover:opacity-100');
+        } else {
+          btn.classList.remove('bg-white', 'shadow-[inset_0_3px_0_0_#0f172a]', 'text-slate-900', 'opacity-100');
+          btn.classList.add('hover:bg-slate-100/50', 'text-slate-500', 'opacity-80', 'hover:opacity-100');
+        }
+      });
+    }
+
+    // 2. Synchronized Pan & Zoom Explorer
+    document.addEventListener("DOMContentLoaded", () => {
+      const viewport = document.getElementById('sim-viewport');
+      const zoomLayer = document.getElementById('sim-zoom-layer');
+      
+      let scale = 1, translateX = 0, translateY = 0;
+      let isDragging = false, startX, startY;
+
+      if(viewport && zoomLayer) {
+        // Zoom towards mouse pointer
+        viewport.addEventListener('wheel', (e) => {
+           e.preventDefault(); 
+           
+           const oldScale = scale;
+           const zoomSpeed = 0.005; 
+           scale += e.deltaY * -zoomSpeed;
+           scale = Math.min(Math.max(1, scale), 6); // Max zoom 6x, Min 1x
+           
+           if (scale !== oldScale) {
+               // Pointer-centric math
+               const rect = viewport.getBoundingClientRect();
+               const mouseX = e.clientX - rect.left;
+               const mouseY = e.clientY - rect.top;
+
+               const px = (mouseX - translateX) / oldScale;
+               const py = (mouseY - translateY) / oldScale;
+
+               translateX = mouseX - px * scale;
+               translateY = mouseY - py * scale;
+           }
+
+           if(scale <= 1) { 
+              scale = 1; translateX = 0; translateY = 0;
+              zoomLayer.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+           } else {
+              zoomLayer.style.transition = 'none'; 
+           }
+           
+           updateTransform();
+        }, {passive: false});
+
+        // Pan via click and drag
+        viewport.addEventListener('mousedown', (e) => {
+           isDragging = true;
+           startX = e.clientX - translateX;
+           startY = e.clientY - translateY;
+        });
+        
+        window.addEventListener('mouseup', () => {
+           isDragging = false;
+        });
+        
+        window.addEventListener('mouseleave', () => {
+           isDragging = false;
+        });
+        
+        window.addEventListener('mousemove', (e) => {
+           if(!isDragging || scale === 1) return; // Only allow drag when zoomed in
+           e.preventDefault();
+           zoomLayer.style.transition = 'none';
+           
+           translateX = e.clientX - startX;
+           translateY = e.clientY - startY;
+           
+           // Apply loose bounding wrapper suitable for origin-top-left
+           const boundsX = viewport.clientWidth * scale * 0.4;
+           const boundsY = viewport.clientHeight * scale * 0.4;
+           const maxPanX = viewport.clientWidth * (scale - 1);
+           const maxPanY = viewport.clientHeight * (scale - 1);
+           
+           translateX = Math.min(boundsX, Math.max(-maxPanX - boundsX, translateX));
+           translateY = Math.min(boundsY, Math.max(-maxPanY - boundsY, translateY));
+
+           updateTransform();
+        });
+
+        // Double click resets fully
+        viewport.addEventListener('dblclick', () => {
+           scale = 1; translateX = 0; translateY = 0;
+           zoomLayer.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+           updateTransform();
+        });
+
+        function updateTransform() {
+           zoomLayer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+      }
+    });
+
+    // 3. Play / Pause Control
+    let simIsPlaying = true;
+    function toggleSimPlayback() {
+      const views = ['baseline', 'block', 'green', 'comp'];
+      const iconPause = document.getElementById('sim-icon-pause');
+      const iconPlay = document.getElementById('sim-icon-play');
+
+      if (simIsPlaying) {
+         views.forEach(id => {
+            const vid = document.getElementById('sim-vid-' + id);
+            if(vid) vid.pause();
+         });
+         iconPause.classList.add('hidden');
+         iconPlay.classList.remove('hidden');
+         simIsPlaying = false;
+      } else {
+         views.forEach(id => {
+            const vid = document.getElementById('sim-vid-' + id);
+            if(vid) vid.play();
+         });
+         iconPause.classList.remove('hidden');
+         iconPlay.classList.add('hidden');
+         simIsPlaying = true;
+      }
+    }
+  </script>
+
 
 </section>
 
@@ -511,132 +794,189 @@
     <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Testing physical and green interventions in our models to measure their impact on pollution reduction.</p>
   </div>
 
-  <article class="mb-32 max-w-6xl mx-auto px-4">
-    <div class="text-left mb-8">
-      <p class="eyebrow mb-2">Strategy 01</p>
-      <h3 class="text-3xl md:text-4xl font-bold">Physical Block</h3>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-12">
-      <div class="text-left">
-        <p class="text-gray-600 border-l-2 border-gray-200 pl-5">
-          A hard engineered barrier system to prevent canal water from entering streets.
-        </p>
-      </div>
-
-      <div class="space-y-8 text-left">
-        <div>
-          <span class="block text-emerald-700 font-bold uppercase tracking-wider text-xs mb-3">Strengths</span>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Immediate stop flood cessation<br/>
-            Predictable protection
-          </p>
+    <div class="flex flex-col gap-24 w-full pb-10">
+      
+      <!-- Strategy 01 -->
+      <article class="max-w-6xl mx-auto px-4 w-full">
+        <div class="text-left mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow mb-2">Strategy 01</p>
+            <h3 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Physical Block</h3>
+          </div>
+          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">A hard engineered barrier system to prevent canal water from entering streets. Halts localized swelling but triggers severe upstream consequences.</p>
         </div>
-        <div>
-          <span class="block text-rose-700 font-bold uppercase tracking-wider text-xs mb-3">Weaknesses</span>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            High cost<br/>
-            Ecological disruption<br/>
-            Obstructed tourist views
-          </p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <!-- Video Split Comparison (Span 2) -->
+          <div class="lg:col-span-2 bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg group flex flex-col min-h-[300px] md:min-h-[400px]">
+             <div class="absolute top-4 left-4 z-10">
+               <span class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
+             </div>
+             <div class="absolute top-4 right-4 z-10">
+               <span class="bg-blue-500/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">PHYSICAL BLOCK</span>
+             </div>
+             <div class="grid grid-cols-2 w-full flex-grow divide-x-4 divide-slate-800/80 absolute inset-0">
+               <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+               <video src="img/part3/block_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+             </div>
+             <!-- Visual Splitter Line Hint -->
+             <div class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+          </div>
+          
+          <div class="flex flex-col gap-6">
+             <!-- Strengths / Weaknesses -->
+             <div class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
+                <div class="mb-5">
+                  <h5 class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Strengths</h5>
+                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                     <li>• Immediate flood cessation</li>
+                     <li>• Predictable protection zone</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> Weaknesses</h5>
+                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                     <li>• High infrastructure capital cost</li>
+                     <li>• Severe ecological flow disruption</li>
+                     <li>• Obstructs canal sightlines</li>
+                  </ul>
+                </div>
+             </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="case-video-wrap mb-10 shadow-sm rounded-lg overflow-hidden">
-      <video src="video/2.mp4" controls class="w-full"></video>
-    </div>
-    <div class="space-y-10">
-      <div class="chart-card group max-w-[75%] mx-auto">
-        <img src="img/temp1.png" alt="Physical block chart" class="w-full" />
-        <div class="overlay"><p>Water levels drop ~62% behind the barrier during a 100-year flood scenario.</p></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="mb-32 max-w-6xl mx-auto px-4">
-    <div class="text-left mb-8">
-      <p class="eyebrow mb-2">Strategy 02</p>
-      <h3 class="text-3xl md:text-4xl font-bold">Permeable Greenland</h3>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-12">
-      <div class="text-left">
-        <p class="text-gray-600 border-l-2 border-gray-200 pl-5">
-          Permeable pavements to slow down flood spreading and absorb polluted sediment.
-        </p>
-      </div>
-      <div class="space-y-8 text-left">
-        <div>
-          <span class="block text-emerald-700 font-bold uppercase tracking-wider text-xs mb-3">Strengths</span>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Ecological co-benefits<br/>
-            Lower cost<br/>
-            Maintain Public space
-          </p>
+        <!-- Data Charts Row for Strategy 1 -->
+        <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
+            <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Pollution Discrepancy Data</h6>
+            <img src="img/temp1.png" alt="Pollution Data" class="w-full max-w-4xl h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
         </div>
-        <div>
-          <span class="block text-rose-700 font-bold uppercase tracking-wider text-xs mb-3">Weaknesses</span>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Limited capacity in extreme events<br/>
-            Requires longtime maintenance
-          </p>
+      </article>
+
+      <!-- Strategy 02 -->
+      <article class="max-w-6xl mx-auto px-4 w-full">
+        <div class="text-left mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow mb-2">Strategy 02</p>
+            <h3 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Permeable Greenland</h3>
+          </div>
+          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">Porous parks and infrastructure designed to absorb runoff naturally, offering ecological benefits but lacking raw defensive capacity.</p>
         </div>
-      </div>
-    </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div class="flex flex-col gap-6">
+             <div class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
+                <div class="mb-5">
+                  <h5 class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Strengths</h5>
+                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                     <li>• Vital ecological co-benefits</li>
+                     <li>• Lower installation cost</li>
+                     <li>• Multi-use public spaces</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> Weaknesses</h5>
+                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                     <li>• Saturated rapidly in storms</li>
+                     <li>• Intense ongoing maintenance</li>
+                  </ul>
+                </div>
+             </div>
+          </div>
 
-    <div class="case-video-wrap mb-10 shadow-sm rounded-lg overflow-hidden">
-      <video src="video/3.mp4" controls class="w-full"></video>
-    </div>
-    <div class="space-y-10">
-      <div class="chart-card group max-w-[75%] mx-auto">
-        <img src="img/temp2.png" alt="Green infrastructure chart" class="w-full" />
-        <div class="overlay"><p>Distributed green systems absorb up to 40% of small-storm runoff.</p></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="mb-12 max-w-6xl mx-auto px-4">
-    <div class="text-left mb-8">
-      <p class="eyebrow mb-2">Strategy 03</p>
-      <h3 class="text-3xl md:text-4xl font-bold">Comprehensive Solution</h3>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-12">
-      <div class="text-left">
-        <p class="text-gray-600 border-l-2 border-gray-200 pl-5">
-          A hybrid approach combining physical defenses, distributed green infrastructure, and policy-driven land use changes for layered resilience.
-        </p>
-      </div>
-      <div class="space-y-8 text-left">
-        <div>
-          <span class="block text-emerald-700 font-bold uppercase tracking-wider text-xs mb-3">Strengths</span>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Adaptive<br/>
-            Multi-scale<br/>
-            Balances ecology and protection
-          </p>
+          <div class="col-span-1 lg:col-span-2 flex flex-col gap-6">
+             <!-- Video Split Comparison (Span 2) -->
+             <div class="bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg group min-h-[300px] md:min-h-[400px] flex-grow w-full">
+                <div class="absolute top-4 left-4 z-10">
+                  <span class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
+                </div>
+                <div class="absolute top-4 right-4 z-10">
+                  <span class="bg-emerald-500/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">PERMEABLE GREEN</span>
+                </div>
+                <div class="grid grid-cols-2 w-full h-full divide-x-4 divide-slate-800/80 absolute inset-0">
+                  <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+                  <video src="img/part3/green_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+                </div>
+                <div class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+             </div>
+          </div>
         </div>
-        <div>
-          <span class="block text-rose-700 font-bold uppercase tracking-wider text-xs mb-3">Weaknesses</span>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Requires coordination across agencies<br/>
-            Requires long-term funding
-          </p>
-        </div>
-      </div>
-    </div>
 
-    <div class="case-video-wrap mb-10 shadow-sm rounded-lg overflow-hidden">
-      <video src="video/4.mp4" controls class="w-full"></video>
+        <!-- Data Charts Row for Strategy 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <!-- Chart 1 (Flooding) -->
+           <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center justify-center">
+              <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Flooding Spread Variance</h6>
+              <img src="img/temp2.png" alt="Flooding Data" class="w-full max-w-lg h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
+           </div>
+           <!-- Chart 2 (Pollution) -->
+           <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center justify-center relative">
+              <div class="absolute top-6 right-6 bg-emerald-50 text-emerald-600 border border-emerald-100 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider hidden md:block">Pollutants Filtered</div>
+              <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Pollutant Soil Retention Analysis</h6>
+              <img src="img/temp3.png" alt="Pollution Data" class="w-full max-w-lg h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
+           </div>
+        </div>
+      </article>
+
+      <!-- Strategy 03 -->
+      <article class="max-w-6xl mx-auto px-4 w-full">
+        <div class="text-left mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow mb-2 !text-purple-500">Strategy 03</p>
+            <h3 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Comprehensive Solution</h3>
+          </div>
+          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">A high-fidelity hybrid approach stacking engineered physical defenses with expansive distributed green infrastructure.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg min-h-[300px] md:min-h-[400px]">
+             <div class="absolute top-4 left-4 z-10">
+               <span class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
+             </div>
+             <div class="absolute top-4 right-4 z-10">
+               <span class="bg-purple-600/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">COMPREHENSIVE</span>
+             </div>
+             <div class="grid grid-cols-2 w-full h-full divide-x-4 divide-slate-800/80 absolute inset-0">
+               <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+               <video src="img/part3/comprehensive_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+             </div>
+             <div class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+          </div>
+          
+          <div class="flex flex-col gap-6">
+             <div class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
+                <div class="mb-5">
+                  <h5 class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Strengths</h5>
+                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                     <li>• Dynamic adaptive resilience</li>
+                     <li>• Layered multi-scale defense</li>
+                     <li>• Balances ecology & geometry</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> Weaknesses</h5>
+                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                     <li>• Complex agency jurisdiction</li>
+                     <li>• Massive sustained funding</li>
+                  </ul>
+                </div>
+             </div>
+          </div>
+        </div>
+        
+        <!-- Data Charts Row for Strategy 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+             <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
+                <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">System Flood Reduction Efficacy</h6>
+                <img src="img/temp4.png" alt="Flooding Data" class="w-full h-auto max-h-64 object-contain rounded-xl mix-blend-multiply">
+             </div>
+             <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
+                <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Toxicity & Pollution Mitigation</h6>
+                <img src="img/temp5.png" alt="Pollution Data" class="w-full h-auto max-h-64 object-contain rounded-xl mix-blend-multiply">
+             </div>
+        </div>
+      </article>
+
     </div>
-    <div class="space-y-10">
-      <div class="chart-card group max-w-[75%] mx-auto">
-        <img src="img/temp4.png" alt="Comprehensive solution data" class="w-full" />
-        <div class="overlay"><p>Combined approach reduces flood depth by 78% across modeled scenarios.</p></div>
-      </div>
-    </div>
-  </article>
 </section>
 
 <div class="divider"></div>

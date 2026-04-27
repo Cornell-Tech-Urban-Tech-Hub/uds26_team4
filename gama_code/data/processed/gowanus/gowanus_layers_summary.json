@@ -1,0 +1,33 @@
+{
+  "model": "models/gowanus_flood_resilience.gaml",
+  "runtime_files": {
+    "dem": "data/processed/gowanus/gowanus_dem_2263.tif",
+    "lots": "data/processed/gowanus/gowanus_lots_surface_2263.geojson",
+    "buildings": "data/processed/gowanus/gowanus_buildings_enriched_2263.geojson",
+    "canal_water": "data/processed/gowanus/gowanus_canal_water_no_345_2263.geojson",
+    "green_scenario": "data/processed/gowanus/scenarios/green_infrastructure.shp",
+    "block_scenario": "data/processed/gowanus/scenarios/flood_barrier.shp",
+    "mixed_block_scenario": "data/processed/gowanus/scenarios/mixed_barrier.shp"
+  },
+  "bbox": {
+    "west": -74.0007,
+    "south": 40.6691,
+    "east": -73.9758,
+    "north": 40.6862
+  },
+  "counts": {
+    "building_features": 8378,
+    "lot_features": 8574
+  },
+  "lot_surface_type_counts": {
+    "building_hardscape": 42,
+    "other_paved_surface": 4760,
+    "tree_canopy": 3187,
+    "green_open_space": 553,
+    "road_surface": 23,
+    "industrial_hardscape": 1,
+    "built_residential": 3,
+    "unclassified": 4,
+    "bare_soil": 1
+  }
+}

@@ -1,801 +1,1100 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth snap-y snap-mandatory bg-[#fafaf7]">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Flooding-driven Pollution in Gowanus</title>
-<meta name="description" content="A research showcase on flooding-driven pollution in the Gowanus Canal: causes, simulations, and solutions." />
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-<style>
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', sans-serif; color: #1f2937; background: #fafaf7; }
-  h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
-  .section { padding: 6rem 1.5rem; max-width: 1200px; margin: 0 auto; }
-  .eyebrow { letter-spacing: .25em; font-size: .75rem; text-transform: uppercase; color: #6b7280; font-weight: 600; }
-  /* Hover overlay for charts */
-  .chart-card { position: relative; overflow: hidden; border-radius: 0.75rem; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #e5e7eb; }
-  .chart-card img { display:block; width:100%; height:auto; transition: opacity .35s ease, transform .6s ease; }
-  .chart-card .overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(15,23,42,0.85), rgba(15,23,42,0.95));
-    color: #f8fafc; padding: 1.25rem 1.5rem;
-    opacity: 0; transition: opacity .35s ease;
-    display: flex; align-items: center; justify-content: center; text-align: center;
-    font-size: .95rem; line-height: 1.6;
-  }
-  .chart-card:hover img { opacity: .15; transform: scale(1.02); }
-  .chart-card:hover .overlay { opacity: 1; }
-  /* Hero */
-  .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; }
-  .hero img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-  .hero::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.55) 100%); }
-  .hero-content { position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:#fff; padding: 0 1.5rem; }
-  /* Nav */
-  .nav { position: fixed; top: 0; left:0; right:0; z-index: 50; backdrop-filter: blur(10px); background: rgba(250,250,247,0.75); border-bottom: 1px solid rgba(0,0,0,.05); }
-  .nav a { font-size: .85rem; color:#374151; font-weight:500; }
-  .nav a:hover { color:#0f172a; }
-  /* Card */
-  .card { background:#fff; border:1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.75rem; transition: transform .3s ease, box-shadow .3s ease; }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -10px rgba(0,0,0,.15); }
-  .divider { height:1px; background: linear-gradient(90deg, transparent, #d1d5db, transparent); margin: 0 auto; max-width: 200px; }
-  video { width: 100%; border-radius: 0.75rem; background:#000; display:block; }
-  .case-video-wrap { box-shadow: 0 20px 50px -20px rgba(0,0,0,.25); border-radius: 0.75rem; overflow:hidden; }
-  
-  /* Scroll Reveal Animations */
-  .reveal { opacity: 0; transform: translateY(60px); }
-  .reveal.active { 
-    opacity: 1; 
-    transform: translateY(0); 
-    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flooding-driven Pollution in Gowanus</title>
+  <meta name="description"
+    content="A research showcase on flooding-driven pollution in the Gowanus Canal: causes, simulations, and solutions." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1f2937;
+      background: #fafaf7;
+    }
+
+    h1,
+    h2,
+    h3,
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .section {
+      padding: 6rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      letter-spacing: .25em;
+      font-size: .75rem;
+      text-transform: uppercase;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    /* Hover overlay for charts */
+    .chart-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .chart-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: opacity .35s ease, transform .6s ease;
+    }
+
+    .chart-card .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95));
+      color: #f8fafc;
+      padding: 1.25rem 1.5rem;
+      opacity: 0;
+      transition: opacity .35s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+
+    .chart-card:hover img {
+      opacity: .15;
+      transform: scale(1.02);
+    }
+
+    .chart-card:hover .overlay {
+      opacity: 1;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, .35) 0%, rgba(0, 0, 0, .55) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 0 1.5rem;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(250, 250, 247, 0.75);
+      border-bottom: 1px solid rgba(0, 0, 0, .05);
+    }
+
+    .nav a {
+      font-size: .85rem;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: #0f172a;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, .15);
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d1d5db, transparent);
+      margin: 0 auto;
+      max-width: 200px;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 0.75rem;
+      background: #000;
+      display: block;
+    }
+
+    .case-video-wrap {
+      box-shadow: 0 20px 50px -20px rgba(0, 0, 0, .25);
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+  </style>
 </head>
+
 <body class="antialiased">
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-    <div class="font-semibold tracking-tight">Gowanus · Research</div>
-    <div class="hidden md:flex gap-8">
-      <a href="#hook">1. Crisis</a>
-      <a href="#problem">2. The Problem</a>
-      <a href="#science">3. Simulations</a>
-      <a href="#solutions">4. Solutions</a>
-      <a href="#action">5. Take Action</a>
-    </div>
-  </div>
-</nav>
-
-<!-- PART 1: THE HOOK -->
-<header id="hook" class="hero snap-start snap-always">
-  <img src="img/1.png" alt="Gowanus Canal aerial view" />
-  <div class="hero-content">
-    <p class="eyebrow text-white/80 mb-6">Part 1: The Hook</p>
-    <h1 class="text-5xl md:text-7xl font-bold leading-tight max-w-4xl">Flooding-driven Pollution in Gowanus</h1>
-    <p class="mt-6 max-w-2xl text-lg text-white/85 leading-relaxed">
-      As sea levels rise and storms intensify, the Gowanus Canal becomes a conduit for contaminated water entering the surrounding neighborhood — threatening public health, fragile ecology, and urban infrastructure.
-    </p>
-    <a href="#problem" class="mt-10 inline-block px-6 py-3 border border-white/40 rounded-full text-sm hover:bg-white hover:text-slate-900 transition">Explore the research ↓</a>
-  </div>
-</header>
-
-<!-- PART 2: THE PROBLEM -->
-<section id="problem" class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-[4.5rem] pb-16">
-  <div class="text-center mb-6">
-    <p class="eyebrow mb-2">Part 2</p>
-    <h2 class="text-4xl font-bold">The Problem: Pollution Mechanisms and Impact</h2>
-    <p class="text-gray-600 mt-3 max-w-4xl mx-auto">How contamination spreads during flood events, and where it remains after the water recedes.</p>
-  </div>
-
-  <!-- DATA CALLOUT -->
-  <div class="max-w-6xl mx-auto mb-10 md:mb-12 reveal">
-    <div class="bg-white rounded-2xl border border-rose-100 shadow-sm px-6 py-3 md:px-8 relative overflow-hidden group hover:shadow-md transition duration-500">
-      <!-- Decorative background accent -->
-      <div class="absolute top-0 right-0 w-64 h-64 bg-rose-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-100 transition duration-700 pointer-events-none"></div>
-      
-      <div class="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center">
-        <div class="shrink-0 text-center md:text-left min-w-[140px]">
-          <div class="text-4xl md:text-5xl font-extrabold text-rose-600 tracking-tight">115M</div>
-          <div class="text-rose-400 font-bold tracking-widest uppercase text-xs mt-1">Gallons / Year</div>
-        </div>
-        
-        <div class="border-l-2 border-rose-100 pl-6 md:pl-8 py-1">
-          <h4 class="text-slate-800 font-bold text-lg mb-1 flex items-center">
-             <svg class="w-4 h-4 text-rose-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-             The Unsolved Reality
-          </h4>
-          <p class="text-slate-600 leading-relaxed text-sm mb-2 max-w-4xl">
-            Historically, over <strong class="text-slate-800">377 million gallons</strong> of raw sewage dumped into Gowanus annually. Even after the ongoing billion-dollar EPA retention tanks are completed, models project that at least <strong class="text-rose-600">115 million gallons</strong> of toxic Combined Sewer Overflow (CSO) will <em>still</em> flush into the canal every single year.
-          </p>
-          <a href="https://www.epa.gov/ny/gowanus-canal-superfund-site-brooklyn-ny" target="_blank" class="inline-flex items-center text-xs font-semibold text-rose-500 hover:text-rose-700 transition group-hover:underline">
-            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            Source: EPA Superfund Official Data Hub
-          </a>
-        </div>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="font-semibold tracking-tight">Gowanus · Research</div>
+      <div class="hidden md:flex gap-8">
+        <a href="#hook">1. Crisis</a>
+        <a href="#problem">2. The Problem</a>
+        <a href="#science">3. Simulations</a>
+        <a href="#solutions">4. Solutions</a>
+        <a href="#action">5. Take Action</a>
       </div>
     </div>
-  </div>
+  </nav>
 
-  <!-- OFFICIAL REPORTS -->
-  <h3 class="text-xl md:text-2xl font-bold mb-5 text-center border-b pb-3 max-w-5xl mx-auto">Official Damage Assessments</h3>
-  <div class="grid md:grid-cols-3 gap-5 mb-16 max-w-6xl mx-auto fade-in">
-    <!-- Health Risk Card -->
-    <a href="https://www.epa.gov/enforcement/multiple-enforcement-actions-address-cleaning-contaminated-sediments-gowanus-canal-site" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
-      <div class="absolute top-0 left-0 w-full h-1 bg-rose-600"></div>
-      <div class="flex justify-between items-start mb-4">
-        <p class="eyebrow text-rose-600">Health Risk</p>
-        <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">EPA</span>
-      </div>
-      <h4 class="text-lg font-bold mb-3 group-hover:text-rose-700 transition leading-snug">Multiple Enforcement Actions Address Cleaning Up Contaminated Sediments</h4>
-      <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
-        "Addressing the severe contamination in the Gowanus Canal... mitigating exposure to hazardous substances like coal tar, heavy metals, and PCBs affecting local communities."
+  <!-- PART 1: THE HOOK -->
+  <header id="hook" class="hero snap-start snap-always">
+    <img src="img/1.png" alt="Gowanus Canal aerial view" />
+    <div class="hero-content">
+      <p class="eyebrow text-white/80 mb-6">Part 1: The Hook</p>
+      <h1 class="text-5xl md:text-7xl font-bold leading-tight max-w-4xl">Flooding-driven Pollution in Gowanus</h1>
+      <p class="mt-6 max-w-2xl text-lg text-white/85 leading-relaxed">
+        As sea levels rise and storms intensify, the Gowanus Canal becomes a conduit for contaminated water entering the
+        surrounding neighborhood — threatening public health, fragile ecology, and urban infrastructure.
       </p>
-      <div class="text-sm font-bold text-rose-600 flex items-center gap-1 mt-auto">
-        Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-      </div>
-    </a>
+      <a href="#problem"
+        class="mt-10 inline-block px-6 py-3 border border-white/40 rounded-full text-sm hover:bg-white hover:text-slate-900 transition">Explore
+        the research ↓</a>
+    </div>
+  </header>
 
-    <!-- Ecological Risk Card -->
-    <a href="https://darrp.noaa.gov/gowanus-canal" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
-      <div class="absolute top-0 left-0 w-full h-1 bg-emerald-600"></div>
-      <div class="flex justify-between items-start mb-4">
-        <p class="eyebrow text-emerald-600">Ecological Risk</p>
-        <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">NOAA</span>
-      </div>
-      <h4 class="text-lg font-bold mb-3 group-hover:text-emerald-700 transition leading-snug">Gowanus Canal Damage Assessment, Remediation, and Restoration</h4>
-      <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
-        "Decades of industrial pollution have severely degraded the canal's ecosystem, threatening marine habitats and degrading sediment quality across the basin."
-      </p>
-      <div class="text-sm font-bold text-emerald-600 flex items-center gap-1 mt-auto">
-        Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-      </div>
-    </a>
+  <!-- PART 2: THE PROBLEM -->
+  <section id="problem"
+    class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-[4.5rem] pb-16">
+    <div class="text-center mb-6">
+      <p class="eyebrow mb-2">Part 2</p>
+      <h2 class="text-4xl font-bold">The Problem: Pollution Mechanisms and Impact</h2>
+      <p class="text-gray-600 mt-3 max-w-4xl mx-auto">How contamination spreads during flood events, and where it
+        remains after the water recedes.</p>
+    </div>
 
-    <!-- Urban Risk Card -->
-    <a href="https://www.epa.gov/newsreleases/epa-reaches-new-milestone-cleanup-gowanus-canal-superfund-site-cleanup" target="_blank" class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
-      <div class="absolute top-0 left-0 w-full h-1 bg-blue-600"></div>
-      <div class="flex justify-between items-start mb-4">
-        <p class="eyebrow text-blue-600">Urban Risk</p>
-        <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">EPA</span>
-      </div>
-      <h4 class="text-lg font-bold mb-3 group-hover:text-blue-700 transition leading-snug">EPA Reaches New Milestone in Gowanus Canal Superfund Site Cleanup</h4>
-      <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
-        "A major component of the cleanup is the construction of two large underground retention tanks designed to intercept and store millions of gallons of sewage during rainstorms."
-      </p>
-      <div class="text-sm font-bold text-blue-600 flex items-center gap-1 mt-auto">
-        Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-      </div>
-    </a>
-  </div>
-  </div>
-</section>
+    <!-- DATA CALLOUT -->
+    <div class="max-w-6xl mx-auto mb-10 md:mb-12 reveal">
+      <div
+        class="bg-white rounded-2xl border border-rose-100 shadow-sm px-6 py-3 md:px-8 relative overflow-hidden group hover:shadow-md transition duration-500">
+        <!-- Decorative background accent -->
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-rose-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-100 transition duration-700 pointer-events-none">
+        </div>
 
-<!-- Slide B: MECHANISMS -->
-<section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
-  <!-- MECHANISMS -->
-  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">During the Flood: Spreading Mechanisms</h3>
-  <div class="max-w-6xl mx-auto mb-24 fade-in">
-    <!-- Animated Web Diagrams replacing img/3.png -->
-    <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm mb-10">
-      <div class="grid lg:grid-cols-[1fr_1fr_200px] gap-8 items-center">
-        
-        <!-- Overflow SVG -->
-        <div class="flex flex-col items-center">
-          <h4 class="text-xl font-bold mb-4 text-slate-800">Overflow Process</h4>
-          <svg viewBox="0 0 400 200" class="w-full h-auto drop-shadow-md">
-            <defs>
-              <clipPath id="above-land-1">
-                <path d="M 0 0 L 400 0 L 400 110 L 260 110 C 220 110, 190 160, 140 160 L 0 160 Z" />
-              </clipPath>
-              <linearGradient id="poll-over" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#fcd34d" stop-opacity="0.9"/>
-                <stop offset="100%" stop-color="#ea580c" stop-opacity="0.9"/>
-              </linearGradient>
-              <linearGradient id="poll-deep" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.9" />
-              </linearGradient>
-            </defs>
-            <!-- Land Profile -->
-            <path d="M 0 160 L 140 160 C 190 160, 220 110, 260 110 L 400 110 L 400 200 L 0 200 Z" fill="#e7e5e4" stroke="#a8a29e" stroke-width="2"/>
-            
-            <!-- Water & Pollution clipped perfectly above land -->
-            <g clip-path="url(#above-land-1)">
-              <!-- 1. Water -->
-              <path fill="#93c5fd" opacity="0.8">
-                <animate attributeName="d" 
-                         values="M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z; 
+        <div class="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+          <div class="shrink-0 text-center md:text-left min-w-[140px]">
+            <div class="text-4xl md:text-5xl font-extrabold text-rose-600 tracking-tight">115M</div>
+            <div class="text-rose-400 font-bold tracking-widest uppercase text-xs mt-1">Gallons / Year</div>
+          </div>
+
+          <div class="border-l-2 border-rose-100 pl-6 md:pl-8 py-1">
+            <h4 class="text-slate-800 font-bold text-lg mb-1 flex items-center">
+              <svg class="w-4 h-4 text-rose-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                </path>
+              </svg>
+              The Unsolved Reality
+            </h4>
+            <p class="text-slate-600 leading-relaxed text-sm mb-2 max-w-4xl">
+              Historically, over <strong class="text-slate-800">377 million gallons</strong> of raw sewage dumped into
+              Gowanus annually. Even after the ongoing billion-dollar EPA retention tanks are completed, models project
+              that at least <strong class="text-rose-600">115 million gallons</strong> of toxic Combined Sewer Overflow
+              (CSO) will <em>still</em> flush into the canal every single year.
+            </p>
+            <a href="https://gowanuscanalconservancy.org/wp-content/uploads/2018/01/GowanusCanal_OpenSewerAtlas_Aug2019_Final_v2.pdf"
+              target="_blank"
+              class="inline-flex items-center text-xs font-semibold text-rose-500 hover:text-rose-700 transition group-hover:underline">
+              <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+              Source: Gowanus Canal Conservancy (GCC) - Open Sewer Atlas
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OFFICIAL REPORTS -->
+    <h3 class="text-xl md:text-2xl font-bold mb-5 text-center border-b pb-3 max-w-5xl mx-auto">Official Damage
+      Assessments</h3>
+    <div class="grid md:grid-cols-3 gap-5 mb-16 max-w-6xl mx-auto fade-in">
+      <!-- Health Risk Card -->
+      <a href="https://www.epa.gov/enforcement/multiple-enforcement-actions-address-cleaning-contaminated-sediments-gowanus-canal-site"
+        target="_blank"
+        class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
+        <div class="absolute top-0 left-0 w-full h-1 bg-rose-600"></div>
+        <div class="flex justify-between items-start mb-4">
+          <p class="eyebrow text-rose-600">Health Risk</p>
+          <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">EPA</span>
+        </div>
+        <h4 class="text-lg font-bold mb-3 group-hover:text-rose-700 transition leading-snug">Multiple Enforcement
+          Actions Address Cleaning Up Contaminated Sediments</h4>
+        <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+          "Addressing the severe contamination in the Gowanus Canal... mitigating exposure to hazardous substances like
+          coal tar, heavy metals, and PCBs affecting local communities."
+        </p>
+        <div class="text-sm font-bold text-rose-600 flex items-center gap-1 mt-auto">
+          Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Ecological Risk Card -->
+      <a href="https://darrp.noaa.gov/gowanus-canal" target="_blank"
+        class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
+        <div class="absolute top-0 left-0 w-full h-1 bg-emerald-600"></div>
+        <div class="flex justify-between items-start mb-4">
+          <p class="eyebrow text-emerald-600">Ecological Risk</p>
+          <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">NOAA</span>
+        </div>
+        <h4 class="text-lg font-bold mb-3 group-hover:text-emerald-700 transition leading-snug">Gowanus Canal Damage
+          Assessment, Remediation, and Restoration</h4>
+        <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+          "Decades of industrial pollution have severely degraded the canal's ecosystem, threatening marine habitats and
+          degrading sediment quality across the basin."
+        </p>
+        <div class="text-sm font-bold text-emerald-600 flex items-center gap-1 mt-auto">
+          Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Urban Risk Card -->
+      <a href="https://www.epa.gov/newsreleases/epa-reaches-new-milestone-cleanup-gowanus-canal-superfund-site-cleanup"
+        target="_blank"
+        class="block bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group relative overflow-hidden flex flex-col h-full">
+        <div class="absolute top-0 left-0 w-full h-1 bg-blue-600"></div>
+        <div class="flex justify-between items-start mb-4">
+          <p class="eyebrow text-blue-600">Urban Risk</p>
+          <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded text-gray-600">EPA</span>
+        </div>
+        <h4 class="text-lg font-bold mb-3 group-hover:text-blue-700 transition leading-snug">EPA Reaches New Milestone
+          in Gowanus Canal Superfund Site Cleanup</h4>
+        <p class="text-gray-500 text-sm leading-relaxed mb-6 line-clamp-3">
+          "A major component of the cleanup is the construction of two large underground retention tanks designed to
+          intercept and store millions of gallons of sewage during rainstorms."
+        </p>
+        <div class="text-sm font-bold text-blue-600 flex items-center gap-1 mt-auto">
+          Read Official Source <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </div>
+      </a>
+    </div>
+    </div>
+  </section>
+
+  <!-- Slide B: MECHANISMS -->
+  <section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
+    <!-- MECHANISMS -->
+    <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">During the Flood: Spreading
+      Mechanisms</h3>
+    <div class="max-w-6xl mx-auto mb-24 fade-in">
+      <!-- Animated Web Diagrams replacing img/3.png -->
+      <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm mb-10">
+        <div class="grid lg:grid-cols-[1fr_1fr_200px] gap-8 items-center">
+
+          <!-- Overflow SVG -->
+          <div class="flex flex-col items-center">
+            <h4 class="text-xl font-bold mb-4 text-slate-800">Overflow Process</h4>
+            <svg viewBox="0 0 400 200" class="w-full h-auto drop-shadow-md">
+              <defs>
+                <clipPath id="above-land-1">
+                  <path d="M 0 0 L 400 0 L 400 110 L 260 110 C 220 110, 190 160, 140 160 L 0 160 Z" />
+                </clipPath>
+                <linearGradient id="poll-over" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#fcd34d" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#ea580c" stop-opacity="0.9" />
+                </linearGradient>
+                <linearGradient id="poll-deep" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.9" />
+                </linearGradient>
+              </defs>
+              <!-- Land Profile -->
+              <path d="M 0 160 L 140 160 C 190 160, 220 110, 260 110 L 400 110 L 400 200 L 0 200 Z" fill="#e7e5e4"
+                stroke="#a8a29e" stroke-width="2" />
+
+              <!-- Water & Pollution clipped perfectly above land -->
+              <g clip-path="url(#above-land-1)">
+                <!-- 1. Water -->
+                <path fill="#93c5fd" opacity="0.8">
+                  <animate attributeName="d" values="M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z; 
                                  M 0 50 Q 200 50 400 120 L 400 200 L 0 200 Z; 
                                  M 0 80 Q 250 80 400 85 L 400 200 L 0 200 Z; 
-                                 M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z" 
-                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-              </path>
+                                 M 0 125 Q 150 125 400 125 L 400 200 L 0 200 Z" keyTimes="0; 0.4; 0.8; 1" dur="4s"
+                    repeatCount="indefinite" />
+                </path>
 
-              <!-- 2. Suspended Lighter Pollution -->
-              <path fill="url(#poll-over)">
-                <animate attributeName="d" 
-                         values="M 0 148 Q 150 148 400 148 L 400 200 L 0 200 Z; 
+                <!-- 2. Suspended Lighter Pollution -->
+                <path fill="url(#poll-over)">
+                  <animate attributeName="d" values="M 0 148 Q 150 148 400 148 L 400 200 L 0 200 Z; 
                                  M 0 75 Q 180 75 400 125 L 400 200 L 0 200 Z; 
                                  M 0 95 Q 230 95 400 100 L 400 200 L 0 200 Z; 
-                                 M 0 148 Q 150 148 400 148 L 400 200 L 0 200 Z" 
-                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-              </path>
+                                 M 0 148 Q 150 148 400 148 L 400 200 L 0 200 Z" keyTimes="0; 0.4; 0.8; 1" dur="4s"
+                    repeatCount="indefinite" />
+                </path>
 
-              <!-- 3. Deep Red Static Sediment (Bottom of canal) -->
-              <path fill="url(#poll-deep)">
-                <animate attributeName="d" 
-                         values="M 0 152 L 400 152 L 400 200 L 0 200 Z;
+                <!-- 3. Deep Red Static Sediment (Bottom of canal) -->
+                <path fill="url(#poll-deep)">
+                  <animate attributeName="d" values="M 0 152 L 400 152 L 400 200 L 0 200 Z;
                                  M 0 152 L 400 152 L 400 200 L 0 200 Z;
                                  M 0 152 L 400 152 L 400 200 L 0 200 Z;
-                                 M 0 152 L 400 152 L 400 200 L 0 200 Z" 
-                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-              </path>
-            </g>
-            
-            <!-- Arrow Right -->
-            <g transform="translate(180, 40)">
-              <path d="M 0 0 L 40 0 M 30 -5 L 40 0 L 30 5" stroke="#1e293b" stroke-width="2" fill="none">
-                <animateTransform attributeName="transform" type="translate" values="-20,0; 20,0; 20,0; -20,0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-              </path>
-            </g>
-          </svg>
-        </div>
+                                 M 0 152 L 400 152 L 400 200 L 0 200 Z" keyTimes="0; 0.4; 0.8; 1" dur="4s"
+                    repeatCount="indefinite" />
+                </path>
+              </g>
 
-        <!-- Backflow SVG -->
-        <div class="flex flex-col items-center lg:border-l border-gray-100 lg:pl-8 mt-8 lg:mt-0">
-          <h4 class="text-xl font-bold mb-4 text-slate-800">Backflow Process</h4>
-          <svg viewBox="0 0 400 200" class="w-full h-auto drop-shadow-md">
-            <defs>
-              <clipPath id="above-land-2">
-                <path d="M 0 0 L 400 0 L 400 110 L 260 110 C 220 110, 190 160, 140 160 L 0 160 Z" />
-              </clipPath>
-              <linearGradient id="poll-back" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.9" />
-              </linearGradient>
-            </defs>
-            <!-- Land Profile -->
-            <path d="M 0 160 L 140 160 C 190 160, 220 110, 260 110 L 400 110 L 400 200 L 0 200 Z" fill="#e7e5e4" stroke="#a8a29e" stroke-width="2"/>
-            
-            <!-- Water & Pollution clipped perfectly above land -->
-            <g clip-path="url(#above-land-2)">
-              <!-- 1. Water Receding -->
-              <path fill="#60a5fa" opacity="0.85">
-                <animate attributeName="d" 
-                         values="M 0 100 C 150 105, 250 95, 400 100 L 400 200 L 0 200 Z; 
+              <!-- Arrow Right -->
+              <g transform="translate(180, 40)">
+                <path d="M 0 0 L 40 0 M 30 -5 L 40 0 L 30 5" stroke="#1e293b" stroke-width="2" fill="none">
+                  <animateTransform attributeName="transform" type="translate" values="-20,0; 20,0; 20,0; -20,0"
+                    keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.4; 0.8; 1" dur="4s"
+                    repeatCount="indefinite" />
+                </path>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Backflow SVG -->
+          <div class="flex flex-col items-center lg:border-l border-gray-100 lg:pl-8 mt-8 lg:mt-0">
+            <h4 class="text-xl font-bold mb-4 text-slate-800">Backflow Process</h4>
+            <svg viewBox="0 0 400 200" class="w-full h-auto drop-shadow-md">
+              <defs>
+                <clipPath id="above-land-2">
+                  <path d="M 0 0 L 400 0 L 400 110 L 260 110 C 220 110, 190 160, 140 160 L 0 160 Z" />
+                </clipPath>
+                <linearGradient id="poll-back" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.9" />
+                </linearGradient>
+              </defs>
+              <!-- Land Profile -->
+              <path d="M 0 160 L 140 160 C 190 160, 220 110, 260 110 L 400 110 L 400 200 L 0 200 Z" fill="#e7e5e4"
+                stroke="#a8a29e" stroke-width="2" />
+
+              <!-- Water & Pollution clipped perfectly above land -->
+              <g clip-path="url(#above-land-2)">
+                <!-- 1. Water Receding -->
+                <path fill="#60a5fa" opacity="0.85">
+                  <animate attributeName="d" values="M 0 100 C 150 105, 250 95, 400 100 L 400 200 L 0 200 Z; 
                                  M 0 120 C 150 125, 250 115, 400 120 L 400 200 L 0 200 Z; 
                                  M 0 145 C 150 140, 250 150, 400 145 L 400 200 L 0 200 Z; 
-                                 M 0 100 C 150 105, 250 95, 400 100 L 400 200 L 0 200 Z" 
-                         keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-              </path>
+                                 M 0 100 C 150 105, 250 95, 400 100 L 400 200 L 0 200 Z" keyTimes="0; 0.4; 0.8; 1"
+                    dur="4s" repeatCount="indefinite" />
+                </path>
 
-              <!-- 2. Pollution (Static sediment hugging the land & canal bed) -->
-              <path fill="url(#poll-back)">
-                <animate attributeName="d" 
-                         values="M 0 152 L 140 152 C 190 152, 220 106, 260 106 L 400 106 L 400 200 L 0 200 Z; 
+                <!-- 2. Pollution (Static sediment hugging the land & canal bed) -->
+                <path fill="url(#poll-back)">
+                  <animate attributeName="d" values="M 0 152 L 140 152 C 190 152, 220 106, 260 106 L 400 106 L 400 200 L 0 200 Z; 
                                  M 0 154 L 140 154 C 190 154, 220 105, 260 105 L 400 105 L 400 200 L 0 200 Z; 
-                                 M 0 152 L 140 152 C 190 152, 220 106, 260 106 L 400 106 L 400 200 L 0 200 Z" 
-                         dur="4s" repeatCount="indefinite"/>
-              </path>
-            </g>
-            
-            <!-- Arrow Left -->
-            <g transform="translate(180, 40)">
-              <path d="M 40 0 L 0 0 M 10 -5 L 0 0 L 10 5" stroke="#1e293b" stroke-width="2" fill="none">
-                <animateTransform attributeName="transform" type="translate" values="20,0; -20,0; -20,0; 20,0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite"/>
-              </path>
-            </g>
+                                 M 0 152 L 140 152 C 190 152, 220 106, 260 106 L 400 106 L 400 200 L 0 200 Z" dur="4s"
+                    repeatCount="indefinite" />
+                </path>
+              </g>
+
+              <!-- Arrow Left -->
+              <g transform="translate(180, 40)">
+                <path d="M 40 0 L 0 0 M 10 -5 L 0 0 L 10 5" stroke="#1e293b" stroke-width="2" fill="none">
+                  <animateTransform attributeName="transform" type="translate" values="20,0; -20,0; -20,0; 20,0"
+                    keyTimes="0; 0.4; 0.8; 1" dur="4s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.4; 0.8; 1" dur="4s"
+                    repeatCount="indefinite" />
+                </path>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Legend -->
+          <div class="flex flex-col lg:border-l border-gray-100 lg:pl-8 mt-8 lg:mt-0 space-y-6">
+            <div>
+              <h5 class="text-sm font-bold uppercase tracking-wider mb-3 text-slate-800">Water Depth</h5>
+              <div class="space-y-2 text-sm text-gray-600">
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-4 bg-[#bae6fd] rounded"></div> Shallow
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-4 bg-[#7dd3fc] rounded"></div> Moderate
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-4 bg-[#38bdf8] rounded"></div> Deep
+                </div>
+              </div>
+            </div>
+            <div>
+              <h5 class="text-sm font-bold uppercase tracking-wider mb-3 text-slate-800">Pollution Level</h5>
+              <div class="space-y-2 text-sm text-gray-600">
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-4 bg-[#fcd34d] rounded"></div> Low
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-4 bg-[#fb923c] rounded"></div> Medium
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-4 bg-[#ea580c] rounded"></div> High
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-6 h-4 bg-[#b91c1c] rounded"></div> Very High
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Explanations Below Diagram -->
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
+          <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-amber-500 pl-3">Overflow Process (Flooding)
+          </h4>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            During a flood event, the highly toxic sediment pollution deposited at the bottom of the Gowanus Canal is
+            easily stirred up. As the water level rises, this mixed contaminated water overflows directly from the canal
+            into the surrounding urban space.
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
+          <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-rose-600 pl-3">Backflow Process (Receding)
+          </h4>
+          <p class="text-gray-600 leading-relaxed text-sm">
+            When the floodwaters begin to recede back into the canal, a significant amount of the pollution does not
+            recede with the water. It is left behind, trapped in the urban fabric where it takes a very long time to
+            safely dissipate.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Slide C: AFTERMATH -->
+  <section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
+    <!-- AFTERMATH -->
+    <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">The Aftermath: What Gets Left
+      Behind?</h3>
+    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
+
+      <!-- Card 1 -->
+      <div
+        class="bg-rose-50 rounded-xl p-6 border border-rose-100 flex flex-col hover:shadow-md transition-shadow relative">
+        <div
+          class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-rose-200 flex-shrink-0 shadow-sm relative">
+          <img src="img/black_mayo.jpg" alt="Black Mayonnaise"
+            class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+        </div>
+        <h4 class="text-lg font-bold text-rose-900 mb-2">"Black Mayonnaise"</h4>
+        <p class="text-rose-800 text-sm leading-relaxed mb-6 flex-grow">
+          The noxious sludge famously lining the canal bottom. When deposited on streets and drying out, its
+          contaminated dust easily becomes airborne and infiltrates local basements.
+        </p>
+        <a href="https://www.brownstoner.com/development/gowanus-canal-black-mayonnaise-superfund-epa-cleanup-brooklyn/"
+          target="_blank"
+          class="text-rose-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
+          Read Cover Story <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+      </div>
+
+      <!-- Card 2 -->
+      <div
+        class="bg-orange-50 rounded-xl p-6 border border-orange-100 flex flex-col hover:shadow-md transition-shadow relative">
+        <div
+          class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-orange-200 flex-shrink-0 shadow-sm relative">
+          <img src="img/heavy_metals.jpg" alt="Heavy Metals and PAHs"
+            class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+        </div>
+        <h4 class="text-lg font-bold text-orange-900 mb-2">Heavy Metals and PAHs</h4>
+        <p class="text-orange-800 text-sm leading-relaxed mb-6 flex-grow">
+          Residual concentrations of Lead, Arsenic, and Polycyclic Aromatic Hydrocarbons (PAHs) persist in the urban
+          soil long after the floodwaters have completely drained.
+        </p>
+        <a href="https://www.epa.gov/archive/epapages/newsroom_archive/newsreleases/e99317da92c631ce8525782b0057e138.html"
+          target="_blank"
+          class="text-orange-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
+          EPA Press Release <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+      </div>
+
+      <!-- Card 3 -->
+      <div
+        class="bg-amber-50 rounded-xl p-6 border border-amber-100 flex flex-col hover:shadow-md transition-shadow relative">
+        <div
+          class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-amber-200 flex-shrink-0 shadow-sm relative">
+          <img src="img/persistence.jpg" alt="Contaminated Soil"
+            class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+        </div>
+        <h4 class="text-lg font-bold text-amber-900 mb-2">Extreme Persistence</h4>
+        <p class="text-amber-800 text-sm leading-relaxed mb-6 flex-grow">
+          While floodwater retracts within hours, sediment pathogens and chemicals take years to dissipate naturally,
+          turning temporary floods into long-term chronic public health hazards.
+        </p>
+        <a href="https://www.esd.ny.gov/sites/default/files/media/document/Item-VA-Exhibit-4-Gowanus-Existing-Conditions-Report.pdf"
+          target="_blank"
+          class="text-amber-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
+          NY Conditions Report <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+      </div>
+
+    </div>
+
+
+    </div>
+  </section>
+
+  <!-- Slide D: SLIDER -->
+  <section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-20 pb-8">
+    <!-- BEFORE & AFTER SLIDER (Moved to bottom of Part 2) -->
+    <h3 class="text-2xl font-bold mb-3 text-center border-b pb-4 max-w-4xl mx-auto">Context and Vulnerability: Proposed
+      vs Flooded</h3>
+
+    <!-- Sleek slider tags moved outside to protect baked-in image annotations -->
+    <div class="flex justify-between items-end w-full max-w-5xl mx-auto mb-3 px-2 text-xs md:text-sm">
+      <div
+        class="text-slate-600 font-bold uppercase tracking-wide bg-slate-100/80 backdrop-blur px-4 py-1.5 rounded-full border border-slate-200/50 shadow-sm">
+        ← Proposed Future Vision</div>
+      <div
+        class="text-rose-700 font-bold uppercase tracking-wide bg-rose-50/80 backdrop-blur px-4 py-1.5 rounded-full border border-rose-200/50 shadow-sm">
+        Simulated Post-Flood Impact →</div>
+    </div>
+
+    <div
+      class="w-full max-w-5xl mx-auto relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group aspect-[16/10]"
+      id="flood-slider-container">
+
+      <!-- Before Image (Baseline) -->
+      <img src="img/part2/Gowanus CSO Red Hook—Rendered View of Proposed Aerial View in Context.png" alt="Normal View"
+        class="absolute top-0 left-0 w-full h-full object-cover object-center block select-none pointer-events-none">
+
+      <!-- After Image (Pollution) -->
+      <img id="flood-after-img"
+        src="img/part2/Gowanus CSO Red Hook—Rendered View of Proposed Aerial View in Context Pollution.png"
+        alt="Flooded View"
+        class="absolute top-0 left-0 w-full h-full object-cover object-center block select-none pointer-events-none z-10"
+        style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);">
+
+      <!-- Custom Slider Handle -->
+      <div id="flood-slider-handle"
+        class="absolute top-0 left-1/2 h-full z-20 flex items-center justify-center -ml-5 w-10 pointer-events-none"
+        style="left: 50%;">
+        <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-white -ml-[2px] shadow-md z-0"></div>
+        <div
+          class="w-10 h-10 bg-white rounded-full shadow-lg border border-slate-200 flex items-center justify-center z-10 text-slate-500">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8l-4 4 4 4m8-8l4 4-4 4"></path>
           </svg>
         </div>
-        
-        <!-- Legend -->
-        <div class="flex flex-col lg:border-l border-gray-100 lg:pl-8 mt-8 lg:mt-0 space-y-6">
-          <div>
-            <h5 class="text-sm font-bold uppercase tracking-wider mb-3 text-slate-800">Water Depth</h5>
-            <div class="space-y-2 text-sm text-gray-600">
-              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#bae6fd] rounded"></div> Shallow</div>
-              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#7dd3fc] rounded"></div> Moderate</div>
-              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#38bdf8] rounded"></div> Deep</div>
-            </div>
-          </div>
-          <div>
-            <h5 class="text-sm font-bold uppercase tracking-wider mb-3 text-slate-800">Pollution Level</h5>
-            <div class="space-y-2 text-sm text-gray-600">
-              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#fcd34d] rounded"></div> Low</div>
-              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#fb923c] rounded"></div> Medium</div>
-              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#ea580c] rounded"></div> High</div>
-              <div class="flex items-center gap-3"><div class="w-6 h-4 bg-[#b91c1c] rounded"></div> Very High</div>
-            </div>
-          </div>
-        </div>
+      </div>
 
-      </div>
-    </div>
-    
-    <!-- Explanations Below Diagram -->
-    <div class="grid md:grid-cols-2 gap-10">
-      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
-        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-amber-500 pl-3">Overflow Process (Flooding)</h4>
-        <p class="text-gray-600 leading-relaxed text-sm">
-          During a flood event, the highly toxic sediment pollution deposited at the bottom of the Gowanus Canal is easily stirred up. As the water level rises, this mixed contaminated water overflows directly from the canal into the surrounding urban space.
-        </p>
-      </div>
-      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
-        <h4 class="text-xl font-bold mb-3 text-gray-900 border-l-4 border-rose-600 pl-3">Backflow Process (Receding)</h4>
-        <p class="text-gray-600 leading-relaxed text-sm">
-          When the floodwaters begin to recede back into the canal, a significant amount of the pollution does not recede with the water. It is left behind, trapped in the urban fabric where it takes a very long time to safely dissipate.
-        </p>
-      </div>
-    </div>
-  </div>
+      <!-- Range Input -->
+      <input type="range" min="0" max="100" value="50"
+        class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" id="flood-slider-input"
+        aria-label="Compare flooding">
 
-</section>
-
-<!-- Slide C: AFTERMATH -->
-<section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
-  <!-- AFTERMATH -->
-  <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">The Aftermath: What Gets Left Behind?</h3>
-  <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
-    
-    <!-- Card 1 -->
-    <div class="bg-rose-50 rounded-xl p-6 border border-rose-100 flex flex-col hover:shadow-md transition-shadow relative">
-      <div class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-rose-200 flex-shrink-0 shadow-sm relative">
-        <img src="img/black_mayo.jpg" alt="Black Mayonnaise" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-      </div>
-      <h4 class="text-lg font-bold text-rose-900 mb-2">"Black Mayonnaise"</h4>
-      <p class="text-rose-800 text-sm leading-relaxed mb-6 flex-grow">
-        The noxious sludge famously lining the canal bottom. When deposited on streets and drying out, its contaminated dust easily becomes airborne and infiltrates local basements.
-      </p>
-      <a href="https://www.brownstoner.com/development/gowanus-canal-black-mayonnaise-superfund-epa-cleanup-brooklyn/" target="_blank" class="text-rose-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
-        Read Cover Story <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-      </a>
     </div>
 
-    <!-- Card 2 -->
-    <div class="bg-orange-50 rounded-xl p-6 border border-orange-100 flex flex-col hover:shadow-md transition-shadow relative">
-      <div class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-orange-200 flex-shrink-0 shadow-sm relative">
-        <img src="img/heavy_metals.jpg" alt="Heavy Metals and PAHs" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-      </div>
-      <h4 class="text-lg font-bold text-orange-900 mb-2">Heavy Metals and PAHs</h4>
-      <p class="text-orange-800 text-sm leading-relaxed mb-6 flex-grow">
-        Residual concentrations of Lead, Arsenic, and Polycyclic Aromatic Hydrocarbons (PAHs) persist in the urban soil long after the floodwaters have completely drained.
-      </p>
-      <a href="https://www.epa.gov/archive/epapages/newsroom_archive/newsreleases/e99317da92c631ce8525782b0057e138.html" target="_blank" class="text-orange-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
-        EPA Press Release <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-      </a>
-    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const sliderInput = document.getElementById('flood-slider-input');
+        const sliderAfterImg = document.getElementById('flood-after-img');
+        const sliderHandle = document.getElementById('flood-slider-handle');
 
-    <!-- Card 3 -->
-    <div class="bg-amber-50 rounded-xl p-6 border border-amber-100 flex flex-col hover:shadow-md transition-shadow relative">
-      <div class="w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-amber-200 flex-shrink-0 shadow-sm relative">
-        <img src="img/persistence.jpg" alt="Contaminated Soil" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-      </div>
-      <h4 class="text-lg font-bold text-amber-900 mb-2">Extreme Persistence</h4>
-      <p class="text-amber-800 text-sm leading-relaxed mb-6 flex-grow">
-        While floodwater retracts within hours, sediment pathogens and chemicals take years to dissipate naturally, turning temporary floods into long-term chronic public health hazards.
-      </p>
-      <a href="https://www.esd.ny.gov/sites/default/files/media/document/Item-VA-Exhibit-4-Gowanus-Existing-Conditions-Report.pdf" target="_blank" class="text-amber-600 font-semibold text-xs uppercase tracking-wide flex items-center group mt-auto">
-        NY Conditions Report <span class="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-      </a>
-    </div>
-    
-  </div>
-
-
-  </div>
-</section>
-
-<!-- Slide D: SLIDER -->
-<section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-20 pb-8">
-  <!-- BEFORE & AFTER SLIDER (Moved to bottom of Part 2) -->
-  <h3 class="text-2xl font-bold mb-3 text-center border-b pb-4 max-w-4xl mx-auto">Context and Vulnerability: Proposed vs Flooded</h3>
-  
-  <!-- Sleek slider tags moved outside to protect baked-in image annotations -->
-  <div class="flex justify-between items-end w-full max-w-5xl mx-auto mb-3 px-2 text-xs md:text-sm">
-    <div class="text-slate-600 font-bold uppercase tracking-wide bg-slate-100/80 backdrop-blur px-4 py-1.5 rounded-full border border-slate-200/50 shadow-sm">← Proposed Future Vision</div>
-    <div class="text-rose-700 font-bold uppercase tracking-wide bg-rose-50/80 backdrop-blur px-4 py-1.5 rounded-full border border-rose-200/50 shadow-sm">Simulated Post-Flood Impact →</div>
-  </div>
-
-  <div class="w-full max-w-5xl mx-auto relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group aspect-[16/10]" id="flood-slider-container">
-    
-    <!-- Before Image (Baseline) -->
-    <img src="img/part2/Gowanus CSO Red Hook—Rendered View of Proposed Aerial View in Context.png" alt="Normal View" class="absolute top-0 left-0 w-full h-full object-cover object-center block select-none pointer-events-none">
-    
-    <!-- After Image (Pollution) -->
-    <img id="flood-after-img" src="img/part2/Gowanus CSO Red Hook—Rendered View of Proposed Aerial View in Context Pollution.png" alt="Flooded View" class="absolute top-0 left-0 w-full h-full object-cover object-center block select-none pointer-events-none z-10" style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);">
-    
-    <!-- Custom Slider Handle -->
-    <div id="flood-slider-handle" class="absolute top-0 left-1/2 h-full z-20 flex items-center justify-center -ml-5 w-10 pointer-events-none" style="left: 50%;">
-      <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-white -ml-[2px] shadow-md z-0"></div>
-      <div class="w-10 h-10 bg-white rounded-full shadow-lg border border-slate-200 flex items-center justify-center z-10 text-slate-500">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8l-4 4 4 4m8-8l4 4-4 4"></path></svg>
-      </div>
-    </div>
-    
-    <!-- Range Input -->
-    <input type="range" min="0" max="100" value="50" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" id="flood-slider-input" aria-label="Compare flooding">
-    
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const sliderInput = document.getElementById('flood-slider-input');
-      const sliderAfterImg = document.getElementById('flood-after-img');
-      const sliderHandle = document.getElementById('flood-slider-handle');
-
-      if (sliderInput && sliderAfterImg && sliderHandle) {
-        sliderInput.addEventListener('input', (e) => {
-          const val = e.target.value;
-          // Pollution image is mapped to the RIGHT half of the slider
-          sliderAfterImg.style.clipPath = `polygon(${val}% 0, 100% 0, 100% 100%, ${val}% 100%)`;
-          sliderHandle.style.left = `${val}%`;
-        });
-      }
-    });
-  </script>
-
-</section>
-
-<div class="divider"></div>
-
-<!-- PART 3: THE SCIENCE -->
-<section id="science" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
-  <div class="text-center mb-16">
-    <p class="eyebrow mb-3">Part 3</p>
-    <h2 class="text-4xl md:text-5xl font-bold">The Science: Simulation and Modeling</h2>
-    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Utilizing data and agent-based modeling to predict the severity of the crisis.</p>
-  </div>
-
-  <!-- SIMULATION METHODOLOGY & PARAMETERS -->
-  <div class="mb-12 lg:mb-16 fade-in w-full max-w-6xl mx-auto px-4 lg:px-0">
-    <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/60 flex flex-col lg:flex-row gap-10 items-stretch">
-        
-        <!-- Left: Intro & Code Link -->
-        <div class="lg:w-5/12 w-full text-left flex flex-col justify-between">
-            <div>
-                <span class="inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] uppercase font-extrabold tracking-widest mb-4 border border-slate-200">Methodology</span>
-                <h4 class="text-2xl font-bold mb-4 text-slate-900">GAMA Agent-Based Model</h4>
-                <p class="text-slate-500 text-sm leading-relaxed mb-5">
-                    Our simulation dynamically maps extreme rainfall, continuous canal overflow, and complex urban topologies (DEM). Water flows anatomically across the terrain grid, constrained by real-world building massing and specific surface runoff coefficients.
-                </p>
-                
-                <!-- SIMULATION TIMELINE GRAPHIC -->
-                <div class="mb-6 bg-slate-50/80 border border-slate-100 rounded-xl p-4">
-                  <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-400 mb-2.5 tracking-wider">
-                     <span>Temporal Frame</span>
-                     <span class="font-mono text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200 shadow-sm">150 Ticks Total</span>
-                  </div>
-                  <div class="flex h-2 rounded-full overflow-hidden mb-2.5 bg-slate-100">
-                     <div class="bg-blue-500" style="width: 13.3%"></div>
-                     <div class="bg-amber-400" style="width: 86.7%"></div>
-                  </div>
-                  <div class="flex justify-between text-[11px] font-semibold">
-                     <span class="text-blue-600 flex items-center gap-1">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg> 
-                        20 Ticks Storm
-                     </span>
-                     <span class="text-amber-600 flex items-center gap-1">
-                        130 Ticks Recession 
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                     </span>
-                  </div>
-                </div>
-            </div>
-
-            <div>
-                <a href="gama_code/models/gowanus_flood_resilience.gaml" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/95 text-white text-sm font-semibold rounded-xl hover:bg-slate-800 transition shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    View GAML Source
-                </a>
-            </div>
-        </div>
-        
-        <!-- Right: Parameter Grid -->
-        <div class="lg:w-7/12 w-full grid grid-cols-2 gap-4 md:gap-5 text-left">
-            <div class="p-5 bg-slate-50/80 rounded-xl border border-slate-100 flex flex-col justify-between">
-                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
-                  <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div> Topography
-                </div>
-                <div>
-                  <div class="font-mono text-sm md:text-base font-semibold text-slate-700">DEM 2263</div>
-                  <p class="text-[11px] text-slate-400 mt-1.5 leading-tight">≈ 1-Foot High-Resolution Elevation Data</p>
-                </div>
-            </div>
-            <div class="p-5 bg-slate-50/80 rounded-xl border border-slate-100 flex flex-col justify-between">
-                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
-                  <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div> Cellular Size
-                </div>
-                <div>
-                  <div class="font-mono text-sm md:text-base font-semibold text-slate-700">Dynamic Grid</div>
-                  <p class="text-[11px] text-slate-400 mt-1.5 leading-tight">≈ 2m × 2m Urban Micro-Catchment Scale</p>
-                </div>
-            </div>
-            <div class="p-5 bg-rose-50/80 rounded-xl border border-rose-100 flex flex-col justify-between">
-                <div class="text-[10px] text-rose-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
-                  <div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div> Rain Intensity
-                </div>
-                <div>
-                  <div class="font-mono text-sm md:text-base font-semibold text-rose-700">0.2 units/t</div>
-                  <p class="text-[11px] text-rose-500/70 mt-1.5 leading-tight">≈ 100-Year Extreme Storm (3+ in/hr)</p>
-                </div>
-            </div>
-            <div class="p-5 bg-amber-50/80 rounded-xl border border-amber-100 flex flex-col justify-between">
-                <div class="text-[10px] text-amber-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
-                  <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div> Canal Pollution
-                </div>
-                <div>
-                  <div class="font-mono text-sm md:text-base font-semibold text-amber-700">Level 7.0</div>
-                  <p class="text-[11px] text-amber-600/70 mt-1.5 leading-tight">≈ Extremely Toxic Raw CSO Sewage Discharge</p>
-                </div>
-            </div>
-            <div class="p-5 bg-amber-50/80 rounded-xl border border-amber-100 flex flex-col justify-between">
-                <div class="text-[10px] text-amber-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
-                  <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div> Contagion Rate
-                </div>
-                <div>
-                  <div class="font-mono text-sm md:text-base font-semibold text-amber-700">Mobility 1.4</div>
-                  <p class="text-[11px] text-amber-600/70 mt-1.5 leading-tight">≈ Rapid Tidal Backflow Spreading Rate</p>
-                </div>
-            </div>
-            <div class="p-5 bg-emerald-50/80 rounded-xl border border-emerald-100 flex flex-col justify-between">
-                <div class="text-[10px] text-emerald-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
-                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> Green Absorb
-                </div>
-                <div>
-                  <div class="font-mono text-sm md:text-base font-semibold text-emerald-700">0.08 / cell</div>
-                  <p class="text-[11px] text-emerald-600/70 mt-1.5 leading-tight">≈ Natural Porous Soil Retention Capacity</p>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-  </div>
-
-  <!-- INTERACTIVE SIMULATION SWITCHER -->
-  <div class="mb-10 lg:mb-20 fade-in w-full">
-    <h3 class="text-2xl mb-2 font-bold text-center">Intervention Modeling Console</h3>
-    <p class="text-gray-600 mb-8 max-w-2xl mx-auto text-center">Interactive hydrological simulation mapping four distinct physical intervention strategies under identical storm constraints.</p>
-    
-    <div class="max-w-6xl mx-auto bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200/60 ring-1 ring-slate-900/5">
-      
-      <!-- Interactive Screen -->
-      <div id="sim-viewport" class="relative w-full aspect-[16/10] md:aspect-video bg-slate-900 border-b border-slate-100 overflow-hidden cursor-grab active:cursor-grabbing group">
-        
-        <!-- Zoom instructions hint -->
-        <div class="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-black/60 backdrop-blur text-white/90 px-4 py-1.5 text-[10px] md:text-xs uppercase tracking-widest rounded-full opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none shadow-lg">
-           <span class="hidden md:inline">Scroll to Zoom · </span>Drag to Pan<span class="hidden md:inline"> · Double Click to Reset</span>
-        </div>
-
-        <!-- THE ZOOM LAYER -->
-        <div id="sim-zoom-layer" class="absolute inset-0 w-full h-full origin-top-left will-change-transform">
-            <video id="sim-vid-baseline" src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-100 z-10 pointer-events-none"></video>
-            <video id="sim-vid-block" src="img/part3/block_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
-            <video id="sim-vid-green" src="img/part3/green_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
-            <video id="sim-vid-comp" src="img/part3/comprehensive_8s.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
-        </div>
-        
-        <!-- Play / Pause Overlay Button -->
-        <button onclick="toggleSimPlayback()" class="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-50 bg-black/60 backdrop-blur text-white/90 p-3 rounded-full hover:bg-black/80 transition shadow-lg focus:outline-none flex items-center justify-center cursor-pointer">
-            <!-- Pause Icon -->
-            <svg id="sim-icon-pause" class="w-3.5 h-3.5 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>
-            <!-- Play Icon -->
-            <svg id="sim-icon-play" class="w-3.5 h-3.5 md:w-4 md:h-4 hidden ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </button>
-
-        <!-- THE STATIC UI OVERLAY LAYER -->
-        <div id="sim-text-baseline" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-100 z-20 border border-white/10">
-             <span class="font-bold text-amber-400 block mb-1 text-xs tracking-wider uppercase">Baseline Scenario</span>
-             <p class="text-slate-200">No interventions active. Severe flooding occurs, driving pollutant deposition deep into vulnerable low-lying urban zones.</p>
-        </div>
-        <div id="sim-text-block" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
-             <span class="font-bold text-blue-400 block mb-1 text-xs tracking-wider uppercase">Strategy 1: Physical Block</span>
-             <p class="text-slate-200">Hard engineered barriers completely halt initial storm surges but disrupt critical tidal ecosystems inside the canal.</p>
-        </div>
-        <div id="sim-text-green" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
-             <span class="font-bold text-emerald-400 block mb-1 text-xs tracking-wider uppercase">Strategy 2: Permeable Greenland</span>
-             <p class="text-slate-200">Vast porous networks absorb minor runoff effectively, though they inevitably become saturated during extreme events.</p>
-        </div>
-        <div id="sim-text-comp" class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
-             <span class="font-bold text-purple-400 block mb-1 text-xs tracking-wider uppercase">Strategy 3: Comprehensive</span>
-             <p class="text-slate-200">A hybrid layered approach balances resilient physical defense with ecological integration and absorption.</p>
-        </div>
-        
-      </div>
-
-      <!-- Control Console -->
-      <div class="grid grid-cols-4 bg-slate-50/50 backdrop-blur divide-x divide-slate-200/50 text-sm">
-        <button onclick="switchSimulation('baseline')" id="btn-sim-baseline" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 bg-white shadow-[inset_0_3px_0_0_#0f172a] text-slate-900">
-           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-slate-500 mb-1 tracking-widest">Control</span>
-           <span class="font-bold text-sm md:text-base">Baseline</span>
-        </button>
-        <button onclick="switchSimulation('block')" id="btn-sim-block" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
-           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-blue-500 mb-1 tracking-widest">Strategy 1</span>
-           <span class="font-bold text-sm md:text-base">Physical Block</span>
-        </button>
-        <button onclick="switchSimulation('green')" id="btn-sim-green" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
-           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-emerald-500 mb-1 tracking-widest">Strategy 2</span>
-           <span class="font-bold text-sm md:text-base">Greenland</span>
-        </button>
-        <button onclick="switchSimulation('comp')" id="btn-sim-comp" class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
-           <span class="block text-[10px] md:text-xs uppercase font-extrabold text-purple-500 mb-1 tracking-widest">Strategy 3</span>
-           <span class="font-bold text-sm md:text-base">Comprehensive</span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    // 1. Simulation Crossfade Logic
-    function switchSimulation(targetId) {
-      const views = ['baseline', 'block', 'green', 'comp'];
-      views.forEach(id => {
-        // Toggle dynamic video layer
-        const vidEl = document.getElementById('sim-vid-' + id);
-        if (id === targetId) {
-          vidEl.classList.remove('opacity-0', 'z-0');
-          vidEl.classList.add('opacity-100', 'z-10');
-        } else {
-          vidEl.classList.remove('opacity-100', 'z-10');
-          vidEl.classList.add('opacity-0', 'z-0');
-        }
-
-        // Toggle text overlay layer
-        const txtEl = document.getElementById('sim-text-' + id);
-        if (id === targetId) {
-          txtEl.classList.remove('opacity-0', 'z-0');
-          txtEl.classList.add('opacity-100', 'z-20');
-        } else {
-          txtEl.classList.remove('opacity-100', 'z-20');
-          txtEl.classList.add('opacity-0', 'z-0');
-        }
-
-        // Toggle button styling
-        const btn = document.getElementById('btn-sim-' + id);
-        if (id === targetId) {
-          btn.classList.add('bg-white', 'shadow-[inset_0_3px_0_0_#0f172a]', 'text-slate-900', 'opacity-100');
-          btn.classList.remove('hover:bg-slate-100/50', 'text-slate-500', 'opacity-80', 'hover:opacity-100');
-        } else {
-          btn.classList.remove('bg-white', 'shadow-[inset_0_3px_0_0_#0f172a]', 'text-slate-900', 'opacity-100');
-          btn.classList.add('hover:bg-slate-100/50', 'text-slate-500', 'opacity-80', 'hover:opacity-100');
+        if (sliderInput && sliderAfterImg && sliderHandle) {
+          sliderInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            // Pollution image is mapped to the RIGHT half of the slider
+            sliderAfterImg.style.clipPath = `polygon(${val}% 0, 100% 0, 100% 100%, ${val}% 100%)`;
+            sliderHandle.style.left = `${val}%`;
+          });
         }
       });
-    }
+    </script>
 
-    // 2. Synchronized Pan & Zoom Explorer
-    document.addEventListener("DOMContentLoaded", () => {
-      const viewport = document.getElementById('sim-viewport');
-      const zoomLayer = document.getElementById('sim-zoom-layer');
-      
-      let scale = 1, translateX = 0, translateY = 0;
-      let isDragging = false, startX, startY;
+  </section>
 
-      if(viewport && zoomLayer) {
-        // Zoom towards mouse pointer
-        viewport.addEventListener('wheel', (e) => {
-           e.preventDefault(); 
-           
-           const oldScale = scale;
-           const zoomSpeed = 0.005; 
-           scale += e.deltaY * -zoomSpeed;
-           scale = Math.min(Math.max(1, scale), 6); // Max zoom 6x, Min 1x
-           
-           if (scale !== oldScale) {
-               // Pointer-centric math
-               const rect = viewport.getBoundingClientRect();
-               const mouseX = e.clientX - rect.left;
-               const mouseY = e.clientY - rect.top;
+  <div class="divider"></div>
 
-               const px = (mouseX - translateX) / oldScale;
-               const py = (mouseY - translateY) / oldScale;
+  <!-- PART 3: THE SCIENCE -->
+  <section id="science" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
+    <div class="text-center mb-16">
+      <p class="eyebrow mb-3">Part 3</p>
+      <h2 class="text-4xl md:text-5xl font-bold">The Science: Simulation and Modeling</h2>
+      <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Utilizing data and agent-based modeling to predict the severity of
+        the crisis.</p>
+    </div>
 
-               translateX = mouseX - px * scale;
-               translateY = mouseY - py * scale;
-           }
+    <!-- SIMULATION METHODOLOGY & PARAMETERS -->
+    <div class="mb-12 lg:mb-16 fade-in w-full max-w-6xl mx-auto px-4 lg:px-0">
+      <div
+        class="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/60 flex flex-col lg:flex-row gap-10 items-stretch">
 
-           if(scale <= 1) { 
+        <!-- Left: Intro & Code Link -->
+        <div class="lg:w-5/12 w-full text-left flex flex-col justify-between">
+          <div>
+            <span
+              class="inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] uppercase font-extrabold tracking-widest mb-4 border border-slate-200">Methodology</span>
+            <h4 class="text-2xl font-bold mb-4 text-slate-900">GAMA Agent-Based Model</h4>
+            <p class="text-slate-500 text-sm leading-relaxed mb-5">
+              Our simulation dynamically maps extreme rainfall, continuous canal overflow, and complex urban topologies
+              (DEM). Water flows anatomically across the terrain grid, constrained by real-world building massing and
+              specific surface runoff coefficients.
+            </p>
+
+            <!-- SIMULATION TIMELINE GRAPHIC -->
+            <div class="mb-6 bg-slate-50/80 border border-slate-100 rounded-xl p-4">
+              <div
+                class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-400 mb-2.5 tracking-wider">
+                <span>Temporal Frame</span>
+                <span
+                  class="font-mono text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200 shadow-sm">150
+                  Ticks Total</span>
+              </div>
+              <div class="flex h-2 rounded-full overflow-hidden mb-2.5 bg-slate-100">
+                <div class="bg-blue-500" style="width: 13.3%"></div>
+                <div class="bg-amber-400" style="width: 86.7%"></div>
+              </div>
+              <div class="flex justify-between text-[11px] font-semibold">
+                <span class="text-blue-600 flex items-center gap-1">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                      d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                  </svg>
+                  20 Ticks Storm
+                </span>
+                <span class="text-amber-600 flex items-center gap-1">
+                  130 Ticks Recession
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <a href="gama_code/models/gowanus_flood_resilience.gaml" target="_blank"
+              class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900/95 text-white text-sm font-semibold rounded-xl hover:bg-slate-800 transition shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+              </svg>
+              View GAML Source
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Parameter Grid -->
+        <div class="lg:w-7/12 w-full grid grid-cols-2 gap-4 md:gap-5 text-left">
+          <div class="p-5 bg-slate-50/80 rounded-xl border border-slate-100 flex flex-col justify-between">
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+              <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div> Topography
+            </div>
+            <div>
+              <div class="font-mono text-sm md:text-base font-semibold text-slate-700">DEM 2263</div>
+              <p class="text-[11px] text-slate-400 mt-1.5 leading-tight">≈ 1-Foot High-Resolution Elevation Data</p>
+            </div>
+          </div>
+          <div class="p-5 bg-slate-50/80 rounded-xl border border-slate-100 flex flex-col justify-between">
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+              <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div> Cellular Size
+            </div>
+            <div>
+              <div class="font-mono text-sm md:text-base font-semibold text-slate-700">Dynamic Grid</div>
+              <p class="text-[11px] text-slate-400 mt-1.5 leading-tight">≈ 2m × 2m Urban Micro-Catchment Scale</p>
+            </div>
+          </div>
+          <div class="p-5 bg-rose-50/80 rounded-xl border border-rose-100 flex flex-col justify-between">
+            <div class="text-[10px] text-rose-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+              <div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div> Rain Intensity
+            </div>
+            <div>
+              <div class="font-mono text-sm md:text-base font-semibold text-rose-700">0.2 units/t</div>
+              <p class="text-[11px] text-rose-500/70 mt-1.5 leading-tight">≈ 100-Year Extreme Storm (3+ in/hr)</p>
+            </div>
+          </div>
+          <div class="p-5 bg-amber-50/80 rounded-xl border border-amber-100 flex flex-col justify-between">
+            <div class="text-[10px] text-amber-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+              <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div> Canal Pollution
+            </div>
+            <div>
+              <div class="font-mono text-sm md:text-base font-semibold text-amber-700">Level 7.0</div>
+              <p class="text-[11px] text-amber-600/70 mt-1.5 leading-tight">≈ Extremely Toxic Raw CSO Sewage Discharge
+              </p>
+            </div>
+          </div>
+          <div class="p-5 bg-amber-50/80 rounded-xl border border-amber-100 flex flex-col justify-between">
+            <div class="text-[10px] text-amber-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+              <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div> Contagion Rate
+            </div>
+            <div>
+              <div class="font-mono text-sm md:text-base font-semibold text-amber-700">Mobility 1.4</div>
+              <p class="text-[11px] text-amber-600/70 mt-1.5 leading-tight">≈ Rapid Tidal Backflow Spreading Rate</p>
+            </div>
+          </div>
+          <div class="p-5 bg-emerald-50/80 rounded-xl border border-emerald-100 flex flex-col justify-between">
+            <div class="text-[10px] text-emerald-500 font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+              <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> Green Absorb
+            </div>
+            <div>
+              <div class="font-mono text-sm md:text-base font-semibold text-emerald-700">0.08 / cell</div>
+              <p class="text-[11px] text-emerald-600/70 mt-1.5 leading-tight">≈ Natural Porous Soil Retention Capacity
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- INTERACTIVE SIMULATION SWITCHER -->
+    <div class="mb-10 lg:mb-20 fade-in w-full">
+      <h3 class="text-2xl mb-2 font-bold text-center">Intervention Modeling Console</h3>
+      <p class="text-gray-600 mb-8 max-w-2xl mx-auto text-center">Interactive hydrological simulation mapping four
+        distinct physical intervention strategies under identical storm constraints.</p>
+
+      <div
+        class="max-w-6xl mx-auto bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200/60 ring-1 ring-slate-900/5">
+
+        <!-- Interactive Screen -->
+        <div id="sim-viewport"
+          class="relative w-full aspect-[16/10] md:aspect-video bg-slate-900 border-b border-slate-100 overflow-hidden cursor-grab active:cursor-grabbing group">
+
+          <!-- Zoom instructions hint -->
+          <div
+            class="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-black/60 backdrop-blur text-white/90 px-4 py-1.5 text-[10px] md:text-xs uppercase tracking-widest rounded-full opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none shadow-lg">
+            <span class="hidden md:inline">Scroll to Zoom · </span>Drag to Pan<span class="hidden md:inline"> · Double
+              Click to Reset</span>
+          </div>
+
+          <!-- THE ZOOM LAYER -->
+          <div id="sim-zoom-layer" class="absolute inset-0 w-full h-full origin-top-left will-change-transform">
+            <video id="sim-vid-baseline" src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-100 z-10 pointer-events-none"></video>
+            <video id="sim-vid-block" src="img/part3/block_8s.mp4" autoplay loop muted playsinline
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
+            <video id="sim-vid-green" src="img/part3/green_8s.mp4" autoplay loop muted playsinline
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
+            <video id="sim-vid-comp" src="img/part3/comprehensive_8s.mp4" autoplay loop muted playsinline
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0 z-0 pointer-events-none"></video>
+          </div>
+
+          <!-- Play / Pause Overlay Button -->
+          <button onclick="toggleSimPlayback()"
+            class="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-50 bg-black/60 backdrop-blur text-white/90 p-3 rounded-full hover:bg-black/80 transition shadow-lg focus:outline-none flex items-center justify-center cursor-pointer">
+            <!-- Pause Icon -->
+            <svg id="sim-icon-pause" class="w-3.5 h-3.5 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
+            </svg>
+            <!-- Play Icon -->
+            <svg id="sim-icon-play" class="w-3.5 h-3.5 md:w-4 md:h-4 hidden ml-0.5" fill="currentColor"
+              viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </button>
+
+          <!-- THE STATIC UI OVERLAY LAYER -->
+          <div id="sim-text-baseline"
+            class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-100 z-20 border border-white/10">
+            <span class="font-bold text-amber-400 block mb-1 text-xs tracking-wider uppercase">Baseline Scenario</span>
+            <p class="text-slate-200">No interventions active. Severe flooding occurs, driving pollutant deposition deep
+              into vulnerable low-lying urban zones.</p>
+          </div>
+          <div id="sim-text-block"
+            class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
+            <span class="font-bold text-blue-400 block mb-1 text-xs tracking-wider uppercase">Strategy 1: Physical
+              Block</span>
+            <p class="text-slate-200">Hard engineered barriers completely halt initial storm surges but disrupt critical
+              tidal ecosystems inside the canal.</p>
+          </div>
+          <div id="sim-text-green"
+            class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
+            <span class="font-bold text-emerald-400 block mb-1 text-xs tracking-wider uppercase">Strategy 2: Permeable
+              Greenland</span>
+            <p class="text-slate-200">Vast porous networks absorb minor runoff effectively, though they inevitably
+              become saturated during extreme events.</p>
+          </div>
+          <div id="sim-text-comp"
+            class="pointer-events-none absolute top-4 right-4 md:bottom-6 md:right-6 md:top-auto bg-slate-900/85 backdrop-blur-xl text-white px-5 py-4 rounded-xl text-sm shadow-2xl max-w-sm transition-opacity duration-700 opacity-0 z-0 border border-white/10">
+            <span class="font-bold text-purple-400 block mb-1 text-xs tracking-wider uppercase">Strategy 3:
+              Comprehensive</span>
+            <p class="text-slate-200">A hybrid layered approach balances resilient physical defense with ecological
+              integration and absorption.</p>
+          </div>
+
+        </div>
+
+        <!-- Control Console -->
+        <div class="grid grid-cols-4 bg-slate-50/50 backdrop-blur divide-x divide-slate-200/50 text-sm">
+          <button onclick="switchSimulation('baseline')" id="btn-sim-baseline"
+            class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 bg-white shadow-[inset_0_3px_0_0_#0f172a] text-slate-900">
+            <span
+              class="block text-[10px] md:text-xs uppercase font-extrabold text-slate-500 mb-1 tracking-widest">Control</span>
+            <span class="font-bold text-sm md:text-base">Baseline</span>
+          </button>
+          <button onclick="switchSimulation('block')" id="btn-sim-block"
+            class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
+            <span
+              class="block text-[10px] md:text-xs uppercase font-extrabold text-blue-500 mb-1 tracking-widest">Strategy
+              1</span>
+            <span class="font-bold text-sm md:text-base">Physical Block</span>
+          </button>
+          <button onclick="switchSimulation('green')" id="btn-sim-green"
+            class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
+            <span
+              class="block text-[10px] md:text-xs uppercase font-extrabold text-emerald-500 mb-1 tracking-widest">Strategy
+              2</span>
+            <span class="font-bold text-sm md:text-base">Greenland</span>
+          </button>
+          <button onclick="switchSimulation('comp')" id="btn-sim-comp"
+            class="p-4 md:py-6 md:px-2 text-center cursor-pointer transition-all duration-300 hover:bg-slate-100/50 text-slate-500 opacity-80 hover:opacity-100">
+            <span
+              class="block text-[10px] md:text-xs uppercase font-extrabold text-purple-500 mb-1 tracking-widest">Strategy
+              3</span>
+            <span class="font-bold text-sm md:text-base">Comprehensive</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      // 1. Simulation Crossfade Logic
+      function switchSimulation(targetId) {
+        const views = ['baseline', 'block', 'green', 'comp'];
+        views.forEach(id => {
+          // Toggle dynamic video layer
+          const vidEl = document.getElementById('sim-vid-' + id);
+          if (id === targetId) {
+            vidEl.classList.remove('opacity-0', 'z-0');
+            vidEl.classList.add('opacity-100', 'z-10');
+          } else {
+            vidEl.classList.remove('opacity-100', 'z-10');
+            vidEl.classList.add('opacity-0', 'z-0');
+          }
+
+          // Toggle text overlay layer
+          const txtEl = document.getElementById('sim-text-' + id);
+          if (id === targetId) {
+            txtEl.classList.remove('opacity-0', 'z-0');
+            txtEl.classList.add('opacity-100', 'z-20');
+          } else {
+            txtEl.classList.remove('opacity-100', 'z-20');
+            txtEl.classList.add('opacity-0', 'z-0');
+          }
+
+          // Toggle button styling
+          const btn = document.getElementById('btn-sim-' + id);
+          if (id === targetId) {
+            btn.classList.add('bg-white', 'shadow-[inset_0_3px_0_0_#0f172a]', 'text-slate-900', 'opacity-100');
+            btn.classList.remove('hover:bg-slate-100/50', 'text-slate-500', 'opacity-80', 'hover:opacity-100');
+          } else {
+            btn.classList.remove('bg-white', 'shadow-[inset_0_3px_0_0_#0f172a]', 'text-slate-900', 'opacity-100');
+            btn.classList.add('hover:bg-slate-100/50', 'text-slate-500', 'opacity-80', 'hover:opacity-100');
+          }
+        });
+      }
+
+      // 2. Synchronized Pan & Zoom Explorer
+      document.addEventListener("DOMContentLoaded", () => {
+        const viewport = document.getElementById('sim-viewport');
+        const zoomLayer = document.getElementById('sim-zoom-layer');
+
+        let scale = 1, translateX = 0, translateY = 0;
+        let isDragging = false, startX, startY;
+
+        if (viewport && zoomLayer) {
+          // Zoom towards mouse pointer
+          viewport.addEventListener('wheel', (e) => {
+            e.preventDefault();
+
+            const oldScale = scale;
+            const zoomSpeed = 0.005;
+            scale += e.deltaY * -zoomSpeed;
+            scale = Math.min(Math.max(1, scale), 6); // Max zoom 6x, Min 1x
+
+            if (scale !== oldScale) {
+              // Pointer-centric math
+              const rect = viewport.getBoundingClientRect();
+              const mouseX = e.clientX - rect.left;
+              const mouseY = e.clientY - rect.top;
+
+              const px = (mouseX - translateX) / oldScale;
+              const py = (mouseY - translateY) / oldScale;
+
+              translateX = mouseX - px * scale;
+              translateY = mouseY - py * scale;
+            }
+
+            if (scale <= 1) {
               scale = 1; translateX = 0; translateY = 0;
               zoomLayer.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-           } else {
-              zoomLayer.style.transition = 'none'; 
-           }
-           
-           updateTransform();
-        }, {passive: false});
+            } else {
+              zoomLayer.style.transition = 'none';
+            }
 
-        // Pan via click and drag
-        viewport.addEventListener('mousedown', (e) => {
-           isDragging = true;
-           startX = e.clientX - translateX;
-           startY = e.clientY - translateY;
-        });
-        
-        window.addEventListener('mouseup', () => {
-           isDragging = false;
-        });
-        
-        window.addEventListener('mouseleave', () => {
-           isDragging = false;
-        });
-        
-        window.addEventListener('mousemove', (e) => {
-           if(!isDragging || scale === 1) return; // Only allow drag when zoomed in
-           e.preventDefault();
-           zoomLayer.style.transition = 'none';
-           
-           translateX = e.clientX - startX;
-           translateY = e.clientY - startY;
-           
-           // Apply loose bounding wrapper suitable for origin-top-left
-           const boundsX = viewport.clientWidth * scale * 0.4;
-           const boundsY = viewport.clientHeight * scale * 0.4;
-           const maxPanX = viewport.clientWidth * (scale - 1);
-           const maxPanY = viewport.clientHeight * (scale - 1);
-           
-           translateX = Math.min(boundsX, Math.max(-maxPanX - boundsX, translateX));
-           translateY = Math.min(boundsY, Math.max(-maxPanY - boundsY, translateY));
+            updateTransform();
+          }, { passive: false });
 
-           updateTransform();
-        });
+          // Pan via click and drag
+          viewport.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+          });
 
-        // Double click resets fully
-        viewport.addEventListener('dblclick', () => {
-           scale = 1; translateX = 0; translateY = 0;
-           zoomLayer.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-           updateTransform();
-        });
+          window.addEventListener('mouseup', () => {
+            isDragging = false;
+          });
 
-        function updateTransform() {
-           zoomLayer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+          window.addEventListener('mouseleave', () => {
+            isDragging = false;
+          });
+
+          window.addEventListener('mousemove', (e) => {
+            if (!isDragging || scale === 1) return; // Only allow drag when zoomed in
+            e.preventDefault();
+            zoomLayer.style.transition = 'none';
+
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+
+            // Apply loose bounding wrapper suitable for origin-top-left
+            const boundsX = viewport.clientWidth * scale * 0.4;
+            const boundsY = viewport.clientHeight * scale * 0.4;
+            const maxPanX = viewport.clientWidth * (scale - 1);
+            const maxPanY = viewport.clientHeight * (scale - 1);
+
+            translateX = Math.min(boundsX, Math.max(-maxPanX - boundsX, translateX));
+            translateY = Math.min(boundsY, Math.max(-maxPanY - boundsY, translateY));
+
+            updateTransform();
+          });
+
+          // Double click resets fully
+          viewport.addEventListener('dblclick', () => {
+            scale = 1; translateX = 0; translateY = 0;
+            zoomLayer.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            updateTransform();
+          });
+
+          function updateTransform() {
+            zoomLayer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+          }
+        }
+      });
+
+      // 3. Play / Pause Control
+      let simIsPlaying = true;
+      function toggleSimPlayback() {
+        const views = ['baseline', 'block', 'green', 'comp'];
+        const iconPause = document.getElementById('sim-icon-pause');
+        const iconPlay = document.getElementById('sim-icon-play');
+
+        if (simIsPlaying) {
+          views.forEach(id => {
+            const vid = document.getElementById('sim-vid-' + id);
+            if (vid) vid.pause();
+          });
+          iconPause.classList.add('hidden');
+          iconPlay.classList.remove('hidden');
+          simIsPlaying = false;
+        } else {
+          views.forEach(id => {
+            const vid = document.getElementById('sim-vid-' + id);
+            if (vid) vid.play();
+          });
+          iconPause.classList.remove('hidden');
+          iconPlay.classList.add('hidden');
+          simIsPlaying = true;
         }
       }
-    });
-
-    // 3. Play / Pause Control
-    let simIsPlaying = true;
-    function toggleSimPlayback() {
-      const views = ['baseline', 'block', 'green', 'comp'];
-      const iconPause = document.getElementById('sim-icon-pause');
-      const iconPlay = document.getElementById('sim-icon-play');
-
-      if (simIsPlaying) {
-         views.forEach(id => {
-            const vid = document.getElementById('sim-vid-' + id);
-            if(vid) vid.pause();
-         });
-         iconPause.classList.add('hidden');
-         iconPlay.classList.remove('hidden');
-         simIsPlaying = false;
-      } else {
-         views.forEach(id => {
-            const vid = document.getElementById('sim-vid-' + id);
-            if(vid) vid.play();
-         });
-         iconPause.classList.remove('hidden');
-         iconPlay.classList.add('hidden');
-         simIsPlaying = true;
-      }
-    }
-  </script>
+    </script>
 
 
-</section>
+  </section>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
-<!-- PART 4: THE SOLUTIONS -->
-<section id="solutions" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
-  <div class="text-center mb-20">
-    <p class="eyebrow mb-3">Part 4</p>
-    <h2 class="text-4xl md:text-5xl font-bold">The Solutions: Interventions and Testing</h2>
-    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Testing physical and green interventions in our models to measure their impact on pollution reduction.</p>
-  </div>
+  <!-- PART 4: THE SOLUTIONS -->
+  <section id="solutions" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative">
+    <div class="text-center mb-20">
+      <p class="eyebrow mb-3">Part 4</p>
+      <h2 class="text-4xl md:text-5xl font-bold">The Solutions: Interventions and Testing</h2>
+      <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Testing physical and green interventions in our models to measure
+        their impact on pollution reduction.</p>
+    </div>
 
     <div class="flex flex-col gap-24 w-full pb-10">
-      
+
       <!-- Strategy 01 -->
       <article class="max-w-6xl mx-auto px-4 w-full">
         <div class="text-left mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -803,52 +1102,73 @@
             <p class="eyebrow mb-2">Strategy 01</p>
             <h3 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Physical Block</h3>
           </div>
-          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">A hard engineered barrier system to prevent canal water from entering streets. Halts localized swelling but triggers severe upstream consequences.</p>
+          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">A hard engineered barrier system to prevent canal
+            water from entering streets. Halts localized swelling but triggers severe upstream consequences.</p>
         </div>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <!-- Video Split Comparison (Span 2) -->
-          <div class="lg:col-span-2 bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg group flex flex-col min-h-[300px] md:min-h-[400px]">
-             <div class="absolute top-4 left-4 z-10">
-               <span class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
-             </div>
-             <div class="absolute top-4 right-4 z-10">
-               <span class="bg-blue-500/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">PHYSICAL BLOCK</span>
-             </div>
-             <div class="grid grid-cols-2 w-full flex-grow divide-x-4 divide-slate-800/80 absolute inset-0">
-               <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-               <video src="img/part3/block_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-             </div>
-             <!-- Visual Splitter Line Hint -->
-             <div class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+          <div
+            class="lg:col-span-2 bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg group flex flex-col min-h-[300px] md:min-h-[400px]">
+            <div class="absolute top-4 left-4 z-10">
+              <span
+                class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
+            </div>
+            <div class="absolute top-4 right-4 z-10">
+              <span
+                class="bg-blue-500/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">PHYSICAL
+                BLOCK</span>
+            </div>
+            <div class="grid grid-cols-2 w-full flex-grow divide-x-4 divide-slate-800/80 absolute inset-0">
+              <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline
+                class="w-full h-full object-cover"></video>
+              <video src="img/part3/block_8s.mp4" autoplay loop muted playsinline
+                class="w-full h-full object-cover"></video>
+            </div>
+            <!-- Visual Splitter Line Hint -->
+            <div
+              class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none">
+            </div>
           </div>
-          
+
           <div class="flex flex-col gap-6">
-             <!-- Strengths / Weaknesses -->
-             <div class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
-                <div class="mb-5">
-                  <h5 class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Strengths</h5>
-                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
-                     <li>• Immediate flood cessation</li>
-                     <li>• Predictable protection zone</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> Weaknesses</h5>
-                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
-                     <li>• High infrastructure capital cost</li>
-                     <li>• Severe ecological flow disruption</li>
-                     <li>• Obstructs canal sightlines</li>
-                  </ul>
-                </div>
-             </div>
+            <!-- Strengths / Weaknesses -->
+            <div
+              class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
+              <div class="mb-5">
+                <h5
+                  class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                  </svg> Strengths</h5>
+                <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                  <li>• Immediate flood cessation</li>
+                  <li>• Predictable protection zone</li>
+                </ul>
+              </div>
+              <div>
+                <h5
+                  class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                  </svg> Weaknesses</h5>
+                <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                  <li>• High infrastructure capital cost</li>
+                  <li>• Severe ecological flow disruption</li>
+                  <li>• Obstructs canal sightlines</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Data Charts Row for Strategy 1 -->
         <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
-            <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Pollution Discrepancy Data</h6>
-            <img src="img/temp1.png" alt="Pollution Data" class="w-full max-w-4xl h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
+          <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Pollution
+            Discrepancy Data</h6>
+          <img src="img/temp1.png" alt="Pollution Data"
+            class="w-full max-w-4xl h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
         </div>
       </article>
 
@@ -859,61 +1179,88 @@
             <p class="eyebrow mb-2">Strategy 02</p>
             <h3 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Permeable Greenland</h3>
           </div>
-          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">Porous parks and infrastructure designed to absorb runoff naturally, offering ecological benefits but lacking raw defensive capacity.</p>
+          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">Porous parks and infrastructure designed to absorb
+            runoff naturally, offering ecological benefits but lacking raw defensive capacity.</p>
         </div>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <div class="flex flex-col gap-6">
-             <div class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
-                <div class="mb-5">
-                  <h5 class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Strengths</h5>
-                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
-                     <li>• Vital ecological co-benefits</li>
-                     <li>• Lower installation cost</li>
-                     <li>• Multi-use public spaces</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> Weaknesses</h5>
-                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
-                     <li>• Saturated rapidly in storms</li>
-                     <li>• Intense ongoing maintenance</li>
-                  </ul>
-                </div>
-             </div>
+            <div
+              class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
+              <div class="mb-5">
+                <h5
+                  class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                  </svg> Strengths</h5>
+                <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                  <li>• Vital ecological co-benefits</li>
+                  <li>• Lower installation cost</li>
+                  <li>• Multi-use public spaces</li>
+                </ul>
+              </div>
+              <div>
+                <h5
+                  class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                  </svg> Weaknesses</h5>
+                <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                  <li>• Saturated rapidly in storms</li>
+                  <li>• Intense ongoing maintenance</li>
+                </ul>
+              </div>
+            </div>
           </div>
 
           <div class="col-span-1 lg:col-span-2 flex flex-col gap-6">
-             <!-- Video Split Comparison (Span 2) -->
-             <div class="bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg group min-h-[300px] md:min-h-[400px] flex-grow w-full">
-                <div class="absolute top-4 left-4 z-10">
-                  <span class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
-                </div>
-                <div class="absolute top-4 right-4 z-10">
-                  <span class="bg-emerald-500/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">PERMEABLE GREEN</span>
-                </div>
-                <div class="grid grid-cols-2 w-full h-full divide-x-4 divide-slate-800/80 absolute inset-0">
-                  <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-                  <video src="img/part3/green_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-                </div>
-                <div class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none"></div>
-             </div>
+            <!-- Video Split Comparison (Span 2) -->
+            <div
+              class="bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg group min-h-[300px] md:min-h-[400px] flex-grow w-full">
+              <div class="absolute top-4 left-4 z-10">
+                <span
+                  class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
+              </div>
+              <div class="absolute top-4 right-4 z-10">
+                <span
+                  class="bg-emerald-500/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">PERMEABLE
+                  GREEN</span>
+              </div>
+              <div class="grid grid-cols-2 w-full h-full divide-x-4 divide-slate-800/80 absolute inset-0">
+                <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline
+                  class="w-full h-full object-cover"></video>
+                <video src="img/part3/green_8s.mp4" autoplay loop muted playsinline
+                  class="w-full h-full object-cover"></video>
+              </div>
+              <div
+                class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none">
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Data Charts Row for Strategy 2 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-           <!-- Chart 1 (Flooding) -->
-           <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center justify-center">
-              <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Flooding Spread Variance</h6>
-              <img src="img/temp2.png" alt="Flooding Data" class="w-full max-w-lg h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
-           </div>
-           <!-- Chart 2 (Pollution) -->
-           <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center justify-center relative">
-              <div class="absolute top-6 right-6 bg-emerald-50 text-emerald-600 border border-emerald-100 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider hidden md:block">Pollutants Filtered</div>
-              <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Pollutant Soil Retention Analysis</h6>
-              <img src="img/temp3.png" alt="Pollution Data" class="w-full max-w-lg h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
-           </div>
+          <!-- Chart 1 (Flooding) -->
+          <div
+            class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center justify-center">
+            <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Flooding Spread
+              Variance</h6>
+            <img src="img/temp2.png" alt="Flooding Data"
+              class="w-full max-w-lg h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
+          </div>
+          <!-- Chart 2 (Pollution) -->
+          <div
+            class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center justify-center relative">
+            <div
+              class="absolute top-6 right-6 bg-emerald-50 text-emerald-600 border border-emerald-100 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider hidden md:block">
+              Pollutants Filtered</div>
+            <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Pollutant Soil
+              Retention Analysis</h6>
+            <img src="img/temp3.png" alt="Pollution Data"
+              class="w-full max-w-lg h-auto max-h-72 object-contain rounded-xl mix-blend-multiply">
+          </div>
         </div>
       </article>
 
@@ -924,254 +1271,329 @@
             <p class="eyebrow mb-2 !text-purple-500">Strategy 03</p>
             <h3 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Comprehensive Solution</h3>
           </div>
-          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">A high-fidelity hybrid approach stacking engineered physical defenses with expansive distributed green infrastructure.</p>
+          <p class="text-slate-500 md:max-w-lg text-sm md:text-right">A high-fidelity hybrid approach stacking
+            engineered physical defenses with expansive distributed green infrastructure.</p>
         </div>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg min-h-[300px] md:min-h-[400px]">
-             <div class="absolute top-4 left-4 z-10">
-               <span class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
-             </div>
-             <div class="absolute top-4 right-4 z-10">
-               <span class="bg-purple-600/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">COMPREHENSIVE</span>
-             </div>
-             <div class="grid grid-cols-2 w-full h-full divide-x-4 divide-slate-800/80 absolute inset-0">
-               <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-               <video src="img/part3/comprehensive_8s.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-             </div>
-             <div class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+          <div
+            class="lg:col-span-2 bg-slate-900 rounded-[2rem] overflow-hidden relative shadow-lg min-h-[300px] md:min-h-[400px]">
+            <div class="absolute top-4 left-4 z-10">
+              <span
+                class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/10 shadow-sm pointer-events-none">BASELINE</span>
+            </div>
+            <div class="absolute top-4 right-4 z-10">
+              <span
+                class="bg-purple-600/80 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest border border-white/20 shadow-sm pointer-events-none">COMPREHENSIVE</span>
+            </div>
+            <div class="grid grid-cols-2 w-full h-full divide-x-4 divide-slate-800/80 absolute inset-0">
+              <video src="img/part3/baseline_8s.mp4" autoplay loop muted playsinline
+                class="w-full h-full object-cover"></video>
+              <video src="img/part3/comprehensive_8s.mp4" autoplay loop muted playsinline
+                class="w-full h-full object-cover"></video>
+            </div>
+            <div
+              class="absolute inset-y-0 left-1/2 w-1 bg-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-none">
+            </div>
           </div>
-          
+
           <div class="flex flex-col gap-6">
-             <div class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
-                <div class="mb-5">
-                  <h5 class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Strengths</h5>
-                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
-                     <li>• Dynamic adaptive resilience</li>
-                     <li>• Layered multi-scale defense</li>
-                     <li>• Balances ecology & geometry</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> Weaknesses</h5>
-                  <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
-                     <li>• Complex agency jurisdiction</li>
-                     <li>• Massive sustained funding</li>
-                  </ul>
-                </div>
-             </div>
+            <div
+              class="bg-slate-50 border border-slate-100 rounded-[2rem] p-6 shadow-sm flex-grow flex flex-col justify-center">
+              <div class="mb-5">
+                <h5
+                  class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                  </svg> Strengths</h5>
+                <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                  <li>• Dynamic adaptive resilience</li>
+                  <li>• Layered multi-scale defense</li>
+                  <li>• Balances ecology & geometry</li>
+                </ul>
+              </div>
+              <div>
+                <h5
+                  class="text-rose-500 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                  </svg> Weaknesses</h5>
+                <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
+                  <li>• Complex agency jurisdiction</li>
+                  <li>• Massive sustained funding</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-        
+
         <!-- Data Charts Row for Strategy 3 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-             <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
-                <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">System Flood Reduction Efficacy</h6>
-                <img src="img/temp4.png" alt="Flooding Data" class="w-full h-auto max-h-64 object-contain rounded-xl mix-blend-multiply">
-             </div>
-             <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
-                <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Toxicity & Pollution Mitigation</h6>
-                <img src="img/temp5.png" alt="Pollution Data" class="w-full h-auto max-h-64 object-contain rounded-xl mix-blend-multiply">
-             </div>
+          <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
+            <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">System Flood
+              Reduction Efficacy</h6>
+            <img src="img/temp4.png" alt="Flooding Data"
+              class="w-full h-auto max-h-64 object-contain rounded-xl mix-blend-multiply">
+          </div>
+          <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm flex flex-col items-center">
+            <h6 class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mb-4 text-center">Toxicity &
+              Pollution Mitigation</h6>
+            <img src="img/temp5.png" alt="Pollution Data"
+              class="w-full h-auto max-h-64 object-contain rounded-xl mix-blend-multiply">
+          </div>
         </div>
       </article>
 
     </div>
-</section>
+  </section>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
 
-<!-- PART 5: TAKE ACTION -->
-<section id="take-action" class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative py-20 bg-slate-50/50">
-  <div class="text-center mb-16 px-4">
-    <p class="eyebrow mb-3">Part 5</p>
-    <h2 class="text-4xl md:text-5xl font-bold">Take Action: Community and Policy</h2>
-    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Translating hydrological research into resilient, equitable outcomes.</p>
-  </div>
+  <!-- PART 5: TAKE ACTION -->
+  <section id="take-action"
+    class="section snap-start snap-always min-h-[100svh] flex flex-col justify-center relative py-20 bg-slate-50/50">
+    <div class="text-center mb-16 px-4">
+      <p class="eyebrow mb-3">Part 5</p>
+      <h2 class="text-4xl md:text-5xl font-bold">Take Action: Community and Policy</h2>
+      <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Translating hydrological research into resilient, equitable
+        outcomes.</p>
+    </div>
 
-  <div class="max-w-6xl mx-auto px-4 w-full flex flex-col gap-24">
-    
-    <!-- Concerned Problem Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-       
-       <!-- Left: Public Outcry Cards -->
-       <div class="flex flex-col gap-4">
+    <div class="max-w-6xl mx-auto px-4 w-full flex flex-col gap-24">
+
+      <!-- Concerned Problem Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+        <!-- Left: Public Outcry Cards -->
+        <div class="flex flex-col gap-4">
           <h3 class="text-3xl font-bold text-slate-800 mb-1 tracking-tight">Concerned Problem</h3>
           <p class="text-slate-500 font-medium italic mb-4">Agencies see the data. Residents need to see the risk.</p>
           <h4 class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-2">The concern is already loud:</h4>
-          
-          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md hover:border-slate-300 cursor-default">
-             <div class="flex items-center gap-3 mb-3">
-                <span class="bg-[#C85A3C] text-white text-[10px] font-bold px-3 py-1 rounded uppercase tracking-wider">News</span>
-                <span class="font-black text-slate-800 text-sm">Gothamist</span>
-             </div>
-             <p class="text-slate-700 font-medium text-sm">Residents press state & feds to clean up toxic fumes</p>
+
+          <div
+            class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md hover:border-slate-300 cursor-default">
+            <div class="flex items-center gap-3 mb-3">
+              <span
+                class="bg-[#C85A3C] text-white text-[10px] font-bold px-3 py-1 rounded uppercase tracking-wider">News</span>
+              <span class="font-black text-slate-800 text-sm">Gothamist</span>
+            </div>
+            <p class="text-slate-700 font-medium text-sm">Residents press state & feds to clean up toxic fumes</p>
           </div>
 
-          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md hover:border-slate-300 cursor-default" style="transition-delay: 50ms;">
-             <div class="flex items-center gap-3 mb-3">
-                <span class="bg-[#2FA2EE] text-white text-[10px] font-bold px-3 py-1 rounded uppercase tracking-wider">X</span>
-                <span class="font-black text-slate-800 text-sm">@infogobn</span>
-             </div>
-             <p class="text-slate-700 font-medium text-sm">"The remediation plan will put residents' health at risk."</p>
+          <div
+            class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md hover:border-slate-300 cursor-default"
+            style="transition-delay: 50ms;">
+            <div class="flex items-center gap-3 mb-3">
+              <span
+                class="bg-[#2FA2EE] text-white text-[10px] font-bold px-3 py-1 rounded uppercase tracking-wider">X</span>
+              <span class="font-black text-slate-800 text-sm">@infogobn</span>
+            </div>
+            <p class="text-slate-700 font-medium text-sm">"The remediation plan will put residents' health at risk."</p>
           </div>
 
-          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md hover:border-slate-300 cursor-default" style="transition-delay: 100ms;">
-             <div class="flex items-center gap-3 mb-3">
-                <span class="bg-[#3D5A98] text-white text-[10px] font-bold px-3 py-1 rounded uppercase tracking-wider">Facebook</span>
-                <span class="font-black text-slate-800 text-sm">Voice of Gowanus</span>
-             </div>
-             <p class="text-slate-700 font-medium text-sm">Community health survey on legacy toxicants (TCE, BTEX)</p>
+          <div
+            class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-md hover:border-slate-300 cursor-default"
+            style="transition-delay: 100ms;">
+            <div class="flex items-center gap-3 mb-3">
+              <span
+                class="bg-[#3D5A98] text-white text-[10px] font-bold px-3 py-1 rounded uppercase tracking-wider">Facebook</span>
+              <span class="font-black text-slate-800 text-sm">Voice of Gowanus</span>
+            </div>
+            <p class="text-slate-700 font-medium text-sm">Community health survey on legacy toxicants (TCE, BTEX)</p>
           </div>
-       </div>
+        </div>
 
-       <!-- Right: Community Health Risk & Two lines of defense -->
-       <div class="flex flex-col gap-6 lg:mt-[4.5rem]">
+        <!-- Right: Community Health Risk & Two lines of defense -->
+        <div class="flex flex-col gap-6 lg:mt-[4.5rem]">
           <div>
             <h3 class="text-3xl font-black text-[#266874] mb-2 tracking-tight">Community Health Risk</h3>
             <p class="text-slate-600 font-medium italic">Legacy pollutants + dust + construction exposure</p>
           </div>
-          
+
           <h4 class="text-xs font-bold text-[#3B828F] uppercase tracking-widest mt-4">Two lines of defense:</h4>
-          
-          <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-[#346876] transition-all duration-300 hover:translate-x-2 hover:shadow-md cursor-default">
-             <h5 class="text-xl font-bold text-[#346876] mb-2">During Construction</h5>
-             <p class="text-slate-600 text-sm font-medium">Controlled excavation · Covered transport · Safe scheduling</p>
+
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-[#346876] transition-all duration-300 hover:translate-x-2 hover:shadow-md cursor-default">
+            <h5 class="text-xl font-bold text-[#346876] mb-2">During Construction</h5>
+            <p class="text-slate-600 text-sm font-medium">Controlled excavation · Covered transport · Safe scheduling
+            </p>
           </div>
 
-          <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-[#A6BA65] transition-all duration-300 hover:translate-x-2 hover:shadow-md cursor-default">
-             <h5 class="text-xl font-bold text-[#A6BA65] mb-2">Long-Term</h5>
-             <p class="text-slate-600 text-sm font-medium">Air-quality sensors · Green buffers · Health reporting</p>
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-[#A6BA65] transition-all duration-300 hover:translate-x-2 hover:shadow-md cursor-default">
+            <h5 class="text-xl font-bold text-[#A6BA65] mb-2">Long-Term</h5>
+            <p class="text-slate-600 text-sm font-medium">Air-quality sensors · Green buffers · Health reporting</p>
           </div>
-       </div>
+        </div>
 
-    </div>
+      </div>
 
-    <div class="w-full h-px bg-slate-200"></div>
+      <div class="w-full h-px bg-slate-200"></div>
 
-    <!-- From Disclosure to Monitoring (Timeline) -->
-    <div class="w-full pb-10">
-       <div class="text-left mb-16">
-          <h3 class="text-4xl md:text-5xl font-black text-[#286B75] mb-4 tracking-tight">From Disclosure to Monitoring</h3>
+      <!-- From Disclosure to Monitoring (Timeline) -->
+      <div class="w-full pb-10">
+        <div class="text-left mb-16">
+          <h3 class="text-4xl md:text-5xl font-black text-[#286B75] mb-4 tracking-tight">From Disclosure to Monitoring
+          </h3>
           <p class="text-slate-500 font-medium italic text-lg">Who does what, at each step of the process</p>
-       </div>
+        </div>
 
-       <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
           <!-- Connecting Line (Hidden on Mobile) -->
           <div class="hidden md:block absolute top-6 left-[10%] right-[10%] h-[2px] bg-slate-400 z-0">
-             <!-- Arrows perfectly centered between columns -->
-             <div class="absolute left-[12.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45"></div>
-             <div class="absolute left-[37.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45"></div>
-             <div class="absolute left-[62.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45"></div>
-             <div class="absolute left-[87.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45"></div>
+            <!-- Arrows perfectly centered between columns -->
+            <div
+              class="absolute left-[12.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45">
+            </div>
+            <div
+              class="absolute left-[37.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45">
+            </div>
+            <div
+              class="absolute left-[62.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45">
+            </div>
+            <div
+              class="absolute left-[87.5%] top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 border-t-2 border-r-2 border-slate-400 rotate-45">
+            </div>
           </div>
 
           <!-- Step 1 -->
           <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
-             <div class="w-12 h-12 rounded-full bg-[#1A5463] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">1</div>
-             <h4 class="text-[#1A5463] font-black text-lg mb-3">Disclose Risk</h4>
-             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">Publish flood and contamination hotspot maps for streets, parks, and canal edges.</div>
-             <div class="w-full bg-[#1A5463] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO LEADS</span>
-                U.S. EPA<br/>NYC DEP
-             </div>
+            <div
+              class="w-12 h-12 rounded-full bg-[#1A5463] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
+              1</div>
+            <h4 class="text-[#1A5463] font-black text-lg mb-3">Disclose Risk</h4>
+            <div
+              class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+              Publish flood and contamination hotspot maps for streets, parks, and canal edges.</div>
+            <div
+              class="w-full bg-[#1A5463] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
+              <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO
+                LEADS</span>
+              U.S. EPA<br />NYC DEP
+            </div>
           </div>
 
           <!-- Step 2 -->
           <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
-             <div class="w-12 h-12 rounded-full bg-[#368494] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">2</div>
-             <h4 class="text-[#368494] font-black text-lg mb-3">Gather Concerns</h4>
-             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">Collect resident input on health, green space, and construction impacts.</div>
-             <div class="w-full bg-[#368494] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO LEADS</span>
-                Brooklyn CB6<br/>Gowanus CAG
-             </div>
+            <div
+              class="w-12 h-12 rounded-full bg-[#368494] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
+              2</div>
+            <h4 class="text-[#368494] font-black text-lg mb-3">Gather Concerns</h4>
+            <div
+              class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+              Collect resident input on health, green space, and construction impacts.</div>
+            <div
+              class="w-full bg-[#368494] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
+              <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO
+                LEADS</span>
+              Brooklyn CB6<br />Gowanus CAG
+            </div>
           </div>
 
           <!-- Step 3 -->
           <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
-             <div class="w-12 h-12 rounded-full bg-[#9FB661] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">3</div>
-             <h4 class="text-[#9FB661] font-black text-lg mb-3">Review Options</h4>
-             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">Compare hard barriers, green landscapes, and hybrid solutions side by side.</div>
-             <div class="w-full bg-[#9FB661] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO LEADS</span>
-                Residents<br/>Planners<br/>Gowanus Canal Conservancy
-             </div>
+            <div
+              class="w-12 h-12 rounded-full bg-[#9FB661] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
+              3</div>
+            <h4 class="text-[#9FB661] font-black text-lg mb-3">Review Options</h4>
+            <div
+              class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+              Compare hard barriers, green landscapes, and hybrid solutions side by side.</div>
+            <div
+              class="w-full bg-[#9FB661] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
+              <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO
+                LEADS</span>
+              Residents<br />Planners<br />Gowanus Canal Conservancy
+            </div>
           </div>
 
           <!-- Step 4 -->
           <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
-             <div class="w-12 h-12 rounded-full bg-[#DC9533] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">4</div>
-             <h4 class="text-[#DC9533] font-black text-lg mb-3">Pilot Solutions</h4>
-             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">Test interventions near the canal first before scaling city-wide.</div>
-             <div class="w-full bg-[#DC9533] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO LEADS</span>
-                NYC agencies<br/>Waterfront owners<br/>Engineering contractors
-             </div>
+            <div
+              class="w-12 h-12 rounded-full bg-[#DC9533] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
+              4</div>
+            <h4 class="text-[#DC9533] font-black text-lg mb-3">Pilot Solutions</h4>
+            <div
+              class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+              Test interventions near the canal first before scaling city-wide.</div>
+            <div
+              class="w-full bg-[#DC9533] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
+              <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO
+                LEADS</span>
+              NYC agencies<br />Waterfront owners<br />Engineering contractors
+            </div>
           </div>
 
           <!-- Step 5 -->
           <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
-             <div class="w-12 h-12 rounded-full bg-[#C75231] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">5</div>
-             <h4 class="text-[#C75231] font-black text-lg mb-3">Monitor Safety</h4>
-             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">Publish ongoing updates on water, soil, and public-space safety.</div>
-             <div class="w-full bg-[#C75231] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO LEADS</span>
-                EPA + NYC DEP<br/>Community partners
-             </div>
+            <div
+              class="w-12 h-12 rounded-full bg-[#C75231] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
+              5</div>
+            <h4 class="text-[#C75231] font-black text-lg mb-3">Monitor Safety</h4>
+            <div
+              class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-xs text-slate-600 mb-4 w-full flex-grow text-left leading-relaxed font-medium transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+              Publish ongoing updates on water, soil, and public-space safety.</div>
+            <div
+              class="w-full bg-[#C75231] text-white p-4 rounded-xl text-xs font-bold min-h-[120px] flex flex-col justify-center items-center shadow-inner transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
+              <span class="text-[10px] text-white/60 mb-2 uppercase tracking-widest border-b border-white/20 pb-1">WHO
+                LEADS</span>
+              EPA + NYC DEP<br />Community partners
+            </div>
           </div>
 
-       </div>
+        </div>
+      </div>
+
     </div>
-
-  </div>
-</section>
+  </section>
 
 
-<!-- FOOTER -->
-<footer class="border-t border-gray-200 mt-20 py-10 text-center text-sm text-gray-500">
-  <p>INFO5420 Urban Design · Team 4 Research Portfolio · 2026</p>
-</footer>
+  <!-- FOOTER -->
+  <footer class="border-t border-gray-200 mt-20 py-10 text-center text-sm text-gray-500">
+    <p>INFO5420 Urban Design · Team 4 Research Portfolio · 2026</p>
+  </footer>
 
-<script>
-  // Advanced Scroll Reveal Logic
-  document.addEventListener("DOMContentLoaded", () => {
-    // Automatically apply the 'reveal' class to major blocks to avoid manual HTML bloat
-    const autoAnimateSelectors = [
-      '.eyebrow', '.section h2', '.section h3', '.section p.max-w-2xl',
-      '.card', '.chart-card', 
-      '.grid > div', '.grid > a', '#flood-slider-container', 
-      '.bg-slate-900', '.bg-gray-900', 'video', '.case-video-wrap'
-    ];
-    
-    document.querySelectorAll(autoAnimateSelectors.join(', ')).forEach(el => {
-      // Don't apply to icons/small svgs inside cards
-      el.classList.add('reveal');
-    });
+  <script>
+    // Advanced Scroll Reveal Logic
+    document.addEventListener("DOMContentLoaded", () => {
+      // Automatically apply the 'reveal' class to major blocks to avoid manual HTML bloat
+      const autoAnimateSelectors = [
+        '.eyebrow', '.section h2', '.section h3', '.section p.max-w-2xl',
+        '.card', '.chart-card',
+        '.grid > div', '.grid > a', '#flood-slider-container',
+        '.bg-slate-900', '.bg-gray-900', 'video', '.case-video-wrap'
+      ];
 
-    const observer = new IntersectionObserver((entries) => {
-      let delay = 0;
-      entries.forEach((entry) => {
-        if(entry.isIntersecting) {
-          // Staggered wave effect for elements entering at the exact same time (like grid cards)
-          setTimeout(() => {
-            entry.target.classList.add('active');
-          }, delay);
-          delay += 150; // 150ms delay between each simultaneous element
-          observer.unobserve(entry.target);
-        }
+      document.querySelectorAll(autoAnimateSelectors.join(', ')).forEach(el => {
+        // Don't apply to icons/small svgs inside cards
+        el.classList.add('reveal');
       });
-    }, { 
-      threshold: 0.15, 
-      rootMargin: "0px 0px -40px 0px" 
-    });
 
-    document.querySelectorAll('.reveal').forEach(el => {
-      observer.observe(el);
+      const observer = new IntersectionObserver((entries) => {
+        let delay = 0;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Staggered wave effect for elements entering at the exact same time (like grid cards)
+            setTimeout(() => {
+              entry.target.classList.add('active');
+            }, delay);
+            delay += 150; // 150ms delay between each simultaneous element
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
+
 </html>

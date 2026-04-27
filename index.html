@@ -22,6 +22,19 @@
       background: #fafaf7;
     }
 
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
     h1,
     h2,
     h3,
@@ -99,13 +112,20 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      animation: kenBurns 14s ease-out forwards;
+      transform-origin: center center;
+    }
+
+    @keyframes kenBurns {
+      from { transform: scale(1);    }
+      to   { transform: scale(1.06); }
     }
 
     .hero::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, .35) 0%, rgba(0, 0, 0, .55) 100%);
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 55%, rgba(0,0,0,0.1) 100%);
     }
 
     .hero-content {
@@ -114,11 +134,27 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: left;
       color: #fff;
-      padding: 0 1.5rem;
+      padding: 0 clamp(1.5rem, 6vw, 6rem) clamp(3rem, 8vh, 5rem);
+    }
+
+    /* Hero entrance animation */
+    .hero-content > * {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: heroFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.2s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.4s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.55s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.7s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.85s; }
+
+    @keyframes heroFadeUp {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Nav */
@@ -141,6 +177,29 @@
 
     .nav a:hover {
       color: #0f172a;
+    }
+
+    .nav a.active {
+      color: #0f172a;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #0f172a;
+      border-radius: 1px;
+      animation: navUnderline 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes navUnderline {
+      from { transform: scaleX(0); opacity: 0; }
+      to   { transform: scaleX(1); opacity: 1; }
     }
 
     /* Card */
@@ -180,13 +239,17 @@
     /* Scroll Reveal Animations */
     .reveal {
       opacity: 0;
-      transform: translateY(60px);
+      transform: translateY(24px);
     }
 
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
       transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .timeline-step.reveal.active {
+      transition-delay: var(--sd, 0ms);
     }
   </style>
 </head>
@@ -202,7 +265,7 @@
         <a href="#problem">2. The Problem</a>
         <a href="#science">3. Simulations</a>
         <a href="#solutions">4. Solutions</a>
-        <a href="#action">5. Take Action</a>
+        <a href="#take-action">5. Take Action</a>
       </div>
     </div>
   </nav>
@@ -211,15 +274,20 @@
   <header id="hook" class="hero snap-start snap-always">
     <img src="img/1.png" alt="Gowanus Canal aerial view" />
     <div class="hero-content">
-      <p class="eyebrow text-white/80 mb-6">Part 1: The Hook</p>
-      <h1 class="text-5xl md:text-7xl font-bold leading-tight max-w-4xl">Flooding-driven Pollution in Gowanus</h1>
-      <p class="mt-6 max-w-2xl text-lg text-white/85 leading-relaxed">
-        As sea levels rise and storms intensify, the Gowanus Canal becomes a conduit for contaminated water entering the
-        surrounding neighborhood — threatening public health, fragile ecology, and urban infrastructure.
+      <p class="eyebrow text-white/40 mb-5 tracking-[0.25em]">Gowanus · Research · 2026</p>
+      <div class="w-14 h-px bg-white/25 mb-7"></div>
+      <h1 class="font-bold leading-[1.05] tracking-tight max-w-2xl mb-6"
+        style="font-size: clamp(2.8rem, 7vw, 6rem);">
+        Flooding-driven<br>Pollution<br>in Gowanus
+      </h1>
+      <p class="max-w-xs text-sm md:text-base text-white/55 leading-relaxed mb-10">
+        As sea levels rise and storms intensify, the Gowanus Canal becomes a conduit for contaminated water — threatening public health, ecology, and infrastructure.
       </p>
       <a href="#problem"
-        class="mt-10 inline-block px-6 py-3 border border-white/40 rounded-full text-sm hover:bg-white hover:text-slate-900 transition">Explore
-        the research ↓</a>
+        class="inline-flex items-center gap-3 text-sm font-semibold text-white/75 hover:text-white transition-colors duration-300 group">
+        Explore the research
+        <span class="w-8 h-px bg-white/40 group-hover:w-14 transition-all duration-500"></span>
+      </a>
     </div>
   </header>
 
@@ -244,7 +312,7 @@
 
         <div class="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center">
           <div class="shrink-0 text-center md:text-left min-w-[140px]">
-            <div class="text-4xl md:text-5xl font-extrabold text-rose-600 tracking-tight">115M</div>
+            <div id="stat-115m" data-target="115" data-suffix="M" class="text-4xl md:text-5xl font-extrabold text-rose-600 tracking-tight">0M</div>
             <div class="text-rose-400 font-bold tracking-widest uppercase text-xs mt-1">Gallons / Year</div>
           </div>
 
@@ -280,7 +348,7 @@
     <!-- OFFICIAL REPORTS -->
     <h3 class="text-xl md:text-2xl font-bold mb-5 text-center border-b pb-3 max-w-5xl mx-auto">Official Damage
       Assessments</h3>
-    <div class="grid md:grid-cols-3 gap-5 mb-16 max-w-6xl mx-auto fade-in">
+    <div class="grid md:grid-cols-3 gap-5 mb-16 max-w-6xl mx-auto reveal">
       <!-- Health Risk Card -->
       <a href="https://www.epa.gov/enforcement/multiple-enforcement-actions-address-cleaning-contaminated-sediments-gowanus-canal-site"
         target="_blank"
@@ -353,11 +421,11 @@
   </section>
 
   <!-- Slide B: MECHANISMS -->
-  <section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
+  <section id="problem-mechanisms" class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
     <!-- MECHANISMS -->
     <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">During the Flood: Spreading
       Mechanisms</h3>
-    <div class="max-w-6xl mx-auto mb-24 fade-in">
+    <div class="max-w-6xl mx-auto mb-24 reveal">
       <!-- Animated Web Diagrams replacing img/3.png -->
       <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm mb-10">
         <div class="grid lg:grid-cols-[1fr_1fr_200px] gap-8 items-center">
@@ -538,7 +606,7 @@
   </section>
 
   <!-- Slide C: AFTERMATH -->
-  <section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
+  <section id="problem-aftermath" class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-32 pb-8">
     <!-- AFTERMATH -->
     <h3 class="text-2xl font-bold mb-8 text-center border-b pb-4 max-w-5xl mx-auto">The Aftermath: What Gets Left
       Behind?</h3>
@@ -611,7 +679,7 @@
   </section>
 
   <!-- Slide D: SLIDER -->
-  <section class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-20 pb-8">
+  <section id="problem-slider" class="snap-start snap-always min-h-[100svh] flex flex-col justify-center relative w-full pt-20 pb-8">
     <!-- BEFORE & AFTER SLIDER (Moved to bottom of Part 2) -->
     <h3 class="text-2xl font-bold mb-3 text-center border-b pb-4 max-w-4xl mx-auto">Context and Vulnerability: Proposed
       vs Flooded</h3>
@@ -646,11 +714,16 @@
         class="absolute top-0 left-1/2 h-full z-20 flex items-center justify-center -ml-5 w-10 pointer-events-none"
         style="left: 50%;">
         <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-white -ml-[2px] shadow-md z-0"></div>
-        <div
-          class="w-10 h-10 bg-white rounded-full shadow-lg border border-slate-200 flex items-center justify-center z-10 text-slate-500">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8l-4 4 4 4m8-8l4 4-4 4"></path>
-          </svg>
+        <div class="relative w-10 h-10 flex items-center justify-center z-10">
+          <!-- Ping ring (fires once on viewport entry) -->
+          <span id="slider-ping"
+            class="absolute inline-flex w-full h-full rounded-full bg-slate-400 opacity-0 pointer-events-none"></span>
+          <div
+            class="w-10 h-10 bg-white rounded-full shadow-lg border border-slate-200 flex items-center justify-center text-slate-500">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8l-4 4 4 4m8-8l4 4-4 4"></path>
+            </svg>
+          </div>
         </div>
       </div>
 
@@ -660,6 +733,10 @@
         aria-label="Compare flooding">
 
     </div>
+
+    <p class="text-center text-xs text-slate-400 mt-2 tracking-wide select-none">
+      ← Drag the handle to compare →
+    </p>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -692,7 +769,7 @@
     </div>
 
     <!-- SIMULATION METHODOLOGY & PARAMETERS -->
-    <div class="mb-12 lg:mb-16 fade-in w-full max-w-6xl mx-auto px-4 lg:px-0">
+    <div class="mb-12 lg:mb-16 reveal w-full max-w-6xl mx-auto px-4 lg:px-0">
       <div
         class="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/60 flex flex-col lg:flex-row gap-10 items-stretch">
 
@@ -816,7 +893,7 @@
     </div>
 
     <!-- INTERACTIVE SIMULATION SWITCHER -->
-    <div class="mb-10 lg:mb-20 fade-in w-full">
+    <div class="mb-10 lg:mb-20 reveal w-full">
       <h3 class="text-2xl mb-2 font-bold text-center">Intervention Modeling Console</h3>
       <p class="text-gray-600 mb-8 max-w-2xl mx-auto text-center">Interactive hydrological simulation mapping four
         distinct physical intervention strategies under identical storm constraints.</p>
@@ -1140,7 +1217,8 @@
                   class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-                  </svg> Strengths</h5>
+                  </svg> Strengths
+                </h5>
                 <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
                   <li>• Immediate flood cessation</li>
                   <li>• Predictable protection zone</li>
@@ -1152,7 +1230,8 @@
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
                     </path>
-                  </svg> Weaknesses</h5>
+                  </svg> Weaknesses
+                </h5>
                 <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
                   <li>• High infrastructure capital cost</li>
                   <li>• Severe ecological flow disruption</li>
@@ -1192,7 +1271,8 @@
                   class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-                  </svg> Strengths</h5>
+                  </svg> Strengths
+                </h5>
                 <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
                   <li>• Vital ecological co-benefits</li>
                   <li>• Lower installation cost</li>
@@ -1205,7 +1285,8 @@
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
                     </path>
-                  </svg> Weaknesses</h5>
+                  </svg> Weaknesses
+                </h5>
                 <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
                   <li>• Saturated rapidly in storms</li>
                   <li>• Intense ongoing maintenance</li>
@@ -1305,7 +1386,8 @@
                   class="text-emerald-600 font-bold uppercase text-[10px] tracking-widest mb-2 flex items-center gap-1.5">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-                  </svg> Strengths</h5>
+                  </svg> Strengths
+                </h5>
                 <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
                   <li>• Dynamic adaptive resilience</li>
                   <li>• Layered multi-scale defense</li>
@@ -1318,7 +1400,8 @@
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
                     </path>
-                  </svg> Weaknesses</h5>
+                  </svg> Weaknesses
+                </h5>
                 <ul class="text-xs text-slate-600 space-y-1.5 font-semibold">
                   <li>• Complex agency jurisdiction</li>
                   <li>• Massive sustained funding</li>
@@ -1459,7 +1542,7 @@
           </div>
 
           <!-- Step 1 -->
-          <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
+          <div class="timeline-step flex flex-col items-center text-center z-10 h-full group cursor-default" style="--sd:0ms">
             <div
               class="w-12 h-12 rounded-full bg-[#1A5463] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
               1</div>
@@ -1476,7 +1559,7 @@
           </div>
 
           <!-- Step 2 -->
-          <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
+          <div class="timeline-step flex flex-col items-center text-center z-10 h-full group cursor-default" style="--sd:120ms">
             <div
               class="w-12 h-12 rounded-full bg-[#368494] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
               2</div>
@@ -1493,7 +1576,7 @@
           </div>
 
           <!-- Step 3 -->
-          <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
+          <div class="timeline-step flex flex-col items-center text-center z-10 h-full group cursor-default" style="--sd:240ms">
             <div
               class="w-12 h-12 rounded-full bg-[#9FB661] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
               3</div>
@@ -1510,7 +1593,7 @@
           </div>
 
           <!-- Step 4 -->
-          <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
+          <div class="timeline-step flex flex-col items-center text-center z-10 h-full group cursor-default" style="--sd:360ms">
             <div
               class="w-12 h-12 rounded-full bg-[#DC9533] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
               4</div>
@@ -1527,7 +1610,7 @@
           </div>
 
           <!-- Step 5 -->
-          <div class="flex flex-col items-center text-center z-10 h-full group cursor-default">
+          <div class="timeline-step flex flex-col items-center text-center z-10 h-full group cursor-default" style="--sd:480ms">
             <div
               class="w-12 h-12 rounded-full bg-[#C75231] text-white font-bold flex items-center justify-center text-xl mb-4 shadow-md z-10 transition-transform duration-300 group-hover:scale-125 group-hover:shadow-lg">
               5</div>
@@ -1556,6 +1639,104 @@
   </footer>
 
   <script>
+    // Slider Handle Ping
+    document.addEventListener("DOMContentLoaded", () => {
+      const sliderContainer = document.getElementById('flood-slider-container');
+      const pingEl = document.getElementById('slider-ping');
+      if (!sliderContainer || !pingEl) return;
+
+      const pingOnce = () => {
+        pingEl.classList.add('animate-ping', 'opacity-75');
+        // Remove after 2 pings (~1.4s each = ~2.8s), then clean up
+        setTimeout(() => {
+          pingEl.classList.remove('animate-ping', 'opacity-75');
+        }, 2800);
+      };
+
+      const pingObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(pingOnce, 500);
+            pingObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      pingObserver.observe(sliderContainer);
+    });
+
+    // Count-up Animation
+    document.addEventListener("DOMContentLoaded", () => {
+      const countEls = document.querySelectorAll('[data-target]');
+
+      const runCount = (el) => {
+        const target = +el.dataset.target;
+        const suffix = el.dataset.suffix || '';
+        const duration = 1800; // ms
+        const start = performance.now();
+
+        const tick = (now) => {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+
+      const countObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            runCount(entry.target);
+            countObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.6 });
+
+      countEls.forEach(el => countObserver.observe(el));
+    });
+
+    // Nav Active State Tracker
+    document.addEventListener("DOMContentLoaded", () => {
+      const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+
+      // Map section IDs → nav href (sub-slides of Part 2 all map to #problem)
+      const sectionNavMap = {
+        'hook': '#hook',
+        'problem': '#problem',
+        'problem-mechanisms': '#problem',
+        'problem-aftermath': '#problem',
+        'problem-slider': '#problem',
+        'science': '#science',
+        'solutions': '#solutions',
+        'take-action': '#take-action',
+      };
+
+      const allSectionIds = Object.keys(sectionNavMap);
+      const sections = allSectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+      const setActive = (navHref) => {
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === navHref);
+        });
+      };
+
+      // Set first section active on load
+      setActive('#hook');
+
+      const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActive(sectionNavMap[entry.target.id]);
+          }
+        });
+      }, { threshold: 0.4 });
+
+      sections.forEach(sec => navObserver.observe(sec));
+    });
+
     // Advanced Scroll Reveal Logic
     document.addEventListener("DOMContentLoaded", () => {
       // Automatically apply the 'reveal' class to major blocks to avoid manual HTML bloat
@@ -1575,11 +1756,12 @@
         let delay = 0;
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Staggered wave effect for elements entering at the exact same time (like grid cards)
+            const isTimeline = entry.target.classList.contains('timeline-step');
+            // Timeline steps use CSS transition-delay; everything else uses JS stagger
             setTimeout(() => {
               entry.target.classList.add('active');
-            }, delay);
-            delay += 150; // 150ms delay between each simultaneous element
+            }, isTimeline ? 0 : delay);
+            if (!isTimeline) delay += 150;
             observer.unobserve(entry.target);
           }
         });

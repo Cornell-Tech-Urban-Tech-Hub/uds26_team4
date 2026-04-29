@@ -435,7 +435,6 @@
         </div>
       </a>
     </div>
-    </div>
   </section>
 
   <!-- Slide B: MECHANISMS -->
@@ -692,8 +691,6 @@
 
     </div>
 
-
-    </div>
   </section>
 
   <!-- Slide D: SLIDER -->
@@ -1769,18 +1766,32 @@
         });
       };
 
-      // Set first section active on load
-      setActive('#hook');
-
-      const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActive(sectionNavMap[entry.target.id]);
-          }
+      const updateActiveFromScroll = () => {
+        const marker = window.scrollY + window.innerHeight * 0.35;
+        let current = sections[0];
+        sections.forEach(sec => {
+          if (sec.offsetTop <= marker) current = sec;
         });
-      }, { threshold: 0.4 });
+        if (current) setActive(sectionNavMap[current.id]);
+      };
 
-      sections.forEach(sec => navObserver.observe(sec));
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          setActive(link.getAttribute('href'));
+        });
+      });
+
+      updateActiveFromScroll();
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          updateActiveFromScroll();
+          ticking = false;
+        });
+      }, { passive: true });
     });
 
     // Advanced Scroll Reveal Logic
@@ -1790,11 +1801,12 @@
         '.eyebrow', '.section h2', '.section h3', '.section p.max-w-2xl',
         '.card', '.chart-card',
         '.grid > div', '.grid > a', '#flood-slider-container',
-        '.bg-slate-900', '.bg-gray-900', 'video', '.case-video-wrap'
+        '.case-video-wrap'
       ];
 
       document.querySelectorAll(autoAnimateSelectors.join(', ')).forEach(el => {
-        // Don't apply to icons/small svgs inside cards
+        // Avoid overriding components that use opacity classes for their own state.
+        if (el.closest('#sim-viewport')) return;
         el.classList.add('reveal');
       });
 
